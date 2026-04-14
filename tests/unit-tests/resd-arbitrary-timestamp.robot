@@ -12,7 +12,7 @@ ${UART_HUB}        uartHub
 Create Machine With UARTHub And UARTRESDFeeder
     Execute Command            using sysbus
     Execute Command            mach create
-    Execute Command            include @platforms/cpus/stm32l071.repl
+    Execute Command            include @platforms/cpus/st/stm32l071.repl
 
     Execute Command            machine CreateUARTRESDFeeder "${UART_FEEDER}"
 

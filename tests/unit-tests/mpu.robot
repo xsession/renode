@@ -2,7 +2,7 @@
 Create Machine
     [Arguments]                     ${binary}
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/boards/st/stm32f4_discovery-kit.repl
     Execute Command                 sysbus LoadELF @${binary}
     Create Terminal Tester          sysbus.usart2
 

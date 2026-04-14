@@ -5,7 +5,7 @@ $name?="LiteX+Minerva"
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/litex_minerva.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_minerva.repl
 
 $bios?=@https://dl.antmicro.com/projects/renode/litex_minerva--bios.bin-s_23548-4b53f9bd9af1804c893bd088ac179916bf3efa2c
 

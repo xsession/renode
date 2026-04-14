@@ -1,0 +1,56 @@
+// Espressif ESP32-C6 — Single RISC-V (RV32IMAC), 160 MHz
+// 512 KB SRAM, WiFi 6 (802.11ax) + Bluetooth 5.3 LE + 802.15.4
+// Reference: ESP32-C6 Technical Reference Manual (Espressif)
+//
+// Memory map (similar to C3 but larger SRAM, different peripheral base):
+//   0x40000000  Internal ROM (320 KB)
+//   0x40800000  SRAM (512 KB, HP)
+//   0x42000000  Flash (instruction cache)
+//   0x42800000  Flash (data cache)
+//   0x60000000  Peripheral base
+
+cpu: CPU.RiscV32 @ sysbus
+    cpuType: "rv32imac"
+    timeProvider: clint
+
+clint: IRQControllers.CoreLevelInterruptor @ sysbus 0x600C0000
+    frequency: 160000000
+    [0, 1] -> cpu@[3, 7]
+
+rom: Memory.MappedMemory @ sysbus 0x40000000
+    size: 0x50000
+
+sram: Memory.MappedMemory @ sysbus 0x40800000
+    size: 0x80000
+
+flash_inst: Memory.MappedMemory @ sysbus 0x42000000
+    size: 0x400000
+
+flash_data: Memory.MappedMemory @ sysbus 0x42800000
+    size: 0x400000
+
+uart0: UART.ESP32C3_UART @ sysbus 0x60000000
+    -> cpu@21
+
+uart1: UART.ESP32C3_UART @ sysbus 0x60001000
+    -> cpu@22
+
+gpio: GPIOPort.ESP32_GPIO @ sysbus 0x60091000
+    -> cpu@19
+
+timerGroup0: Timers.ESP32_Timer @ sysbus 0x60008000
+    frequency: 80000000
+    -> cpu@14
+
+timerGroup1: Timers.ESP32_Timer @ sysbus 0x60009000
+    frequency: 80000000
+    -> cpu@15
+
+spi2: SPI.ESP32_SPI @ sysbus 0x60081000
+    -> cpu@17
+
+i2c0: I2C.ESP32_I2C @ sysbus 0x60004000
+    -> cpu@20
+
+i2c1: I2C.ESP32_I2C @ sysbus 0x60005000
+    -> cpu@50

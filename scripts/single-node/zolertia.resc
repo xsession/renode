@@ -5,7 +5,7 @@ $name?="Zolertia"
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @platforms/boards/zolertia-firefly.repl
+machine LoadPlatformDescription @platforms/boards/others/zolertia-firefly.repl
 
 machine PyDevFromFile @scripts/pydev/rolling-bit.py 0x400D2004 0x4 True "sysctrl"
 

@@ -20,14 +20,14 @@ Initialize Emulation
     IF  ${region_count} != None
         ${mpu_regions_string}=      Catenate  SEPARATOR=\n
         ...                         """
-        ...                         using "platforms/cpus/cortex-r52.repl"
+        ...                         using "platforms/cpus/arm/cortex-r52.repl"
         ...
         ...                         cpu:
         ...                         ${SPACE*4}mpuRegionsCount: ${region_count}
         ...                         """
         Execute Command             machine LoadPlatformDescriptionFromString ${mpu_regions_string}
     ELSE
-        Execute Command             machine LoadPlatformDescription @platforms/cpus/cortex-r52.repl
+        Execute Command             machine LoadPlatformDescription @platforms/cpus/arm/cortex-r52.repl
     END
 
     Execute Command                 sysbus LoadELF ${binary}

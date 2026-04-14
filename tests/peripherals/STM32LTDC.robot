@@ -9,7 +9,7 @@ ${INTERRUPT_STATUS}         0x38
 *** Keywords ***
 Setup Machine
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/cpus/stm32h743.repl
+    Execute Command         machine LoadPlatformDescription @platforms/cpus/st/stm32h743.repl
     Execute Command         machine LoadPlatformDescriptionFromString "button: Miscellaneous.Button @ gpioPortA { -> gpioPortA@0 }"
     Execute Command         sysbus LoadELF ${BIN}
     Execute Command         ltdc FramesPerVirtualSecond 1

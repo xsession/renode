@@ -8,7 +8,7 @@ Create Machine
 
     Execute Command             mach create
     Execute Command             using sysbus
-    Execute Command             machine LoadPlatformDescription @platforms/cpus/cc2538.repl
+    Execute Command             machine LoadPlatformDescription @platforms/cpus/ti/cc2538.repl
 
     Execute Command             machine PyDevFromFile @scripts/pydev/rolling-bit.py 0x400D2004 0x4 True "sysctrl"
 

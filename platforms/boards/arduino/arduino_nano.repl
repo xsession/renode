@@ -1,0 +1,11 @@
+// Arduino Nano — ATmega328P, 16 MHz
+// 32 KB Flash, 2 KB SRAM, 1 KB EEPROM
+// On-board LED on PB5 (Arduino digital pin 13)
+
+using "platforms/cpus/microchip/atmega328p.repl"
+
+// LED on PB5 (digital pin 13)
+portb:
+    5 -> led@0
+
+led: Miscellaneous.LED @ portb 5

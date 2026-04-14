@@ -4,7 +4,7 @@
 using sysbus
 
 mach create
-machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+machine LoadPlatformDescription @platforms/boards/nordic/nrf52840dk_nrf52840.repl
 
 # mesh sample
 $bin?=@https://dl.antmicro.com/projects/renode/nrf52840dk_nrf52840--zephyr-hci-uart-ble-mesh.elf-s_6254428-ea0b067773adeed92a659394967e05e741b76d09

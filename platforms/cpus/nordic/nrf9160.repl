@@ -1,0 +1,89 @@
+// Nordic nRF9160 — Cortex-M33, 64 MHz, 1 MB Flash, 256 KB RAM
+// Reference: nRF9160 Product Specification v2.1
+// LTE-M / NB-IoT modem, GPS, TrustZone, ARM CryptoCell-312
+//
+// Memory map:
+//   0x00000000  Flash (1 MB)
+//   0x20000000  RAM (256 KB)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m33"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 64000000
+    -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x100000
+
+ram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x40000
+
+uart0: UART.NRF52840_UART @ sysbus 0x40008000
+    easyDMA: true
+    -> nvic@8
+
+uart1: UART.NRF52840_UART @ sysbus 0x40009000
+    easyDMA: true
+    -> nvic@9
+
+uart2: UART.NRF52840_UART @ sysbus 0x4000A000
+    easyDMA: true
+    -> nvic@10
+
+uart3: UART.NRF52840_UART @ sysbus 0x4000B000
+    easyDMA: true
+    -> nvic@11
+
+spi0: SPI.NRF52840_SPI @ sysbus 0x40008000
+    -> nvic@8
+
+spi1: SPI.NRF52840_SPI @ sysbus 0x40009000
+    -> nvic@9
+
+spi2: SPI.NRF52840_SPI @ sysbus 0x4000A000
+    -> nvic@10
+
+spi3: SPI.NRF52840_SPI @ sysbus 0x4000B000
+    -> nvic@11
+
+twi0: I2C.NRF52840_I2C @ sysbus 0x40008000
+    -> nvic@8
+
+twi1: I2C.NRF52840_I2C @ sysbus 0x40009000
+    -> nvic@9
+
+twi2: I2C.NRF52840_I2C @ sysbus 0x4000A000
+    -> nvic@10
+
+twi3: I2C.NRF52840_I2C @ sysbus 0x4000B000
+    -> nvic@11
+
+gpio0: GPIOPort.NRF52840_GPIO @ sysbus 0x50842500
+
+timer0: Timers.NRF52840_Timer @ sysbus 0x4000F000
+    numberOfEvents: 6
+    -> nvic@15
+
+timer1: Timers.NRF52840_Timer @ sysbus 0x40010000
+    numberOfEvents: 6
+    -> nvic@16
+
+timer2: Timers.NRF52840_Timer @ sysbus 0x40011000
+    numberOfEvents: 6
+    -> nvic@17
+
+rtc0: Timers.NRF52840_RTC @ sysbus 0x40014000
+    numberOfEvents: 4
+    -> nvic@20
+
+rtc1: Timers.NRF52840_RTC @ sysbus 0x40015000
+    numberOfEvents: 4
+    -> nvic@21
+
+wdt: Timers.NRF52840_Watchdog @ sysbus 0x40018000
+    -> nvic@24
+
+clock: Miscellaneous.NRF_CLOCK @ sysbus 0x40005000
+    -> nvic@5

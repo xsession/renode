@@ -1,0 +1,21 @@
+// MCS-51 (8051) blink test platform
+// Code at 0x000000, IRAM at 0x100000, SFR at 0x300000 (P1 = 0x300090)
+
+cpu: CPU.MCS51 @ sysbus
+    cpuType: "mcs51"
+
+// Code space (64 KB)
+code: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x010000
+
+// Internal RAM (256 bytes)
+iram: Memory.MappedMemory @ sysbus 0x100000
+    size: 0x000100
+
+// External data (64 KB)
+xdata: Memory.MappedMemory @ sysbus 0x200000
+    size: 0x010000
+
+// SFR space (128 bytes: 0x80-0xFF mapped at 0x300080-0x3000FF)
+sfr: Memory.MappedMemory @ sysbus 0x300000
+    size: 0x000100

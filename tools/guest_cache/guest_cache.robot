@@ -7,7 +7,7 @@ Library                             Process
 ${CACHE_TESTBENCH}                  ${RENODETOOLS}/guest_cache/src/cache_testbench.py
 ${GUEST_CACHE_ANALYZER}             ${RENODETOOLS}/guest_cache/src/renode_cache_interface.py
 ${EXPECTED_OUTPUT}                  {"l1i,u74": {"hit": 13, "miss": 1, "invalidations": 0}, "l1d,u74": {"hit": 2, "miss": 4, "invalidations": 0}}
-${PLATFORM_REPL}                    platforms/cpus/sifive-fu740.repl
+${PLATFORM_REPL}                    platforms/cpus/sifive/sifive-fu740.repl
 ${CPU}                              sysbus.u74_1
 ${ASSEMBLY}                         SEPARATOR=\n
 ...                                 """

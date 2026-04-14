@@ -1,0 +1,21 @@
+// WeAct Studio Black Pill V3.0 — STM32F401CCU6, Cortex-M4F @ 84 MHz
+// 256 KB Flash, 64 KB SRAM
+// On-board LED on PC13 (active low), user button PA0
+
+using "platforms/cpus/st/stm32f401.repl"
+
+// Override flash for C6 variant (256 KB)
+flash: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x40000           // 256 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x10000           // 64 KB
+
+gpioPortC:
+    13 -> led@0
+
+led: Miscellaneous.LED @ gpioPortC 13
+    invert: true
+
+button: Miscellaneous.Button @ gpioPortA
+    -> gpioPortA@0

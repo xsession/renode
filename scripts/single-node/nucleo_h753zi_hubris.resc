@@ -63,7 +63,7 @@ using sysbus
 mach create $name
 
 machine LoadPlatformDescriptionFromString """
-using "platforms/boards/nucleo_h753zi.repl"
+using "platforms/boards/st/nucleo_h753zi.repl"
 nvic:
     priorityMask: 0xFF
 """

@@ -1,0 +1,71 @@
+// MSP430G2553 platform description
+// Texas Instruments MSP430G2553 — MSP430 (16-bit), 16 MHz
+// 16 KB Flash, 512 B RAM — LaunchPad Value Line MCU
+// Reference: SLAS735, MSP430G2x53 Datasheet
+//
+// Memory map:
+//   0x0000–0x00FF   SFR + 8-bit peripherals
+//   0x0100–0x01FF   16-bit peripherals
+//   0x0200–0x03FF   RAM (512 B)
+//   0xC000–0xFFFF   Flash (16 KB)
+//   0x1000–0x10FF   Information memory (256 B)
+
+cpu: CPU.MSP430X @ sysbus
+    cpuType: "msp430x"
+
+// ---- RAM ----
+ram: Memory.ArrayMemory @ sysbus 0x0200
+    size: 0x200             // 512 B
+
+// ---- Flash ----
+code: Memory.ArrayMemory @ sysbus 0xC000
+    size: 0x4000            // 16 KB (0xC000–0xFFFF)
+
+// ---- Information memory ----
+info_mem: Memory.ArrayMemory @ sysbus 0x1000
+    size: 0x100             // 256 B (4 × 64 B segments)
+
+// ---- Watchdog ----
+wdt: Timers.MSP430F2XXX_Watchdog @ {
+    sysbus 0x120;
+    sysbus new Bus.BusMultiRegistration { address: 0x0000; size: 0x1; region: "interruptEnable" };
+    sysbus new Bus.BusMultiRegistration { address: 0x0002; size: 0x1; region: "interruptStatus" }
+}
+    baseFrequency: 32768
+
+// ---- Timer_A (TA0, 3 CC channels) ----
+timer_a0: Timers.MSP430_Timer @ {
+    sysbus <0x160, +0x20>;
+    sysbus new Bus.BusMultiRegistration { address: 0x012E; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 6
+    baseFrequency: 1_048_576
+    IRQ0->cpu@6
+    IRQ_IV->cpu@7
+
+// ---- Timer_A (TA1, 3 CC channels) ----
+timer_a1: Timers.MSP430_Timer @ {
+    sysbus <0x180, +0x20>;
+    sysbus new Bus.BusMultiRegistration { address: 0x011E; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 2
+    baseFrequency: 1_048_576
+    IRQ0->cpu@2
+    IRQ_IV->cpu@3
+
+// ---- USCI_A0 (UART mode) ----
+usci_a0: UART.MSP430_USCIA @ {
+    sysbus 0x5D;
+    sysbus new Bus.BusMultiRegistration { address: 0x0001; size: 0x1; region: "interruptEnable" };
+    sysbus new Bus.BusMultiRegistration { address: 0x0003; size: 0x1; region: "interruptStatus" }
+}
+    RxInterrupt->cpu@8
+    TxInterrupt->cpu@9
+
+// ---- GPIO Port 1 (P1.0-P1.7) ----
+gpio_p1: GPIOPort.MSP430_GPIO @ sysbus <0x0020, +0x08>
+
+// ---- GPIO Port 2 (P2.0-P2.7) ----
+gpio_p2: GPIOPort.MSP430_GPIO @ sysbus <0x0028, +0x08>

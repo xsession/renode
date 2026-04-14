@@ -1,0 +1,6 @@
+// TI LAUNCHXL-F28069M — TMS320F28069M LaunchPad
+// C28x @ 90 MHz, 256 KB Flash, InstaSPIN-FOC motor control
+// 4 user LEDs, 2 buttons
+// XDS100v2 on-board debug probe
+
+using "platforms/cpus/ti/tms320f28069.repl"

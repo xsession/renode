@@ -1,7 +1,7 @@
 mach create "Zolertia Z1"
 using sysbus
 
-include @platforms/cpus/msp430f2619.repl
+include @platforms/cpus/ti/msp430f2619.repl
 
 $bin?=@https://dl.antmicro.com/projects/renode/hello-world.elf-s_50467-180b9b5262a1df6ef45668ba7b6ed6d6e62ff6d2
 

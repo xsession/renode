@@ -1,0 +1,108 @@
+// dsPIC33FJ128GM802 platform description
+// Microchip dsPIC33FJ128GM802 — 16-bit DSP/MCU (dsPIC33FJ family, 28-pin)
+// Reference: DS70291, dsPIC33FJ128GP802/804 & dsPIC33FJ128GM802 Data Sheet
+//
+// Memory map (16-bit data space, byte addresses):
+//   0x0000–0x07FF    SFR region (2 KB)
+//   0x0800–0x47FF    Data RAM (16 KB)
+//
+// Program memory (24-bit word-addressed, phantom-byte model):
+//   0x000000–0x015FFF  Program Flash (128 KB, ~44K instruction words)
+//
+// This variant uses the existing dsPIC33 core and peripherals.
+
+cpu: CPU.DSPIC33 @ sysbus
+    cpuType: "dspic33fj128gm802"
+
+// ---- Program Flash ----
+// NOTE: dsPIC33FJ is Harvard architecture. Program memory at 0x100000
+// to avoid overlap with data-space SFR/SRAM.
+flash: Memory.MappedMemory @ sysbus 0x100000
+    size: 0x016000    // 128 KB (phantom-byte)
+
+// ---- Data RAM ----
+ram: Memory.MappedMemory @ sysbus 0x001000
+    size: 0x004000    // 16 KB data RAM (page-aligned)
+
+// ---- UART1 (U1) ----
+// SFR: U1MODE at 0x0220
+uart1: UART.dsPIC33_UART @ sysbus <0x000220, +0x0A>
+    -> cpu@0
+
+// ---- UART2 (U2) ----
+// SFR: U2MODE at 0x0230
+uart2: UART.dsPIC33_UART @ sysbus <0x000230, +0x0A>
+    -> cpu@0
+
+// ---- SPI1 ----
+// SFR: SPI1CON1 at 0x0240
+spi1: SPI.dsPIC33_SPI @ sysbus <0x000240, +0x08>
+    -> cpu@0
+
+// ---- SPI2 ----
+// SFR: SPI2CON1 at 0x0260
+spi2: SPI.dsPIC33_SPI @ sysbus <0x000260, +0x08>
+    -> cpu@0
+
+// ---- I2C1 ----
+// SFR: I2C1RCV at 0x0200
+i2c1: I2C.dsPIC33_I2C @ sysbus <0x000200, +0x20>
+    -> cpu@0
+
+// ---- Timer1 (Type A) ----
+// SFR: TMR1 at 0x0100
+timer1: Timers.dsPIC33_Timer @ sysbus <0x000100, +0x06>
+    baseFrequency: 40000000
+    -> cpu@0
+
+// ---- Timer2 (Type B) ----
+timer2: Timers.dsPIC33_Timer @ sysbus <0x000106, +0x06>
+    baseFrequency: 40000000
+    -> cpu@0
+
+// ---- Timer3 (Type B) ----
+timer3: Timers.dsPIC33_Timer @ sysbus <0x00010C, +0x06>
+    baseFrequency: 40000000
+    -> cpu@0
+
+// ---- Timer4 (Type B) ----
+timer4: Timers.dsPIC33_Timer @ sysbus <0x000112, +0x06>
+    baseFrequency: 40000000
+    -> cpu@0
+
+// ---- Timer5 (Type B) ----
+timer5: Timers.dsPIC33_Timer @ sysbus <0x000118, +0x06>
+    baseFrequency: 40000000
+    -> cpu@0
+
+// ---- OC1 (Output Compare / PWM) ----
+pwm1: Timers.dsPIC33_PWM @ sysbus <0x000180, +0x0C>
+    -> cpu@0
+
+// ---- OC2 (Output Compare / PWM) ----
+pwm2: Timers.dsPIC33_PWM @ sysbus <0x00018C, +0x0C>
+    -> cpu@0
+
+// ---- ADC1 (12-bit) ----
+// SFR: AD1CON1 at 0x0300
+adc1: Analog.dsPIC33_ADC @ sysbus <0x000300, +0x0C>
+    -> cpu@0
+
+// ---- DMA Controller ----
+dma: DMA.dsPIC33_DMA @ sysbus <0x000380, +0x40>
+    -> cpu@0
+
+// ---- GPIO Port A (RA0-RA4) ----
+// SFR: TRISA at 0x02C0
+gpio_porta: GPIOPort.dsPIC33_GPIO @ sysbus <0x0002C0, +0x08>
+    -> cpu@0
+
+// ---- GPIO Port B (RB0-RB15) ----
+// SFR: TRISB at 0x02C8
+gpio_portb: GPIOPort.dsPIC33_GPIO @ sysbus <0x0002C8, +0x08>
+    -> cpu@0
+
+// ---- ECAN1 (Enhanced CAN 2.0B) ----
+// SFR: C1CTRL1 at 0x0400
+ecan1: CAN.dsPIC33_ECAN @ sysbus <0x000400, +0x100>
+    -> cpu@0

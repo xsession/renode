@@ -3,7 +3,7 @@ ${URI}                              @https://dl.antmicro.com/projects/renode
 ${BLINKY_ELF}                       ${URI}/zephyr-blinky.elf-s_409892-ff40b96865d6d6a7af51989180bb74dc21240a91
 ${BUTTON_ELF}                       ${URI}/zephyr-button.elf-s_416536-a09e3bb98514ac3318664fe7572a0fca77dd8534
 ${UART}                             sysbus.uart0
-${PLATFORM}                         @platforms/boards/sam4s_xplained.repl
+${PLATFORM}                         @platforms/boards/microchip/sam4s_xplained.repl
 
 *** Keywords ***
 Prepare Machine

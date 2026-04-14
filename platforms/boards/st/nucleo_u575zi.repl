@@ -1,0 +1,19 @@
+// ST Nucleo-U575ZI-Q — STM32U575ZIT6Q, Cortex-M33 @ 160 MHz
+// 2 MB Flash, 786 KB SRAM, TrustZone, Nucleo-144 form factor
+// User LEDs: LD1 (PC7 green), LD2 (PB7 blue), LD3 (PG2 red)
+// User button (B1) on PC13
+
+using "platforms/cpus/st/stm32u575.repl"
+
+gpioPortC:
+    7 -> led1@0
+
+gpioPortB:
+    7 -> led2@0
+
+led1: Miscellaneous.LED @ gpioPortC 7
+
+led2: Miscellaneous.LED @ gpioPortB 7
+
+userButton: Miscellaneous.Button @ gpioPortC
+    -> gpioPortC@13

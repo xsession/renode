@@ -1,0 +1,36 @@
+// ATtiny85 platform description
+// Atmel ATtiny85 — 8 KB Flash, 512 B SRAM, 512 B EEPROM
+// 8-pin DIP/SOIC, 20 MHz max — Adafruit Trinket / Digispark MCU
+//
+// Memory layout:
+//   0x000000–0x001FFF  Program Flash
+//   0x800000 + da      Data space:
+//     0x800000–0x80001F  Register file R0-R31
+//     0x800020–0x80005F  I/O space (64 registers)
+//     0x800060–0x80025F  Internal SRAM (512 B at 0x0060-0x025F)
+
+cpu: CPU.AVR @ sysbus
+    cpuType: "attiny85"
+
+// ---- Program flash ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x002000    // 8 KB
+
+// ---- Internal SRAM (data-space 0x0060-0x025F) ----
+sram: Memory.MappedMemory @ sysbus 0x800060
+    size: 0x000200    // 512 B
+
+// ---- GPIO Port B (the only port, data-space 0x0016-0x0018: PINB/DDRB/PORTB) ----
+portb: GPIOPort.AVR_GPIO @ sysbus <0x800016, +0x03>
+
+// ---- Timer0 (8-bit, data-space 0x002A TCCR0A) ----
+timer0: Timers.AVR_Timer8 @ sysbus <0x80002A, +0x05>
+    baseFrequency: 8000000
+    -> cpu@0
+
+// ---- Watchdog (data-space 0x0041) ----
+wdt: Timers.AVR_WDT @ sysbus <0x800041, +0x01>
+
+// ---- EEPROM controller (data-space 0x003C) ----
+eeprom: Memory.AVR_EEPROM @ sysbus <0x80003C, +0x04>
+    size: 512

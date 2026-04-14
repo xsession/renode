@@ -1,0 +1,8 @@
+cpu: CPU.AVR @ sysbus
+    cpuType: "atmega328p"
+
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x008000
+
+dataspace: Memory.MappedMemory @ sysbus 0x800000
+    size: 0x000900

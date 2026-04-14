@@ -13,7 +13,7 @@ ${UNLEASHED_VMINUX}                 @https://dl.antmicro.com/projects/renode/hif
 *** Keywords ***
 Create Versatile Express
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/boards/vexpress.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/boards/arm/vexpress.repl
     Execute Command
     ...                             machine LoadPlatformDescriptionFromString "fake_memory: Memory.MappedMemory @ sysbus 0x0 { size: 0x1000 }"
     Execute Command                 machine PyDevFromFile @scripts/pydev/repeater.py 0xf0000000 0x4 True
@@ -21,23 +21,23 @@ Create Versatile Express
 
 Create Versatile
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/versatile.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/arm/versatile.repl
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT}
 
 Create Leon3
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/leon3.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/gaisler/leon3.repl
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT}
 
 Create MPC5567
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/mpc5567.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/nxp/mpc5567.repl
     Execute Command                 sysbus.cpu PC 0
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT}
 
 Create Microwatt
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/microwatt.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/others/microwatt.repl
     Execute Command
     ...                             machine LoadPlatformDescriptionFromString "fake_memory: Memory.MappedMemory @ sysbus 0x40000000 { size: 0x1000 }"
     Execute Command                 sysbus.cpu PC 0
@@ -50,7 +50,7 @@ Create VM Demo
 
     Execute Command                 mach create
     Execute Command                 using sysbus
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/sifive-fe310.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/sifive/sifive-fe310.repl
     # PAGETABLE is a raw binary representation of page table[s] (max 3), it's in RISC-V spec.
     ${macro_reset}=                 catenate  SEPARATOR=
     ...                             macro reset  ${\n}
@@ -104,7 +104,7 @@ Create Machine With PythonPeripheral
 
 Create HiFive Unleashed
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/sifive-fu540.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/sifive/sifive-fu540.repl
     Execute Command                 sysbus LoadELF ${UNLEASHED_BIN}
     Execute Command                 sysbus LoadFdt ${UNLEASHED_FDT} 0x81000000 "earlyconsole mem=256M@0x80000000"
     Execute Command                 sysbus LoadSymbolsFrom ${UNLEASHED_VMINUX}
@@ -1206,13 +1206,13 @@ Should Not Pause Machine Upon Python Peripheral Access
 ## Regression tests for simple CPU clustering for GDB stub
 
 Clustering Should Fail On CPUs With Different Archs
-    Execute Command                 i @platforms/cpus/zynqmp.repl
+    Execute Command                 i @platforms/cpus/xilinx/zynqmp.repl
 
     Run Keyword And Expect Error    *CPUs of different architectures are present in this platform*
     ...                             Execute Command  machine StartGdbServer ${GDB_REMOTE_PORT}
 
 Clustering Should Load Arch Cluster
-    Execute Command                 i @platforms/cpus/zynqmp.repl
+    Execute Command                 i @platforms/cpus/xilinx/zynqmp.repl
 
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT} cpuCluster="cortex-r5f"
     Check and Run Gdb               aarch64-zephyr-elf-gdb
@@ -1221,7 +1221,7 @@ Clustering Should Load Arch Cluster
     Should Contain                  ${x}  Thread 2 "machine-0.rpu1"
 
 Clustering Should Load Arch Cluster And Then Another Cluster
-    Execute Command                 i @platforms/cpus/zynqmp.repl
+    Execute Command                 i @platforms/cpus/xilinx/zynqmp.repl
 
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT} false cpuCluster="cortex-r5f"
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT} false cpuCluster="cortex-a53"
@@ -1235,7 +1235,7 @@ Clustering Should Load Arch Cluster And Then Another Cluster
     Should Contain                  ${x}  Thread 6 "machine-0.apu3"
 
 Clustering Should Load Arch Cluster And Then CPU
-    Execute Command                 i @platforms/cpus/zynqmp.repl
+    Execute Command                 i @platforms/cpus/xilinx/zynqmp.repl
 
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT} false cpuCluster="cortex-r5f"
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT} false cpu=sysbus.cluster0.apu2
@@ -1248,7 +1248,7 @@ Clustering Should Load Arch Cluster And Then CPU
     Should Contain                  ${x}  Thread 4 "machine-0.apu0"
 
 Clustering Should Load CPU And Then Another CPU
-    Execute Command                 i @platforms/cpus/zynqmp.repl
+    Execute Command                 i @platforms/cpus/xilinx/zynqmp.repl
 
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT} false cpu=sysbus.cluster0.apu2
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT} false cpu=sysbus.cluster1.rpu0
@@ -1258,7 +1258,7 @@ Clustering Should Load CPU And Then Another CPU
     Should Contain                  ${x}  Thread 2 "machine-0.rpu0"
 
 Clustering Should Load All Cpus By Force
-    Execute Command                 i @platforms/cpus/zynqmp.repl
+    Execute Command                 i @platforms/cpus/xilinx/zynqmp.repl
 
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT} cpuCluster="all"
     Check and Run Gdb               aarch64-zephyr-elf-gdb
@@ -1271,7 +1271,7 @@ Clustering Should Load All Cpus By Force
     Should Contain                  ${x}  Thread 6 "machine-0.rpu1"
 
 Clustering Should Load All Cpus If Only One Arch
-    Execute Command                 i @platforms/cpus/cortex-r52_smp_4.repl
+    Execute Command                 i @platforms/cpus/arm/cortex-r52_smp_4.repl
 
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT}
     Check and Run Gdb               aarch64-zephyr-elf-gdb

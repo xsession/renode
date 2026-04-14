@@ -1,0 +1,9 @@
+// Raspberry Pi Pico 2 — RP2350, Dual Cortex-M33 @ 150 MHz
+// 4 MB external QSPI flash, on-board LED on GPIO25
+
+using "platforms/cpus/raspberrypi/rp2350.repl"
+
+gpio0:
+    25 -> led@0
+
+led: Miscellaneous.LED @ gpio0 25

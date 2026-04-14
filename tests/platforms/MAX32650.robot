@@ -7,7 +7,7 @@ Create Platform
     [Arguments]               ${elf}
 
     Execute Command           mach create "max32650"
-    Execute Command           machine LoadPlatformDescription @platforms/boards/max32652-evkit.repl
+    Execute Command           machine LoadPlatformDescription @platforms/boards/maxim/max32652-evkit.repl
     Execute Command           sysbus LoadELF ${URI}/${elf}
 
 *** Test Cases ***

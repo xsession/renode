@@ -7,7 +7,7 @@ set elf @https://dl.antmicro.com/projects/renode/litex_vexriscv--tock-cxx_hello.
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/litex_tock.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_tock.repl
 
 showAnalyzer uart
 

@@ -1,0 +1,60 @@
+//
+// PIC12F675 platform description.
+// Microchip PIC12F675 — Midrange 8-bit MCU (14-bit instruction set)
+// 1024 × 14-bit Flash, 64 bytes SRAM, 128 bytes EEPROM, 6 I/O pins
+// Reference: DS41190, PIC12F629/675 Data Sheet
+//
+// Memory map (Renode flat):
+//   0x000000–0x0007FF  Program Flash (1K words × 2 bytes)
+//   0x200000 + sfr     Data space
+//     INDF=0x00  TMR0=0x01  PCL=0x02  STATUS=0x03  FSR=0x04
+//     GPIO=0x05  TRISIO=0x85
+//     TMR1L=0x0E  TMR1H=0x0F  T1CON=0x10
+//     CMCON=0x19  ADRESH=0x1E  ADCON0=0x1F
+//     GPR: 0x20–0x5F (64 bytes)
+//     EEPROM SFR: EEDATA=0x9A, EEADR=0x9B, EECON1=0x9C, EECON2=0x9D
+
+cpu: CPU.PIC12 @ sysbus
+    cpuType: "pic12f675"
+
+// ---- Program Flash ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x800     // 1K words × 2 bytes = 2 KB
+
+// ---- Data SRAM (GPR 0x20-0x5F) ----
+sram: Memory.MappedMemory @ sysbus 0x200020
+    size: 0x40      // 64 bytes
+
+// ---- GPIO (6 pins: GP0-GP5) ----
+// SFR 0x05 = GPIO, TRISIO at offset +1
+gpio: GPIOPort.PIC16_GPIO @ sysbus <0x200005, +0x02>
+    pinCount: 6
+
+// ---- Timer0 (8-bit) ----
+timer0: Timers.PIC16_Timer0 @ sysbus <0x200001, +0x03>
+    -> cpu@0
+
+// ---- Timer1 (16-bit) ----
+// TMR1L=0x0E, TMR1H=0x0F, T1CON=0x10
+timer1: Timers.PIC16_Timer1 @ sysbus <0x20000E, +0x03>
+    -> cpu@0
+
+// ---- ADC (10-bit, 4 channels) ----
+// ADRESH=0x1E, ADRESL=0x9E, ADCON0=0x1F
+adc: Analog.PIC16_ADC @ sysbus <0x20001E, +0x04>
+    -> cpu@0
+
+// ---- Comparator ----
+// CMCON=0x19, VRCON=0x99
+comparator: Analog.PIC16_Comparator @ sysbus <0x200019, +0x02>
+    -> cpu@0
+
+// ---- Data EEPROM (128 bytes) ----
+// EECON1=0x9C, EECON2=0x9D, EEDATA=0x9A, EEADR=0x9B
+eeprom: Memory.PIC16_EEPROM @ sysbus <0x20009C, +0x04>
+    eepromSize: 128
+    -> cpu@0
+
+// ---- Watchdog Timer ----
+wdt: Timers.PIC16_WDT @ sysbus <0x200085, +0x01>
+    -> cpu@0

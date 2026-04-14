@@ -6,7 +6,7 @@ ${PROMPT}                     >
 *** Keywords ***
 Prepare Machine
     Execute Command           mach create
-    Execute Command           machine LoadPlatformDescription @platforms/boards/sltb004a.repl
+    Execute Command           machine LoadPlatformDescription @platforms/boards/silabs/sltb004a.repl
 
     Create Terminal Tester    ${UART}
 

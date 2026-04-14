@@ -1,0 +1,14 @@
+// TI LP-MSPM0L2228 — MSPM0L2228 LaunchPad
+// Cortex-M0+ @ 32 MHz, 256 KB Flash, 32 KB SRAM, segment LCD
+// User LED (PA0), buttons (PA18, PB21)
+// On-board segment LCD, XDS110 debug probe
+
+using "platforms/cpus/ti/mspm0l2228.repl"
+
+gpioA:
+    0 -> userLed@0
+
+userLed: Miscellaneous.LED @ gpioA 0
+
+s1: Miscellaneous.Button @ gpioA
+    -> gpioA@18

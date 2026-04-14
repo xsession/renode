@@ -1,0 +1,9 @@
+using sysbus
+mach create "pic18-test"
+machine LoadPlatformDescription @tests/custom-cores/pic18_blink.repl
+sysbus LoadBinary @tests/custom-cores/blink_pic18.bin 0x000000
+cpu PC 0x000000
+log ">>> pic18: starting <<<"
+emulation RunFor "0.0001"
+log ">>> pic18: completed <<<"
+quit

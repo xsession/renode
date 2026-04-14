@@ -1,0 +1,37 @@
+// TI CC3220SF — Cortex-M4, 80 MHz, 1 MB Flash, 256 KB SRAM
+// Reference: SWAS032, CC3220SF Data Sheet
+// WiFi MCU with embedded WiFi+crypto subsystem
+//
+// Memory map:
+//   0x01000000  Serial Flash (1 MB, mapped via SPI)
+//   0x20000000  SRAM (256 KB)
+//   0x20040000  Shared Memory
+//   0x40000000  Peripherals
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xE0
+    systickFrequency: 80000000
+    IRQ -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x01000000
+    size: 0x100000
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x40000
+
+uart0: UART.PL011 @ sysbus <0x4000C000, +0x1000>
+    -> nvic@5
+
+uart1: UART.PL011 @ sysbus <0x4000D000, +0x1000>
+    -> nvic@6
+
+spi0: SPI.Kinetis_SPI @ sysbus 0x40020000
+    -> nvic@7
+
+i2c0: I2C.STM32F1_I2C @ sysbus 0x40020000
+    EventInterrupt -> nvic@8
+    ErrorInterrupt -> nvic@8

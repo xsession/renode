@@ -7,7 +7,7 @@ Prepare Machine
     Execute Command                 using sysbus
     Execute Command                 mach create
     # The specific platform doesn't matter as long as it has GICv3 and more than one CPU
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/cortex-r52_smp.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/arm/cortex-r52_smp.repl
 
 Write To Redistributor
     [Arguments]                     ${index}  ${reg}  ${val}  ${context}  ${size}=Double

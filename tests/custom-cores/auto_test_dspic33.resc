@@ -1,0 +1,9 @@
+using sysbus
+mach create "dspic33-test"
+machine LoadPlatformDescription @tests/custom-cores/dspic33_blink.repl
+sysbus LoadBinary @tests/custom-cores/blink_dspic33.bin 0x000000
+cpu PC 0x000000
+log ">>> dspic33: starting <<<"
+emulation RunFor "0.0001"
+log ">>> dspic33: completed <<<"
+quit

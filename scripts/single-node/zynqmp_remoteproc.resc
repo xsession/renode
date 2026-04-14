@@ -8,7 +8,7 @@ using sysbus.cluster1
 $name?="ZynqUS+"
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/zynqmp.repl
+machine LoadPlatformDescription @platforms/cpus/xilinx/zynqmp.repl
 machine SetSerialExecution True
 showAnalyzer uart0
 showAnalyzer uart1

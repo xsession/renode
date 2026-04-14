@@ -1,0 +1,11 @@
+// Arduino Mega 2560 — ATmega2560, 16 MHz
+// 256 KB Flash, 8 KB SRAM, 4 KB EEPROM
+// On-board LED on PB7 (Arduino digital pin 13)
+
+using "platforms/cpus/microchip/atmega2560.repl"
+
+// LED on PB7 (digital pin 13)
+portb:
+    7 -> led@0
+
+led: Miscellaneous.LED @ portb 7

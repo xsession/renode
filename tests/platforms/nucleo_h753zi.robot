@@ -19,7 +19,7 @@ ${PTP}                              ${PROJECT_URL}/nucleo_h753zi--zephyr-samples
 ${DHCP}                             ${PROJECT_URL}/nucleo_h753zi--zephyr-dhcp_client_server.elf-s_5285644-738a986f7b4250cd1a615e5c9767be20d89d82e0  # Zephyr netshell with DHCP client and server enabled
 ${FLASH_EraseProgram}               ${PROJECT_URL}/stm32cubeh7--stm32h753zi-FLASH_EraseProgram.elf-s_2098720-fdf4d20c82c0619eee844117860017b477696298
 
-${PLATFORM}                         platforms/boards/nucleo_h753zi.repl
+${PLATFORM}                         platforms/boards/st/nucleo_h753zi.repl
 
 ${EVAL_STUB}=    SEPARATOR=
 ...  """                                                                  ${\n}

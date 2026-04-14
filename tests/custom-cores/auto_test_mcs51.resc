@@ -1,0 +1,9 @@
+using sysbus
+mach create "mcs51-test"
+machine LoadPlatformDescription @tests/custom-cores/mcs51_blink.repl
+sysbus LoadBinary @tests/custom-cores/blink_mcs51.bin 0x000000
+cpu PC 0x000000
+log ">>> mcs51: starting <<<"
+emulation RunFor "0.0001"
+log ">>> mcs51: completed <<<"
+quit

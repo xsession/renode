@@ -1,0 +1,6 @@
+// TI LAUNCHXL-F280025C — TMS320F280025C LaunchPad
+// C28x @ 100 MHz, 128 KB Flash, entry-level C2000
+// 2 user LEDs, 2 buttons
+// XDS110 on-board debug probe
+
+using "platforms/cpus/ti/tms320f280025c.repl"

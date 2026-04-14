@@ -8,7 +8,7 @@ Create Machine
     [Arguments]  ${elf}
 
     Execute Command          mach create
-    Execute Command          machine LoadPlatformDescription @platforms/boards/miv-board.repl
+    Execute Command          machine LoadPlatformDescription @platforms/boards/microchip/miv-board.repl
 
     Execute Command          sysbus LoadELF ${URI}/${elf}
 

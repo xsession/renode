@@ -1,0 +1,14 @@
+// ST Nucleo-H563ZI — STM32H563ZIT6, Cortex-M33 @ 250 MHz
+// 2 MB Flash, 640 KB SRAM, TrustZone, Nucleo-144 form factor
+// User LEDs: LD1 (PB0 green), LD2 (PF4 yellow), LD3 (PG4 red)
+// User button (B1) on PC13
+
+using "platforms/cpus/st/stm32h563.repl"
+
+gpioPortB:
+    0 -> led1@0
+
+led1: Miscellaneous.LED @ gpioPortB 0
+
+userButton: Miscellaneous.Button @ gpioPortC
+    -> gpioPortC@13

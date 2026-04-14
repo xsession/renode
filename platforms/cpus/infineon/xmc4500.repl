@@ -1,0 +1,92 @@
+// Infineon XMC4500 — Cortex-M4F, 120 MHz, 1 MB Flash, 160 KB SRAM
+// XMC4000 family — industrial, EtherCAT, CAN, HRPWM
+// Reference: XMC4500 Reference Manual
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xFC
+    systickFrequency: 120000000
+    -> cpu@0
+
+// ---- Memory ----
+// Program Flash (PFLASH)
+pflash0: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x80000           // 512 KB (Bank 0)
+
+pflash1: Memory.MappedMemory @ sysbus 0x08080000
+    size: 0x80000           // 512 KB (Bank 1)
+
+// Cached Flash alias
+pflashCached0: Memory.MappedMemory @ sysbus 0x0C000000
+    size: 0x80000
+
+pflashCached1: Memory.MappedMemory @ sysbus 0x0C080000
+    size: 0x80000
+
+// DSRAM
+dsram1: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x10000           // 64 KB
+
+dsram2: Memory.MappedMemory @ sysbus 0x20010000
+    size: 0x08000           // 32 KB
+
+// PSRAM (Program SRAM)
+psram: Memory.MappedMemory @ sysbus 0x10000000
+    size: 0x10000           // 64 KB
+
+// Boot ROM
+rom: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x8000
+
+// ---- USIC (Universal Serial Interface Channel) — UART mode ----
+usic0ch0: UART.PL011 @ sysbus 0x40030000
+    -> nvic@84
+
+usic0ch1: UART.PL011 @ sysbus 0x40030200
+    -> nvic@85
+
+usic1ch0: UART.PL011 @ sysbus 0x48020000
+    -> nvic@90
+
+usic1ch1: UART.PL011 @ sysbus 0x48020200
+    -> nvic@91
+
+usic2ch0: UART.PL011 @ sysbus 0x48024000
+    -> nvic@96
+
+usic2ch1: UART.PL011 @ sysbus 0x48024200
+    -> nvic@97
+
+// ---- Ethernet ----
+ethernet: Network.CadenceGEM @ sysbus 0x5000C000
+    IRQ -> nvic@108
+
+phy: Network.EthernetPhysicalLayer @ ethernet 0
+    Id1: 0x0007
+    Id2: 0xC0F1
+    AutoNegotiationAdvertisement: 0x00A1
+    AutoNegotiationLinkPartnerBasePageAbility: 0x0001
+
+sysbus:
+    init:
+        Tag <0x40004000 0x100> "SCU_CLK"
+        Tag <0x40004400 0x100> "SCU_OSC"
+        Tag <0x40004800 0x100> "SCU_PLL"
+        Tag <0x40004C00 0x100> "SCU_GENERAL"
+        Tag <0x40010000 0x4000> "CCU40 — Capture/Compare Unit 4"
+        Tag <0x40014000 0x4000> "CCU41"
+        Tag <0x40040000 0x4000> "CCU80 — Capture/Compare Unit 8"
+        Tag <0x40044000 0x4000> "CCU81"
+        Tag <0x40000000 0x100> "VADC — Versatile ADC"
+        Tag <0x40008000 0x200> "DAC"
+        Tag <0x50014000 0x400> "CAN Node 0"
+        Tag <0x50014200 0x200> "CAN Node 1"
+        Tag <0x50014400 0x200> "CAN Node 2"
+        Tag <0x48028000 0x4000> "EtherCAT"
+        Tag <0x48000000 0x4000> "DMA0 — GPDMA0"
+        Tag <0x48004000 0x4000> "DMA1 — GPDMA1"
+        Tag <0x48028000 0x4000> "SDMMC"
+        Tag <0x50008000 0x4000> "USB0"

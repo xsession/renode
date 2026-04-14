@@ -1,0 +1,14 @@
+:name: C2000 Blink
+:description: Minimal blink loop on TMS320C28x — toggles ACC between 0xFF and 0x00
+
+using sysbus
+mach create "c2000-blink"
+machine LoadPlatformDescription @tests/custom-cores/c2000_blink.repl
+
+macro reset
+"""
+    sysbus LoadBinary @tests/custom-cores/blink_c2000.bin 0x000000
+    cpu PC 0x000000
+"""
+
+runMacro $reset

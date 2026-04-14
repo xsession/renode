@@ -1,0 +1,11 @@
+// Nordic nRF52832 — Cortex-M4F, 64 MHz, 512 KB Flash, 64 KB RAM
+// Reference: nRF52832 Product Specification v1.8
+// Bluetooth 5.0, 802.15.4, NFC, ANT
+// Very popular in BLE wearables and IoT
+using "./nrf52840.repl"
+
+flash:
+    size: 0x80000
+
+ram:
+    size: 0x10000

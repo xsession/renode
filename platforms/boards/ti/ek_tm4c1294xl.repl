@@ -1,0 +1,6 @@
+// TI EK-TM4C1294XL (Connected LaunchPad) — TM4C1294NCPDT
+// Cortex-M4F @ 120 MHz, 1 MB Flash, 256 KB SRAM, Ethernet
+// 4 LEDs: D1 (PN1), D2 (PN0), D3 (PF4), D4 (PF0)
+// 2 buttons: SW1 (PJ0), SW2 (PJ1)
+
+using "platforms/cpus/ti/tm4c1294ncpdt.repl"

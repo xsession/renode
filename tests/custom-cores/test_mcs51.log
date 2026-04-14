@@ -1,0 +1,10 @@
+16:47:11.6493 [INFO] Loaded monitor commands from: /mnt/c/GIT/renode/scripts/monitor.py
+16:47:11.6671 [INFO] Monitor available in telnet mode on port 1234
+16:47:11.7114 [INFO] Including script(s): /mnt/c/GIT/renode/tests/custom-cores/auto_test_mcs51.resc
+16:47:11.7396 [INFO] System bus created.
+16:47:12.5856 [INFO] sysbus: Loading block of 8 bytes length at 0x0.
+16:47:12.9073 [INFO] Script: >>> mcs51: starting <<<
+16:47:13.0295 [INFO] mcs51-test: Machine started.
+16:47:13.0460 [INFO] mcs51-test: Machine paused.
+16:47:13.0467 [INFO] Script: >>> mcs51: completed <<<
+16:47:13.0671 [INFO] mcs51-test: Disposed.

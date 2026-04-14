@@ -1,0 +1,14 @@
+:name: STM8 Blink
+:description: Minimal blink loop on STM8 — toggles address 0x50
+
+using sysbus
+mach create "stm8-blink"
+machine LoadPlatformDescription @tests/custom-cores/stm8_blink.repl
+
+macro reset
+"""
+    sysbus LoadBinary @tests/custom-cores/blink_stm8.bin 0x000000
+    cpu PC 0x000000
+"""
+
+runMacro $reset

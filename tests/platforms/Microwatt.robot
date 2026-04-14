@@ -9,7 +9,7 @@ Create Machine
     [Arguments]  ${elf}
 
     Execute Command           mach create
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/microwatt.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/others/microwatt.repl
 
     Execute Command           sysbus LoadELF ${URI}/${elf}
 

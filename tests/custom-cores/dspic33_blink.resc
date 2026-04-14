@@ -1,0 +1,14 @@
+:name: dsPIC33 Blink
+:description: Minimal blink loop on dsPIC33 — toggles W0 between 0xFFFF and 0x0000
+
+using sysbus
+mach create "dspic33-blink"
+machine LoadPlatformDescription @tests/custom-cores/dspic33_blink.repl
+
+macro reset
+"""
+    sysbus LoadBinary @tests/custom-cores/blink_dspic33.bin 0x000000
+    cpu PC 0x000000
+"""
+
+runMacro $reset

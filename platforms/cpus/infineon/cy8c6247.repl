@@ -1,0 +1,82 @@
+// Infineon/Cypress CY8C6247BZI — PSoC 6, Dual Cortex-M4F + Cortex-M0+
+// M4F @ 150 MHz, M0+ @ 100 MHz, 1 MB Flash, 288 KB SRAM
+// BLE 5.0, CapSense, programmable analog
+// Reference: PSoC 6 BLE Architecture TRM (002-18176)
+
+// ---- Application CPU (Cortex-M4F @ 150 MHz) ----
+cpu0: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic0
+
+nvic0: IRQControllers.NVIC @ {
+        sysbus new Bus.BusPointRegistration { address: 0xE000E000; cpu: cpu0 }
+    }
+    priorityMask: 0xE0
+    systickFrequency: 150000000
+    -> cpu0@0
+
+// ---- System CPU (Cortex-M0+ @ 100 MHz) ----
+cpu1: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0+"
+    nvic: nvic1
+
+nvic1: IRQControllers.NVIC @ {
+        sysbus new Bus.BusPointRegistration { address: 0xE000E000; cpu: cpu1 }
+    }
+    systickFrequency: 100000000
+    -> cpu1@0
+
+// ---- Memory ----
+flash: Memory.MappedMemory @ sysbus 0x10000000
+    size: 0x100000          // 1 MB
+
+sram0: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x40000           // 256 KB
+
+sram1: Memory.MappedMemory @ sysbus 0x08040000
+    size: 0x8000            // 32 KB
+
+// ROM
+rom: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x20000
+
+// ---- SCB (Serial Communication Block) — UART mode ----
+scb0: UART.PL011 @ sysbus 0x40600000
+    -> nvic0@39
+
+scb1: UART.PL011 @ sysbus 0x40610000
+    -> nvic0@40
+
+scb2: UART.PL011 @ sysbus 0x40620000
+    -> nvic0@41
+
+scb3: UART.PL011 @ sysbus 0x40630000
+    -> nvic0@42
+
+scb4: UART.PL011 @ sysbus 0x40640000
+    -> nvic0@43
+
+scb5: UART.PL011 @ sysbus 0x40650000
+    -> nvic0@44
+
+scb6: UART.PL011 @ sysbus 0x40660000
+    -> nvic0@45
+
+scb7: UART.PL011 @ sysbus 0x40670000
+    -> nvic0@46
+
+sysbus:
+    init:
+        Tag <0x40200000 0x10000> "PERI — Peripheral Interconnect"
+        Tag <0x40300000 0x10000> "CPUSS"
+        Tag <0x40310000 0x10000> "IPC"
+        Tag <0x40320000 0x10000> "PROT"
+        Tag <0x40400000 0x10000> "HSIOM"
+        Tag <0x40500000 0x10000> "TCPWM"
+        Tag <0x40700000 0x10000> "CSD — CapSense"
+        Tag <0x40800000 0x10000> "SMIF — Serial Memory"
+        Tag <0x40A00000 0x10000> "BLE"
+        Tag <0x40B00000 0x10000> "SAR ADC"
+        Tag <0x40C00000 0x10000> "PASS — DAC/OpAmp"
+        Tag <0x40D00000 0x10000> "GPIO"
+        Tag <0x40E00000 0x10000> "DMA / DataWire"

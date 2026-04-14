@@ -5,7 +5,7 @@ $name?="LiteX+Microwatt"
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/litex_microwatt.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_microwatt.repl
 
 $bios?=@https://dl.antmicro.com/projects/renode/litex_microwatt--bios.bin-s_31172-0833ddddcf3d4aff1adcac22ac536c9c15f7c269
 

@@ -1,0 +1,6 @@
+// MSP430F169 Development Board
+// Texas Instruments MSP-EXP430F169 — MSP430F169 Board
+// MSP430X @ 8 MHz, 60 KB Flash, 2 KB RAM
+// JTAG debug interface
+
+using "platforms/cpus/ti/msp430f169.repl"

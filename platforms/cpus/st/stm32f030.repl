@@ -1,0 +1,16 @@
+// STM32F030 — Cortex-M0, 48 MHz, 64 KB Flash, 8 KB SRAM
+// Reference: RM0360, STM32F030 Reference Manual
+// Entry-level Value Line
+using "./stm32g0.repl"
+
+cpu:
+    cpuType: "cortex-m0"
+
+nvic:
+    systickFrequency: 48000000
+
+flash:
+    size: 0x10000
+
+ram:
+    size: 0x2000

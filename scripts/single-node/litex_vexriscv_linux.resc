@@ -1,7 +1,7 @@
 using sysbus
 
 mach create
-machine LoadPlatformDescription @platforms/cpus/litex_vexriscv_linux.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_vexriscv_linux.repl
 
 sysbus SilenceRange <0xf0004000 0x100> # SDRAM
 sysbus SilenceRange <0xf0009000 0x100> # ETH PHY

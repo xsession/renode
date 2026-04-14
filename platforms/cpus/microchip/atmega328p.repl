@@ -1,0 +1,75 @@
+// ATmega328P platform description
+// Atmel ATmega328P — 32 KB Flash, 2 KB SRAM, 1 KB EEPROM, 28-pin DIP
+//
+// Memory layout (tlib conventions):
+//   0x000000–0x007FFF  Program Flash (byte addresses, 2 bytes/instruction)
+//   0x800000 + da      Data space (da = AVR data-space address):
+//     0x800000–0x80001F  Register file R0-R31 (virtual; handled by tlib)
+//     0x800020–0x80005F  I/O space (64 registers)
+//     0x800060–0x8000FF  Extended I/O
+//     0x800100–0x8008FF  Internal SRAM (2 KB)
+//
+// Reset vector: 0x0000 (byte address)
+// Interrupt vectors: 0x0002, 0x0004, … (2-byte slots, RJMP instructions)
+
+cpu: CPU.AVR @ sysbus
+    cpuType: "atmega328p"
+
+// ---- Program flash ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x008000    // 32 KB
+
+// ---- Internal SRAM (data space, byte address 0x0100-0x08FF) ----
+sram: Memory.MappedMemory @ sysbus 0x800100
+    size: 0x000800    // 2 KB
+
+// ---- USART0 ----
+// Data-space base: 0x00C0 (UCSRnA register)
+// Bus address: 0x8000C0
+usart0: UART.AVR_USART @ sysbus <0x8000C0, +0x07>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- Timer0 (8-bit, general purpose) ----
+// Data-space base: 0x0044 (TCCR0A)
+timer0: Timers.AVR_Timer8 @ sysbus <0x800044, +0x05>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- Timer2 (8-bit, async capable) ----
+timer2: Timers.AVR_Timer8 @ sysbus <0x800090, +0x05>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- GPIO Port B (data-space 0x0023-0x0025) ----
+portb: GPIOPort.AVR_GPIO @ sysbus <0x800023, +0x03>
+
+// ---- GPIO Port C (data-space 0x0026-0x0028) ----
+portc: GPIOPort.AVR_GPIO @ sysbus <0x800026, +0x03>
+
+// ---- GPIO Port D (data-space 0x0029-0x002B) ----
+portd: GPIOPort.AVR_GPIO @ sysbus <0x800029, +0x03>
+
+// ---- Timer1 (16-bit, data-space 0x0080) ----
+timer1: Timers.AVR_Timer16 @ sysbus <0x800080, +0x0C>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- SPI (data-space 0x004C) ----
+spi: SPI.AVR_SPI @ sysbus <0x80004C, +0x03>
+    -> cpu@0
+
+// ---- TWI / I2C (data-space 0x00B8) ----
+twi: I2C.AVR_TWI @ sysbus <0x8000B8, +0x06>
+    -> cpu@0
+
+// ---- ADC (data-space 0x0078) ----
+adc: Analog.AVR_ADC @ sysbus <0x800078, +0x06>
+    -> cpu@0
+
+// ---- Watchdog (data-space 0x0060) ----
+wdt: Timers.AVR_WDT @ sysbus <0x800060, +0x01>
+
+// ---- EEPROM controller (data-space 0x003F) ----
+eeprom: Memory.AVR_EEPROM @ sysbus <0x80003F, +0x04>
+    size: 1024

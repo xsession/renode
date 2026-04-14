@@ -1,0 +1,16 @@
+// STM32U575 — Cortex-M33, 160 MHz, 2 MB Flash, 786 KB SRAM
+// Reference: RM0456, STM32U575 Reference Manual
+// Ultra-low-power U5 series with TrustZone
+using "./stm32l552.repl"
+
+nvic:
+    systickFrequency: 160000000
+
+flash:
+    size: 0x200000
+
+sram1:
+    size: 0xC0000
+
+sram2:
+    size: 0x10000

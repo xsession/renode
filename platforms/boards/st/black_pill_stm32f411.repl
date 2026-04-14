@@ -1,0 +1,13 @@
+// STM32 Black Pill — STM32F411CEU6, Cortex-M4F @ 100 MHz
+// 512 KB Flash, 128 KB SRAM, on-board LED on PC13 (active low), user button PA0
+
+using "platforms/cpus/st/stm32f411.repl"
+
+gpioPortC:
+    13 -> led@0
+
+led: Miscellaneous.LED @ gpioPortC 13
+    invert: true
+
+button: Miscellaneous.Button @ gpioPortA
+    -> gpioPortA@0

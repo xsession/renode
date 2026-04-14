@@ -6,7 +6,7 @@ Create Machine
     [Arguments]                     ${elf_file}
     Execute Command                 using sysbus
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/cortex-r8.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/arm/cortex-r8.repl
 
     Execute Command                 sysbus LoadELF @${elf_file}
     # Older versions of Zephyr have a bug where they never clear UART interrupts causing the software
@@ -105,7 +105,7 @@ Test Remapping Exception Vector
 
     Execute Command      using sysbus
     Execute Command      mach create
-    Execute Command      machine LoadPlatformDescription @platforms/cpus/cortex-r8_smp.repl
+    Execute Command      machine LoadPlatformDescription @platforms/cpus/arm/cortex-r8_smp.repl
     Create Log Tester    1
 
     # Prevent starting other CPUs when stepping one of them.

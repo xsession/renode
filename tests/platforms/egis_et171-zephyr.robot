@@ -7,7 +7,7 @@ ${SPI_LOOP_TEST_BIN}                @https://dl.antmicro.com/projects/renode/zep
 
 ${SPI_LOOP_REPL}=     SEPARATOR=
 ...  """                                     ${\n}
-...  using "platforms/cpus/egis_et171.repl"  ${\n}
+...  using "platforms/cpus/others/egis_et171.repl"  ${\n}
 ...                                          ${\n}
 ...  spiLoopback: SPI.SPILoopback @ spi1     ${\n}
 ...  """

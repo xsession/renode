@@ -8,7 +8,7 @@ $uboot?=@https://dl.antmicro.com/projects/renode/u-boot-s_7278264-f40c30543d63d9
 using sysbus
 mach create
 
-machine LoadPlatformDescription @platforms/boards/beaglev-fire.repl
+machine LoadPlatformDescription @platforms/boards/beagle/beaglev-fire.repl
 machine SdCardFromFile $image mmc 0x100000000
 emulation SetGlobalSerialExecution True
 emulation SetGlobalQuantum "0.0008"

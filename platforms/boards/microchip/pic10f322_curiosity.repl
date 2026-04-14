@@ -1,0 +1,6 @@
+// PIC10F322 Curiosity Board
+// Microchip PIC10F322 on Curiosity development board
+// 4 I/O pins, on-board programmer, LED, potentiometer
+// SOT-23 package
+
+using "platforms/cpus/microchip/pic10f322.repl"

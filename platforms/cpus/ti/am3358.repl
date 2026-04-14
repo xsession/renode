@@ -1,0 +1,90 @@
+// Texas Instruments AM3358 — Cortex-A8, 1 GHz, no on-chip flash
+// Sitara AM335x — Linux/RTOS application processor (BeagleBone Black MCU)
+// 512 MB DDR3 typically on board, 64 KB on-chip SRAM
+// Reference: AM335x TRM (SPRUH73)
+
+cpu: CPU.ARMv7A @ sysbus
+    cpuType: "cortex-a8"
+
+// GIC (Generic Interrupt Controller) — AM335x uses INTC
+gic: IRQControllers.GIC @ {
+        sysbus new Bus.BusMultiRegistration { address: 0x48200000; size: 0x1000; region: "distributor" };
+        sysbus new Bus.BusMultiRegistration { address: 0x48200100; size: 0x100; region: "cpuInterface" }
+    }
+    0 -> cpu@0
+
+// ---- Memory ----
+// On-chip boot ROM
+rom: Memory.MappedMemory @ sysbus 0x40000000
+    size: 0x20000           // 128 KB
+
+// On-chip SRAM (shared L3 OCMC)
+ocmcRam: Memory.MappedMemory @ sysbus 0x40300000
+    size: 0x10000           // 64 KB
+
+// External DDR3 (typical 512 MB — BeagleBone Black)
+ddr: Memory.MappedMemory @ sysbus 0x80000000
+    size: 0x20000000        // 512 MB
+
+// ---- UART ----
+uart0: UART.NS16550 @ sysbus 0x44E09000
+    IRQ -> gic@72
+
+uart1: UART.NS16550 @ sysbus 0x48022000
+    IRQ -> gic@73
+
+uart2: UART.NS16550 @ sysbus 0x48024000
+    IRQ -> gic@74
+
+uart3: UART.NS16550 @ sysbus 0x481A6000
+    IRQ -> gic@44
+
+uart4: UART.NS16550 @ sysbus 0x481A8000
+    IRQ -> gic@45
+
+uart5: UART.NS16550 @ sysbus 0x481AA000
+    IRQ -> gic@46
+
+// ---- Ethernet (CPSW) ----
+ethernet: Network.CadenceGEM @ sysbus 0x4A100000
+    IRQ -> gic@40
+
+phy: Network.EthernetPhysicalLayer @ ethernet 0
+    Id1: 0x0007
+    Id2: 0xC0F1
+    AutoNegotiationAdvertisement: 0x00A1
+    AutoNegotiationLinkPartnerBasePageAbility: 0x0001
+
+sysbus:
+    init:
+        Tag <0x44E00000 0x4000> "CM_PER — Clock Module Per"
+        Tag <0x44E04000 0x4000> "CM_WKUP — Clock Module Wakeup"
+        Tag <0x44E10000 0x2000> "Control Module"
+        Tag <0x44C00000 0x400> "EDMA3CC"
+        Tag <0x44E05000 0x1000> "GPIO0"
+        Tag <0x4804C000 0x1000> "GPIO1"
+        Tag <0x481AC000 0x1000> "GPIO2"
+        Tag <0x481AE000 0x1000> "GPIO3"
+        Tag <0x48040000 0x1000> "DMTIMER2"
+        Tag <0x48042000 0x1000> "DMTIMER3"
+        Tag <0x48044000 0x1000> "DMTIMER4"
+        Tag <0x48046000 0x1000> "DMTIMER5"
+        Tag <0x48048000 0x1000> "DMTIMER6"
+        Tag <0x4804A000 0x1000> "DMTIMER7"
+        Tag <0x48030000 0x1000> "SPI0 (McSPI0)"
+        Tag <0x481A0000 0x1000> "SPI1 (McSPI1)"
+        Tag <0x4802A000 0x1000> "I2C0"
+        Tag <0x4802A000 0x1000> "I2C1"
+        Tag <0x4819C000 0x1000> "I2C2"
+        Tag <0x481D8000 0x1000> "CAN0 (DCAN0)"
+        Tag <0x481CC000 0x1000> "CAN1 (DCAN1)"
+        Tag <0x47400000 0x8000> "USB0"
+        Tag <0x47401C00 0x400> "USB1"
+        Tag <0x48060000 0x2000> "MMC (MMCHS0)"
+        Tag <0x481D8000 0x2000> "MMC (MMCHS1)"
+        Tag <0x47810000 0x10000> "LCDC — LCD Controller"
+        Tag <0x44E31000 0x1000> "RTC"
+        Tag <0x44E35000 0x1000> "WDT1"
+        Tag <0x4830A000 0x2000> "McASP0"
+        Tag <0x4830C000 0x2000> "McASP1"
+        Tag <0x44E07000 0x2000> "PRU-ICSS"

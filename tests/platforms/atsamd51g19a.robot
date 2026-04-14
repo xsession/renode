@@ -1,7 +1,7 @@
 *** Variables ***
 ${UART}                       sysbus.sercom3
 ${ELF}                        @https://dl.antmicro.com/projects/renode/adafruit_itsybitsy_m4_express-zephyr-shell_module.elf-s_1174688-96ba3690738a878b9f1d47e5ac677592a42c9040
-${PLATFORM}                   @platforms/cpus/atsamd51g19a.repl
+${PLATFORM}                   @platforms/cpus/microchip/atsamd51g19a.repl
 ${PROMPT}                     uart:~$
 
 *** Keywords ***

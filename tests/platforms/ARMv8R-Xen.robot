@@ -29,7 +29,7 @@ Create Machine
     ...                             """
 
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/cortex-r52.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/arm/cortex-r52.repl
     Execute Command                 ${python_script}
 
     Execute Command                 sysbus LoadBinary ${XEN_BIN} 0x0

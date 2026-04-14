@@ -1,0 +1,20 @@
+// STM32F205 — Cortex-M3, 120 MHz, 256 KB Flash, 96 KB SRAM
+// Reference: RM0033, STM32F205/215 Reference Manual
+//
+// Similar peripheral set to F4 family but Cortex-M3 core.
+using "./stm32f4.repl"
+
+cpu:
+    cpuType: "cortex-m3"
+
+nvic:
+    systickFrequency: 120000000
+
+flash:
+    size: 0x40000
+
+sram:
+    size: 0x18000
+
+usart6: UART.STM32_UART @ sysbus <0x40011400, +0x100>
+    -> nvic@71

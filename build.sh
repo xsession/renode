@@ -415,7 +415,7 @@ fi
 
 # This list contains all cores that will be built.
 # If you are adding a new core or endianness add it here to have the correct tlib built
-CORES=(arm.le arm.be arm64.le arm-m.le arm-m.be ppc.le ppc.be ppc64.le ppc64.be i386.le x86_64.le riscv.le riscv64.le sparc.le sparc.be xtensa.le)
+CORES=(arm.le arm.be arm64.le arm-m.le arm-m.be ppc.le ppc.be ppc64.le ppc64.be i386.le x86_64.le riscv.le riscv64.le sparc.le sparc.be xtensa.le avr.le stm8.le mcs51.le pic16.le pic18.le c2000.le dspic33.le)
 
 # if '--external-lib-arch' was used - pick the first matching one
 if [[ ! -z $EXTERNAL_LIB_ARCH ]]; then

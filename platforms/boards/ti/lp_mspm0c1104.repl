@@ -1,0 +1,14 @@
+// TI LP-MSPM0C1104 — MSPM0C1104 LaunchPad
+// Cortex-M0+ @ 24 MHz, 16 KB Flash, 1 KB SRAM
+// Ultra-low-cost, 8/16/20-pin packages
+// User LED (PA26), user button (PA14)
+
+using "platforms/cpus/ti/mspm0c1104.repl"
+
+gpioA:
+    26 -> userLed@0
+
+userLed: Miscellaneous.LED @ gpioA 26
+
+s1: Miscellaneous.Button @ gpioA
+    -> gpioA@14

@@ -1,0 +1,13 @@
+// ST Nucleo-F446RE — STM32F446RET6, Cortex-M4F @ 180 MHz
+// 512 KB Flash, 128 KB SRAM
+// User LED (LD2) on PA5, User button (B1) on PC13
+
+using "platforms/cpus/st/stm32f446.repl"
+
+gpioPortA:
+    5 -> userLed@0
+
+userLed: Miscellaneous.LED @ gpioPortA 5
+
+userButton: Miscellaneous.Button @ gpioPortC
+    -> gpioPortC@13

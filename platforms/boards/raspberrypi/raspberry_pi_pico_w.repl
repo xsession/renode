@@ -1,0 +1,11 @@
+// Raspberry Pi Pico W — RP2040 + CYW43439 WiFi/BLE
+// 2 MB external QSPI flash, LED controlled via CYW43 GPIO (not directly on RP2040 pin)
+
+using "platforms/cpus/raspberrypi/rp2040.repl"
+
+// On Pico W, the LED is on the CYW43 WiFi chip, not a direct GPIO pin
+// Modeled as connected to GPIO25 for compatibility
+gpio0:
+    25 -> led@0
+
+led: Miscellaneous.LED @ gpio0 25

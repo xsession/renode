@@ -1,0 +1,6 @@
+// Seeed Studio XIAO ESP32-C3 — ESP32-C3, RV32IMC @ 160 MHz
+// 4 MB flash, 400 KB SRAM, WiFi + BLE 5.0
+// Tiny thumb-sized form factor, USB-C
+// No user LED on GPIO (battery charge LED only)
+
+using "platforms/cpus/espressif/esp32c3.repl"

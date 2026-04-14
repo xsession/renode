@@ -1,0 +1,10 @@
+// STM32 Blue Pill — STM32F103C8T6, Cortex-M3 @ 72 MHz
+// 64 KB Flash, 20 KB SRAM, on-board LED on PC13 (active low)
+
+using "platforms/cpus/st/stm32f103.repl"
+
+gpioPortC:
+    13 -> led@0
+
+led: Miscellaneous.LED @ gpioPortC 13
+    invert: true

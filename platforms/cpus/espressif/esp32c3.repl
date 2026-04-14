@@ -1,0 +1,68 @@
+// Espressif ESP32-C3 — Single RISC-V (RV32IMC), 160 MHz
+// 400 KB SRAM, 384 KB ROM, WiFi 802.11 b/g/n + Bluetooth 5.0 LE
+// Reference: ESP32-C3 Technical Reference Manual (Espressif)
+//
+// Memory map:
+//   0x3C000000  Flash (mapped via cache, up to 16 MB)
+//   0x3FC80000  SRAM (400 KB data)
+//   0x40000000  IROM (384 KB internal ROM)
+//   0x40380000  IRAM (mapped from SRAM)
+//   0x42000000  Flash (instruction cache, up to 16 MB)
+//   0x60000000  Peripheral base
+
+cpu: CPU.RiscV32 @ sysbus
+    cpuType: "rv32imc"
+    timeProvider: clint
+
+clint: IRQControllers.CoreLevelInterruptor @ sysbus 0x600C0000
+    frequency: 160000000
+    [0, 1] -> cpu@[3, 7]
+
+// ---- Internal ROM (boot) ----
+rom: Memory.MappedMemory @ sysbus 0x40000000
+    size: 0x60000
+
+// ---- SRAM (data view) ----
+sram: Memory.MappedMemory @ sysbus 0x3FC80000
+    size: 0x64000
+
+// ---- Flash (mapped via MMU/cache — data) ----
+flash_data: Memory.MappedMemory @ sysbus 0x3C000000
+    size: 0x400000
+
+// ---- Flash (mapped via MMU/cache — instruction) ----
+flash_inst: Memory.MappedMemory @ sysbus 0x42000000
+    size: 0x400000
+
+// ---- UART0 ----
+uart0: UART.ESP32C3_UART @ sysbus 0x60000000
+    -> cpu@21
+
+// ---- UART1 ----
+uart1: UART.ESP32C3_UART @ sysbus 0x60010000
+    -> cpu@22
+
+// ---- GPIO ----
+gpio: GPIOPort.ESP32_GPIO @ sysbus 0x60004000
+    -> cpu@19
+
+// ---- Timer Group 0 ----
+timerGroup0: Timers.ESP32_Timer @ sysbus 0x6001F000
+    frequency: 80000000
+    -> cpu@14
+
+// ---- Timer Group 1 ----
+timerGroup1: Timers.ESP32_Timer @ sysbus 0x60020000
+    frequency: 80000000
+    -> cpu@15
+
+// ---- SPI1 (flash access) ----
+spi1: SPI.ESP32_SPI @ sysbus 0x60002000
+
+// ---- SPI2 (general purpose) ----
+spi2: SPI.ESP32_SPI @ sysbus 0x60024000
+    -> cpu@17
+
+// ---- I2C0 ----
+i2c0: I2C.ESP32_I2C @ sysbus 0x60013000
+    -> cpu@20

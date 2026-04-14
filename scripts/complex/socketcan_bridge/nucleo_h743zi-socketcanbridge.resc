@@ -6,7 +6,7 @@ using sysbus
 $bin=@https://dl.antmicro.com/projects/renode/nucleo_h743zi--zephyr-samples-net-sockets-can.elf-s_2243040-d8ba11b258437935c3880cf3e162f448f55c6f17
 
 mach create "nucleo_h743zi"
-include @platforms/boards/nucleo_h753zi.repl
+include @platforms/boards/st/nucleo_h753zi.repl
 
 showAnalyzer sysbus.usart3
 

@@ -1,0 +1,20 @@
+:name: Arduino Nano Blink Test
+:description: Tests AVR core with a bare-metal blink on ATmega328P
+
+using sysbus
+mach create "Arduino-Nano"
+
+machine LoadPlatformDescription $ORIGIN/nano_test.repl
+
+$bin=$ORIGIN/blink.elf
+
+macro reset
+"""
+    sysbus LoadELF $bin
+"""
+
+runMacro $reset
+# Run 5 virtual seconds of emulation then quit
+emulation RunFor "00:00:05"
+echo "=== Blink test complete (5s virtual time) ==="
+quit

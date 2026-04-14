@@ -3,7 +3,7 @@ Suite Setup                         Custom Suite Setup
 Suite Teardown                      Custom Suite Teardown
 
 *** Variables ***
-${EXISTING_PLATFORM}                platforms/cpus/miv.repl
+${EXISTING_PLATFORM}                platforms/cpus/microchip/miv.repl
 
 *** Keywords ***
 Custom Suite Setup

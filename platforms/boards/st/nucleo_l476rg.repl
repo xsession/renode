@@ -1,0 +1,13 @@
+// ST Nucleo-L476RG — STM32L476RGT6, Cortex-M4F @ 80 MHz
+// 1 MB Flash, 128 KB SRAM, ultra-low-power
+// User LED (LD2) on PA5, User button (B1) on PC13
+
+using "platforms/cpus/st/stm32l476.repl"
+
+gpioPortA:
+    5 -> userLed@0
+
+userLed: Miscellaneous.LED @ gpioPortA 5
+
+userButton: Miscellaneous.Button @ gpioPortC
+    -> gpioPortC@13

@@ -2,7 +2,7 @@ $name?="hifive-unleashed"
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/sifive-fu540.repl
+machine LoadPlatformDescription @platforms/cpus/sifive/sifive-fu540.repl
 
 showAnalyzer uart0
 

@@ -1,0 +1,14 @@
+// PIC16 blink test platform
+// Program memory at 0x000000 (word-addressed, stored as 16-bit LE words)
+// Data registers at PIC16_DATA_BASE = 0x200000 (PORTB = 0x200006)
+
+cpu: CPU.PIC16 @ sysbus
+    cpuType: "pic16"
+
+// Program flash (8 K words = 16 KB byte storage)
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x004000
+
+// Data file registers (256 bytes covers banks 0-1)
+data: Memory.MappedMemory @ sysbus 0x200000
+    size: 0x000100

@@ -100,7 +100,7 @@ Independent Watchdog Should Trigger Reset
     # a reset macro that only resets PC and SP to their initial values.
     Execute Command          mach create
     Execute Command          using sysbus
-    Execute Command          machine LoadPlatformDescription @platforms/cpus/stm32l072.repl
+    Execute Command          machine LoadPlatformDescription @platforms/cpus/st/stm32l072.repl
     Execute Command          sysbus LoadELF @https://dl.antmicro.com/projects/renode/zephyr-drivers_watchdog_wdt_basic_api-test.elf-s_463344-248e7e6eb8a681a33c4bf8fdb45c6bf95bcb57fd
 
     ${pc}=  Execute Command      sysbus GetSymbolAddress "z_arm_reset"

@@ -3,7 +3,7 @@ using sysbus.cluster0
 using sysbus.cluster1
 
 mach create
-machine LoadPlatformDescription @platforms/cpus/zynqmp.repl
+machine LoadPlatformDescription @platforms/cpus/xilinx/zynqmp.repl
 
 showAnalyzer uart0
 

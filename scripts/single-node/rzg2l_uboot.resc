@@ -9,7 +9,7 @@ $name?="Renesas RZ/G2L"
 $bin?=@https://dl.antmicro.com/projects/renode/uboot.elf-s_4151104-c5de311d27f0823c3d888309795fdc0a5b31473b
 
 mach create $name
-include @platforms/cpus/renesas_rz_g2l.repl
+include @platforms/cpus/renesas/renesas_rz_g2l.repl
 
 macro reset
 """

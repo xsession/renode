@@ -1,0 +1,5 @@
+// TI controlCARD F28388D — TMS320F28388D evaluation module
+// Dual C28x + dual CM (Cortex-M4) @ 200 MHz, Ethernet, EtherCAT
+// HSEC180 form factor
+
+using "platforms/cpus/ti/tms320f28388d.repl"

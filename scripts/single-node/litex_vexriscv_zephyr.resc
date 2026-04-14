@@ -7,7 +7,7 @@
 using sysbus
 
 mach create
-machine LoadPlatformDescription @platforms/cpus/litex_vexriscv_zephyr.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_vexriscv_zephyr.repl
 
 showAnalyzer uart
 

@@ -13,7 +13,7 @@ Check And Run Gdb
     Command Gdb                     target remote :${GDB_REMOTE_PORT}  timeout=10
 
 Cortex-R52 Should Have Readable Register ${register}
-    Execute Command                 i @platforms/cpus/cortex-r52.repl
+    Execute Command                 i @platforms/cpus/arm/cortex-r52.repl
 
     Execute Command                 machine StartGdbServer ${GDB_REMOTE_PORT}
     Check and Run Gdb               arm-zephyr-eabi-gdb

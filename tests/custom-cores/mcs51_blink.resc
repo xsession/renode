@@ -1,0 +1,14 @@
+:name: MCS-51 Blink
+:description: Minimal blink loop on 8051 — toggles P1 (SFR 0x90)
+
+using sysbus
+mach create "mcs51-blink"
+machine LoadPlatformDescription @tests/custom-cores/mcs51_blink.repl
+
+macro reset
+"""
+    sysbus LoadBinary @tests/custom-cores/blink_mcs51.bin 0x000000
+    cpu PC 0x000000
+"""
+
+runMacro $reset

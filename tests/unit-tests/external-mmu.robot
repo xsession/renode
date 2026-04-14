@@ -26,7 +26,7 @@ Create ARM Platform
     Execute Command                 using sysbus
     Execute Command                 mach create "${type}"
 
-    Execute Command                 machine LoadPlatformDescriptionFromString "using \\"platforms/cpus/${type}.repl\\"; smmu: MemoryControllers.ARM_SMMUv3 @ sysbus 0xfd800000 { context: cpu }; cpu: @ { sysbus; smmu 29 }"
+    Execute Command                 machine LoadPlatformDescriptionFromString "using \\"platforms/cpus/arm/${type}.repl\\"; smmu: MemoryControllers.ARM_SMMUv3 @ sysbus 0xfd800000 { context: cpu }; cpu: @ { sysbus; smmu 29 }"
     Execute Command                 machine LoadPlatformDescriptionFromString "highmem: Memory.MappedMemory @ sysbus 0x100000000 { size: 0x1000 }"
     Execute Command                 include @tests/unit-tests/external-mmu.py
 

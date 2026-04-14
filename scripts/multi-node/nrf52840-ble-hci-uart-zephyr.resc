@@ -13,23 +13,23 @@ $hci_uart_bin?=@https://dl.antmicro.com/projects/renode/nrf52840dk--zephyr-ble_h
 
 # Create central machines
 mach create "central_host"
-machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+machine LoadPlatformDescription @platforms/boards/nordic/nrf52840dk_nrf52840.repl
 connector Connect sysbus.uart1 central_hci
 showAnalyzer uart0
 
 mach create "central_controller"
-machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+machine LoadPlatformDescription @platforms/boards/nordic/nrf52840dk_nrf52840.repl
 connector Connect sysbus.radio wireless
 connector Connect sysbus.uart1 central_hci
 
 # Create peripheral machines
 mach create "peripheral_host"
-machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+machine LoadPlatformDescription @platforms/boards/nordic/nrf52840dk_nrf52840.repl
 connector Connect sysbus.uart1 peripheral_hci
 showAnalyzer uart0
 
 mach create "peripheral_controller"
-machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+machine LoadPlatformDescription @platforms/boards/nordic/nrf52840dk_nrf52840.repl
 connector Connect sysbus.radio wireless
 connector Connect sysbus.uart1 peripheral_hci
 

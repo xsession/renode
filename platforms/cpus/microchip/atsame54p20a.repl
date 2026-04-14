@@ -1,0 +1,27 @@
+// Microchip ATSAME54P20A — Cortex-M4F, 120 MHz, 1 MB Flash, 256 KB SRAM
+// SAM E54 series — high-performance with Ethernet MAC, dual CAN-FD
+// Reference: DS60001507 (SAME54 Family Datasheet)
+
+using "./atsame51j20a.repl"
+
+// SAME54 adds Ethernet (GMAC) and second CAN
+ethernet: Network.CadenceGEM @ sysbus 0x42000C00
+    IRQ -> nvic@84
+
+phy: Network.EthernetPhysicalLayer @ ethernet 0
+    Id1: 0x0007
+    Id2: 0xC0F1
+    AutoNegotiationAdvertisement: 0x00A1
+    AutoNegotiationLinkPartnerBasePageAbility: 0x0001
+
+// Additional SERCOM instances
+sercom6: UART.SAMD5_UART @ sysbus 0x43000800
+    -> nvic@52
+
+sercom7: UART.SAMD5_UART @ sysbus 0x43000C00
+    -> nvic@53
+
+// Additional GPIO ports
+gpio_c: GPIOPort.SAMD21_GPIO @ sysbus 0x41008100
+
+gpio_d: GPIOPort.SAMD21_GPIO @ sysbus 0x41008180

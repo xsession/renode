@@ -1,0 +1,6 @@
+// TI EK-TM4C123GXL (Tiva C Series LaunchPad) — TM4C123GH6PM
+// Cortex-M4F @ 80 MHz, 256 KB Flash, 32 KB SRAM
+// RGB LED: Red (PF1), Blue (PF2), Green (PF3)
+// 2 buttons: SW1 (PF4), SW2 (PF0)
+
+using "platforms/cpus/ti/tm4c123gh6pm.repl"

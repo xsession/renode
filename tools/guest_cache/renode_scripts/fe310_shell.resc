@@ -1,6 +1,6 @@
 using sysbus
 mach create
-machine LoadPlatformDescription @platforms/cpus/sifive-fe310.repl
+machine LoadPlatformDescription @platforms/cpus/sifive/sifive-fe310.repl
 
 set cacheBenchamrkLogger
 """

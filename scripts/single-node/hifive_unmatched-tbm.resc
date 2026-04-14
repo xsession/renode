@@ -3,7 +3,7 @@ $trace_file?=@renode.trace
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/sifive-fu740.repl
+machine LoadPlatformDescription @platforms/cpus/sifive/sifive-fu740.repl
 
 showAnalyzer uart0
 

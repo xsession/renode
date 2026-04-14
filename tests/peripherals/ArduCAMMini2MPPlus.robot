@@ -20,7 +20,7 @@ Run Test
 
     Execute Command                 Clear
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/boards/arduino_nano_33_ble.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/boards/arduino/arduino_nano_33_ble.repl
     Execute Command                 sysbus LoadELF ${URI}/nrf52840--tf_person_detection.elf-s_7574264-cf1fccf46719c4a60e0df957a1304f17c5647011
 
     Create Terminal Tester          sysbus.uart0

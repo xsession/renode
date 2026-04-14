@@ -1,0 +1,17 @@
+// TI LP-MSPM0G3507 — MSPM0G3507 LaunchPad
+// Cortex-M0+ @ 80 MHz, 128 KB Flash, 32 KB SRAM, 2× CAN-FD
+// 1 user LED (PA0), 2 user buttons (S1/PA18, S2/PB21)
+// XDS110 on-board debug probe, 2× BoosterPack headers
+
+using "platforms/cpus/ti/mspm0g3507.repl"
+
+gpioA:
+    0 -> userLed@0
+
+userLed: Miscellaneous.LED @ gpioA 0
+
+s1: Miscellaneous.Button @ gpioA
+    -> gpioA@18
+
+s2: Miscellaneous.Button @ gpioB
+    -> gpioB@21

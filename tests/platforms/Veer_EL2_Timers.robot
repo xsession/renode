@@ -86,7 +86,7 @@ ${CASCADE_MODE_PROG}                SEPARATOR=\n
 
 Create Machine
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/tock_veer_el2_sim.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/others/tock_veer_el2_sim.repl
     Execute Command                 cpu PC ${PROGRAM_COUNTER}
     Execute Command                 cpu AssembleBlock ${mtvec} """${HANDLER_PROG}"""
 

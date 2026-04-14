@@ -3,7 +3,7 @@ Test Setup                          Create Machine
 
 *** Keywords ***
 Create Machine
-    Execute Command                 include @platforms/cpus/egis_et171.repl
+    Execute Command                 include @platforms/cpus/others/egis_et171.repl
     Create Log Tester               0
 
 *** Test Cases ***

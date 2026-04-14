@@ -1,0 +1,104 @@
+// ATmega2560 platform description
+// Atmel ATmega2560 — 256 KB Flash, 8 KB SRAM, 4 KB EEPROM
+// 100-pin TQFP, 16 MHz — Arduino Mega 2560 MCU
+//
+// Memory layout:
+//   0x000000–0x03FFFF  Program Flash (byte addresses)
+//   0x800000 + da      Data space:
+//     0x800000–0x80001F  Register file R0-R31
+//     0x800020–0x80005F  I/O space
+//     0x800060–0x8001FF  Extended I/O (256 bytes)
+//     0x800200–0x8021FF  Internal SRAM (8 KB)
+
+cpu: CPU.AVR @ sysbus
+    cpuType: "atmega2560"
+
+// ---- Program flash ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x040000    // 256 KB
+
+// ---- Internal SRAM (data-space 0x0200-0x21FF) ----
+sram: Memory.MappedMemory @ sysbus 0x800200
+    size: 0x002000    // 8 KB
+
+// ---- USART0 (UDR0 at data-space 0x00C6) ----
+usart0: UART.AVR_USART @ sysbus <0x8000C0, +0x07>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- USART1 (data-space 0x00C8) ----
+usart1: UART.AVR_USART @ sysbus <0x8000C8, +0x07>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- USART2 (data-space 0x00D0) ----
+usart2: UART.AVR_USART @ sysbus <0x8000D0, +0x07>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- USART3 (data-space 0x0130) ----
+usart3: UART.AVR_USART @ sysbus <0x800130, +0x07>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- Timer0 (8-bit) ----
+timer0: Timers.AVR_Timer8 @ sysbus <0x800044, +0x05>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- Timer2 (8-bit, async capable) ----
+timer2: Timers.AVR_Timer8 @ sysbus <0x800090, +0x05>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- GPIO ports ----
+porta: GPIOPort.AVR_GPIO @ sysbus <0x800020, +0x03>
+portb: GPIOPort.AVR_GPIO @ sysbus <0x800023, +0x03>
+portc: GPIOPort.AVR_GPIO @ sysbus <0x800026, +0x03>
+portd: GPIOPort.AVR_GPIO @ sysbus <0x800029, +0x03>
+porte: GPIOPort.AVR_GPIO @ sysbus <0x80002C, +0x03>
+portf: GPIOPort.AVR_GPIO @ sysbus <0x80002F, +0x03>
+portg: GPIOPort.AVR_GPIO @ sysbus <0x800032, +0x03>
+porth: GPIOPort.AVR_GPIO @ sysbus <0x800100, +0x03>
+portj: GPIOPort.AVR_GPIO @ sysbus <0x800103, +0x03>
+portk: GPIOPort.AVR_GPIO @ sysbus <0x800106, +0x03>
+portl: GPIOPort.AVR_GPIO @ sysbus <0x800109, +0x03>
+
+// ---- Timer1 (16-bit, data-space 0x0080) ----
+timer1: Timers.AVR_Timer16 @ sysbus <0x800080, +0x0C>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- Timer3 (16-bit, data-space 0x0090) ----
+timer3: Timers.AVR_Timer16 @ sysbus <0x800090, +0x0C>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- Timer4 (16-bit, data-space 0x00A0) ----
+timer4: Timers.AVR_Timer16 @ sysbus <0x8000A0, +0x0C>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- Timer5 (16-bit, data-space 0x0120) ----
+timer5: Timers.AVR_Timer16 @ sysbus <0x800120, +0x0C>
+    baseFrequency: 16000000
+    -> cpu@0
+
+// ---- SPI (data-space 0x004C) ----
+spi: SPI.AVR_SPI @ sysbus <0x80004C, +0x03>
+    -> cpu@0
+
+// ---- TWI / I2C (data-space 0x00B8) ----
+twi: I2C.AVR_TWI @ sysbus <0x8000B8, +0x06>
+    -> cpu@0
+
+// ---- ADC (data-space 0x0078) ----
+adc: Analog.AVR_ADC @ sysbus <0x800078, +0x06>
+    -> cpu@0
+
+// ---- Watchdog (data-space 0x0060) ----
+wdt: Timers.AVR_WDT @ sysbus <0x800060, +0x01>
+
+// ---- EEPROM controller (data-space 0x003F) ----
+eeprom: Memory.AVR_EEPROM @ sysbus <0x80003F, +0x04>
+    size: 4096

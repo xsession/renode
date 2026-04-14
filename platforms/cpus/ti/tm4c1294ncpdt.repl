@@ -1,0 +1,69 @@
+// TI TM4C1294NCPDT — Cortex-M4F, 120 MHz, 1 MB Flash, 256 KB SRAM
+// Reference: SPMS433, TM4C1294NCPDT Data Sheet
+// Connected LaunchPad MCU with Ethernet MAC+PHY
+//
+// Memory map:
+//   0x00000000  Flash (1 MB)
+//   0x20000000  SRAM (256 KB)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xE0
+    systickFrequency: 120000000
+    IRQ -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x100000
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x40000
+
+uart0: UART.PL011 @ sysbus <0x4000C000, +0x1000>
+    -> nvic@5
+
+uart1: UART.PL011 @ sysbus <0x4000D000, +0x1000>
+    -> nvic@6
+
+uart2: UART.PL011 @ sysbus <0x4000E000, +0x1000>
+    -> nvic@33
+
+uart3: UART.PL011 @ sysbus <0x4000F000, +0x1000>
+    -> nvic@59
+
+uart4: UART.PL011 @ sysbus <0x40010000, +0x1000>
+    -> nvic@60
+
+uart5: UART.PL011 @ sysbus <0x40011000, +0x1000>
+    -> nvic@61
+
+uart6: UART.PL011 @ sysbus <0x40012000, +0x1000>
+    -> nvic@62
+
+uart7: UART.PL011 @ sysbus <0x40013000, +0x1000>
+    -> nvic@63
+
+ssi0: SPI.Kinetis_SPI @ sysbus 0x40008000
+    -> nvic@7
+
+ssi1: SPI.Kinetis_SPI @ sysbus 0x40009000
+    -> nvic@34
+
+ssi2: SPI.Kinetis_SPI @ sysbus 0x4000A000
+    -> nvic@57
+
+ssi3: SPI.Kinetis_SPI @ sysbus 0x4000B000
+    -> nvic@58
+
+i2c0: I2C.STM32F1_I2C @ sysbus 0x40020000
+    EventInterrupt -> nvic@8
+    ErrorInterrupt -> nvic@8
+
+i2c1: I2C.STM32F1_I2C @ sysbus 0x40021000
+    EventInterrupt -> nvic@37
+    ErrorInterrupt -> nvic@37
+
+ethernet: Network.SynopsysEthernetMAC @ sysbus 0x400EC000
+    -> nvic@40

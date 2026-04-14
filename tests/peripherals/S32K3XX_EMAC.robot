@@ -16,7 +16,7 @@ ${EMAC_PERIPHERAL}                  SEPARATOR=${\n}
 Create Machine
     [Arguments]                     ${elf}
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/nxp-s32k388.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/nxp/nxp-s32k388.repl
 
     # The test binary is built for s32k344 as Zephyr currently doesn't support s32k388. Due to that mismatch we
     # need to change the ethernet controller to match what software expects.

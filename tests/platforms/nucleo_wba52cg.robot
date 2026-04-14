@@ -10,7 +10,7 @@ ${EXTI_ToggleLED}                   ${PROJECT_URL}/stm32wba--cubemx-EXTI_ToggleL
 ${SPI_POLLING}                      ${PROJECT_URL}/stm32wba52--cube_mx--SPI_FullDuplex_ComPolling_Master.elf-s_351444-751cf3ade71c0e0ff33c010a97ab61f9a97e7487
 ${SPI_INTERRUPT}                    ${PROJECT_URL}/stm32wba52--cube_mx--SPI_FullDuplex_ComIT_Master.elf-s_370676-fdb46bf729f660edb79ff64bf10f6da8e0dc517b
 
-${PLATFORM}                         @platforms/boards/nucleo_wba52cg.repl
+${PLATFORM}                         @platforms/boards/st/nucleo_wba52cg.repl
 ${SPI_LOOPBACK}                     loopback: SPI.SPILoopback @ spi3
 
 *** Keywords ***

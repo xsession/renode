@@ -1,5 +1,5 @@
 *** Variables ***
-${PLATFORM}                         platforms/cpus/stm32f4.repl
+${PLATFORM}                         platforms/cpus/st/stm32f4.repl
 ${BIN}                              https://dl.antmicro.com/projects/renode/nucleo_f401re--zephyr-dht_polling.elf-s_651648-b107cceed1ebc23c894d983a6e519a6e494aee88
 ${UART}                             sysbus.usart2
 ${SENSOR}                           sysbus.i2c1.hs3001

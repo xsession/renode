@@ -1,0 +1,7 @@
+// MSP430F449 Development Board
+// Texas Instruments MSP-EXP430F449 — MSP430F449 Board
+// MSP430X @ 8 MHz, 60 KB Flash, 2 KB RAM
+// On-board LCD segment driver
+// JTAG debug interface
+
+using "platforms/cpus/ti/msp430f449.repl"

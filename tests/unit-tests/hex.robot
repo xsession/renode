@@ -3,7 +3,7 @@
 Create Machine
     [Arguments]              ${hex_file}
     Execute Command          mach create
-    Execute Command          machine LoadPlatformDescription @platforms/boards/stm32f072b_discovery.repl
+    Execute Command          machine LoadPlatformDescription @platforms/boards/st/stm32f072b_discovery.repl
     Execute Command          sysbus LoadHEX @${hex_file}
 
 

@@ -9,7 +9,7 @@ $zephyr?=@https://dl.antmicro.com/projects/renode/zephyr_philosophers_xen_cortex
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/cortex-r52.repl
+machine LoadPlatformDescription @platforms/cpus/arm/cortex-r52.repl
 
 python
 """

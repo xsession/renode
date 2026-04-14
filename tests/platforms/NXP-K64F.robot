@@ -10,7 +10,7 @@ Create Machine
     [Arguments]  ${elf}
 
     Execute Command           mach create
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/nxp-k6xf.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/nxp/nxp-k6xf.repl
 
     Execute Command           sysbus LoadELF ${URI}/${elf}
 

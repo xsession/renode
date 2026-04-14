@@ -2,7 +2,7 @@ $name?="SiFive-FU740"
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/sifive-fu740.repl
+machine LoadPlatformDescription @platforms/cpus/sifive/sifive-fu740.repl
 
 $sd?=@https://dl.antmicro.com/projects/renode/zephyr-ext-test-sd.img-s_1310720-55c5fbcb6be6fe138ebd08d31f70552609c9c015
 $bin?=@https://dl.antmicro.com/projects/renode/zephyr--fs_sample.elf-s_1030024-5915de196eecb6f143ec26dc4148eab574c0f327

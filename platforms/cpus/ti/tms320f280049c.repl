@@ -1,0 +1,155 @@
+// TMS320F280049C platform description
+// Texas Instruments TMS320F280049C — Single-core C28x + FPU + TMU (C2000 Piccolo)
+// 100 MHz, 256 KB Flash, 100 KB RAM, CLA v2, dual CAN-FD
+// Reference: SPRUI33, TMS320F28004x Technical Reference Manual
+//
+// Memory map:
+//   0x000000–0x0005FF  M0+M1 SARAM (1.5 KB each)
+//   0x008000–0x009FFF  LS0-LS7 RAM (8 × 2 KB = 16 KB)
+//   0x00A000–0x00A7FF  GS0 RAM (2 KB)
+//   0x080000–0x0BFFFF  Flash (256 KB)
+//   0x3F0000–0x3F7FFF  Boot ROM
+
+cpu: CPU.C2000 @ sysbus
+    cpuType: "tms320f280049c"
+
+// ---- RAM ----
+m0m1saram: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x000800    // M0+M1 merged (2 KB)
+
+lsram: Memory.MappedMemory @ sysbus 0x008000
+    size: 0x002000    // LS0-LS3: 8 KB (0x8000-0x9FFF, clear of GS0 at 0xA000)
+
+gsram: Memory.MappedMemory @ sysbus 0x00A000
+    size: 0x000800    // GS0: 2 KB
+
+// ---- Flash ----
+flash: Memory.MappedMemory @ sysbus 0x080000
+    size: 0x040000    // 256 KB
+
+// ---- Boot ROM ----
+bootrom: Memory.MappedMemory @ sysbus 0x3F0000
+    size: 0x008000
+
+// ---- CPU Timers ----
+timer0: Timers.C2000_CPUTimer @ sysbus <0x000C00, +0x08>
+    baseFrequency: 100000000
+    -> cpu@0
+
+timer1: Timers.C2000_CPUTimer @ sysbus <0x000C08, +0x08>
+    baseFrequency: 100000000
+    -> cpu@0
+
+timer2: Timers.C2000_CPUTimer @ sysbus <0x000C10, +0x08>
+    baseFrequency: 100000000
+    -> cpu@0
+
+// ---- SCI-A (UART-A) ----
+uart_a: UART.C2000_SCI @ sysbus <0x007200, +0x10>
+    -> cpu@0
+
+// ---- SCI-B (UART-B) ----
+uart_b: UART.C2000_SCI @ sysbus <0x007210, +0x10>
+    -> cpu@0
+
+// ---- SPI-A ----
+spi_a: SPI.C2000_SPI @ sysbus <0x006100, +0x10>
+    -> cpu@0
+
+// ---- SPI-B ----
+spi_b: SPI.C2000_SPI @ sysbus <0x006110, +0x10>
+    -> cpu@0
+
+// ---- I2C-A ----
+i2c_a: I2C.C2000_I2C @ sysbus <0x007300, +0x18>
+    -> cpu@0
+
+// ---- I2C-B ----
+i2c_b: I2C.C2000_I2C @ sysbus <0x007340, +0x18>
+    -> cpu@0
+
+// ---- ADC-A (12-bit) ----
+adc_a: Analog.C2000_ADC12 @ sysbus <0x007400, +0x80>
+    -> cpu@0
+
+// ---- ADC-B (12-bit) ----
+adc_b: Analog.C2000_ADC12 @ sysbus <0x007480, +0x80>
+    -> cpu@0
+
+// ---- ADC-C (12-bit) ----
+adc_c: Analog.C2000_ADC12 @ sysbus <0x007500, +0x80>
+    -> cpu@0
+
+// ---- ePWM1-8 ----
+epwm1: Timers.C2000_ePWM @ sysbus <0x004000, +0x40>
+    -> cpu@0
+
+epwm2: Timers.C2000_ePWM @ sysbus <0x004100, +0x40>
+    -> cpu@0
+
+epwm3: Timers.C2000_ePWM @ sysbus <0x004200, +0x40>
+    -> cpu@0
+
+epwm4: Timers.C2000_ePWM @ sysbus <0x004300, +0x40>
+    -> cpu@0
+
+epwm5: Timers.C2000_ePWM @ sysbus <0x004400, +0x40>
+    -> cpu@0
+
+epwm6: Timers.C2000_ePWM @ sysbus <0x004500, +0x40>
+    -> cpu@0
+
+epwm7: Timers.C2000_ePWM @ sysbus <0x004600, +0x40>
+    -> cpu@0
+
+epwm8: Timers.C2000_ePWM @ sysbus <0x004700, +0x40>
+    -> cpu@0
+
+// ---- eCAP1-7 ----
+ecap1: Timers.C2000_eCAP @ sysbus <0x005000, +0x20>
+    -> cpu@0
+
+ecap2: Timers.C2000_eCAP @ sysbus <0x005020, +0x20>
+    -> cpu@0
+
+ecap3: Timers.C2000_eCAP @ sysbus <0x005040, +0x20>
+    -> cpu@0
+
+ecap4: Timers.C2000_eCAP @ sysbus <0x005060, +0x20>
+    -> cpu@0
+
+ecap5: Timers.C2000_eCAP @ sysbus <0x005080, +0x20>
+    -> cpu@0
+
+ecap6: Timers.C2000_eCAP @ sysbus <0x0050A0, +0x20>
+    -> cpu@0
+
+ecap7: Timers.C2000_eCAP @ sysbus <0x0050C0, +0x20>
+    -> cpu@0
+
+// ---- CAN-A (CAN-FD via MCAN) ----
+can_a: CAN.C2000_eCAN @ sysbus <0x048000, +0x200>
+    IRQ0 -> cpu@0
+    IRQ1 -> cpu@0
+
+// ---- CAN-B ----
+can_b: CAN.C2000_eCAN @ sysbus <0x04A000, +0x200>
+    IRQ0 -> cpu@0
+    IRQ1 -> cpu@0
+
+// ---- GPIO (0-58) ----
+gpio: GPIOPort.C2000_GPIO @ sysbus <0x007C00, +0x60>
+    numberOfPorts: 2
+
+// ---- Watchdog ----
+wdt: Timers.C2000_Watchdog @ sysbus <0x007022, +0x08>
+    baseFrequency: 100000000
+
+// ---- DMA ----
+dma: DMA.C2000_DMA @ sysbus <0x001000, +0x1C0>
+
+// ---- PIE (Peripheral Interrupt Expansion) ----
+pie: Miscellaneous.C2000_PIE @ sysbus <0x000D00, +0x200>
+
+// ---- Flash Control ----
+flashCtrl: Miscellaneous.C2000_Flash @ sysbus <0x000A80, +0x0E>

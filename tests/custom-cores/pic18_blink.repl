@@ -1,0 +1,15 @@
+// PIC18 blink test platform
+// Program memory at 0x000000 (byte-addressed, 16-bit instruction words)
+// Data registers at PIC18_DATA_BASE = 0xA00000
+// Access bank: f < 0x60 → DATA_BASE + f.  GPIO at f=0x10 → 0xA00010
+
+cpu: CPU.PIC18 @ sysbus
+    cpuType: "pic18"
+
+// Program flash (128 KB)
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x020000
+
+// Data memory (4 KB covers access bank + banked area)
+data: Memory.MappedMemory @ sysbus 0xA00000
+    size: 0x001000

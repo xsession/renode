@@ -1,0 +1,47 @@
+:name: Arduino Nano Blink
+:description: Bare-metal LED blink on ATmega328P (Arduino Nano) — toggles PB5 (pin 13)
+
+using sysbus
+mach create "Arduino-Nano"
+
+# ---- ATmega328P platform (inline) ----
+machine LoadPlatformDescriptionFromString
+"""
+cpu: CPU.AVR @ sysbus
+    cpuType: "atmega328p"
+
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x008000
+
+sram: Memory.MappedMemory @ sysbus 0x800100
+    size: 0x000800
+
+usart0: UART.AVR8_USART @ sysbus 0x8000C0
+    -> cpu@0
+
+portb: GPIOPort.AVRGPIOPort @ sysbus <0x800023, +0x03>
+    portNumber: 1
+
+portc: GPIOPort.AVRGPIOPort @ sysbus <0x800026, +0x03>
+    portNumber: 2
+
+portd: GPIOPort.AVRGPIOPort @ sysbus <0x800029, +0x03>
+    portNumber: 3
+
+portb:
+    5 -> led@0
+
+led: Miscellaneous.LED @ portb 5
+"""
+
+showAnalyzer usart0
+
+# Path to the ELF built by avr-gcc (same directory as this .resc)
+$bin?=@scripts/single-node/arduino_nano_blink/blink.elf
+
+macro reset
+"""
+    sysbus LoadELF $bin
+"""
+
+runMacro $reset

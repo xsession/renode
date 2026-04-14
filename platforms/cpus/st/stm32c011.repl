@@ -1,0 +1,16 @@
+// STM32C011 — Cortex-M0+, 48 MHz, 32 KB Flash, 12 KB SRAM
+// Reference: RM0490, STM32C0 Reference Manual
+// Entry-level, lowest-cost STM32
+using "./stm32g0.repl"
+
+cpu:
+    cpuType: "cortex-m0+"
+
+nvic:
+    systickFrequency: 48000000
+
+flash:
+    size: 0x8000
+
+ram:
+    size: 0x3000

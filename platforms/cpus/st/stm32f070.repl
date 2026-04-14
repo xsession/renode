@@ -1,0 +1,16 @@
+// STM32F070 — Cortex-M0, 48 MHz, 128 KB Flash, 16 KB SRAM
+// Reference: RM0360, STM32F070 Reference Manual
+// Value Line with USB
+using "./stm32g0.repl"
+
+cpu:
+    cpuType: "cortex-m0"
+
+nvic:
+    systickFrequency: 48000000
+
+flash:
+    size: 0x20000
+
+ram:
+    size: 0x4000

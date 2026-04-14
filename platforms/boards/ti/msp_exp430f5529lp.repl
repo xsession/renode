@@ -1,0 +1,7 @@
+// TI MSP-EXP430F5529LP — MSP430F5529 LaunchPad
+// MSP430X @ 25 MHz, 128 KB Flash, 8 KB RAM, USB 2.0
+// 2 LEDs: LED1 (P1.0), LED2 (P4.7)
+// 2 buttons: S1 (P2.1), S2 (P1.1)
+// eZ-FET Lite debug probe, micro-USB for USB experiments
+
+using "platforms/cpus/ti/msp430f5529.repl"

@@ -2,7 +2,7 @@
 Create Machine
     Execute Command                         using sysbus
     Execute Command                         mach create
-    Execute Command                         machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
+    Execute Command                         machine LoadPlatformDescription @platforms/boards/st/stm32f4_discovery-kit.repl
 
 Unlock Control Register
     Execute Command                         sysbus WriteDoubleWord 0x40023c04 0x45670123

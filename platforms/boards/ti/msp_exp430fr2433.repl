@@ -1,0 +1,8 @@
+// MSP430FR2433 LaunchPad
+// Texas Instruments MSP-EXP430FR2433 — MSP430FR2433 LaunchPad
+// MSP430 @ 16 MHz, 16 KB FRAM, 4 KB SRAM
+// 2 LEDs: LED1 (P1.0 red), LED2 (P1.1 green)
+// 2 buttons: S1 (P2.3), S2 (P1.1)
+// eZ-FET debug probe
+
+using "platforms/cpus/ti/msp430fr2433.repl"

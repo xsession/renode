@@ -5,7 +5,7 @@ $name?="LiteX+Ibex"
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/litex_ibex.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_ibex.repl
 
 $bios?=@https://dl.antmicro.com/projects/renode/litex_ibex--bios.bin-s_20712-80d064cf8ab28801b78c0e5a63cac4830016f6c8
 

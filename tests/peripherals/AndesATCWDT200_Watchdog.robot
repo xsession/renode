@@ -3,7 +3,7 @@ Test Setup                          Create Machine
 Library                             ${CURDIR}/AndesATCWDT200_Watchdog-helpers.py
 
 *** Variables ***
-${PLATFORM_PATH}                    @platforms/cpus/egis_et171.repl
+${PLATFORM_PATH}                    @platforms/cpus/others/egis_et171.repl
 ${CORE_0_PC}                        0x80000000
 
 # Register offsets

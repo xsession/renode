@@ -1,0 +1,6 @@
+// NXP LPCXpresso55S69 — LPC55S69JBD100, Dual Cortex-M33 @ 150 MHz
+// 640 KB Flash, 320 KB SRAM, TrustZone
+// 3 LEDs: Red (P1_6), Green (P1_7), Blue (P1_4)
+// 3 buttons: ISP (P0_5), USER (P1_9), WAKE (P1_18)
+
+using "platforms/cpus/nxp/lpc55s69.repl"

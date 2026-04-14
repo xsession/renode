@@ -34,7 +34,7 @@ Create Machine
     Execute Command           emulation SetAdvanceImmediately true
     Execute Command           mach create "${name}"
 
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/zynq-7000.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/xilinx/zynq-7000.repl
     Execute Command           machine LoadPlatformDescriptionFromString ${EthernetDescription}
 
     Execute Command           set bin @${URL}/zynq--synopsys-dwc-qos-ethernet-vmlinux-s_14385668-e7b88e1decdd7da50b5717f4117ec5ccc9be812f

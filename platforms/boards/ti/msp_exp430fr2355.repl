@@ -1,0 +1,7 @@
+// TI MSP-EXP430FR2355 — MSP430FR2355 LaunchPad
+// MSP430 @ 24 MHz, 64 KB FRAM, 4 KB SRAM
+// 2 LEDs: LED1 (P1.0 red), LED2 (P6.6 green)
+// 2 buttons: S1 (P4.1), S2 (P2.3)
+// eZ-FET debug probe
+
+using "platforms/cpus/ti/msp430fr2355.repl"

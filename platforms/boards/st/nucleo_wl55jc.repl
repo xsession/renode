@@ -1,0 +1,24 @@
+// ST Nucleo-WL55JC — STM32WL55JC, Dual CM4 + CM0+, LoRa SubGHz
+// 256 KB Flash, 64 KB SRAM
+// 3 LEDs: LD1 (PB15 blue), LD2 (PB9 green), LD3 (PB11 red)
+// 3 buttons: B1 (PA0), B2 (PA1), B3 (PC6)
+// On-board LoRa antenna, TCXO
+
+using "platforms/cpus/st/stm32wl55.repl"
+
+gpioPortB:
+    15 -> led1@0
+    9 -> led2@0
+    11 -> led3@0
+
+led1: Miscellaneous.LED @ gpioPortB 15
+
+led2: Miscellaneous.LED @ gpioPortB 9
+
+led3: Miscellaneous.LED @ gpioPortB 11
+
+b1: Miscellaneous.Button @ gpioPortA
+    -> gpioPortA@0
+
+b2: Miscellaneous.Button @ gpioPortA
+    -> gpioPortA@1

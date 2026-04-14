@@ -5,7 +5,7 @@ ${UART}                           sysbus.cpu.uartSemihosting
 Create Machine
     Execute Command               using sysbus
     Execute Command               mach create
-    Execute Command               machine LoadPlatformDescription @platforms/cpus/xtensa-sample-controller.repl
+    Execute Command               machine LoadPlatformDescription @platforms/cpus/others/xtensa-sample-controller.repl
 
 Load Opcodes To Memory
     # MOVI at0, 0x400

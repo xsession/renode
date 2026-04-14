@@ -9,7 +9,7 @@ ${INTERRUPT_STATE_OFFSET}           0x18
 ${CHANNEL_STEP}                     0x10
 *** Keywords ***
 Create Machine
-    Execute Command                 include @platforms/cpus/egis_et171.repl
+    Execute Command                 include @platforms/cpus/others/egis_et171.repl
     Execute Command                 cpu0 PC ${PROGRAM_COUNTER}
     Create Log Tester               0
 

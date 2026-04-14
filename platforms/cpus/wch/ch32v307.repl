@@ -1,0 +1,107 @@
+// WCH CH32V307 — RISC-V RV32IMAFC, 144 MHz, 480 KB Flash, 128 KB SRAM
+// QingKe V4F core — Ethernet, USB HS OTG, CAN, DVP camera
+// Reference: CH32V307 Reference Manual
+
+cpu: CPU.RiscV32 @ sysbus
+    cpuType: "rv32imafc"
+    privilegedArchitecture: PrivilegedArchitecture.Priv1_10
+    timeProvider: clint
+    hartId: 0
+
+plic: IRQControllers.PlatformLevelInterruptController @ sysbus 0xE000E000
+    0 -> cpu@11
+    numberOfSources: 103
+    numberOfContexts: 1
+
+clint: IRQControllers.CoreLevelInterruptor @ sysbus 0xE0000000
+    [0, 1] -> cpu@[3, 7]
+    frequency: 144000000
+
+// ---- Memory ----
+flash: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x78000           // 480 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x20000           // 128 KB
+
+bootrom: Memory.MappedMemory @ sysbus 0x1FFF8000
+    size: 0x8000
+
+// ---- USART ----
+usart1: UART.SiFive_UART @ sysbus 0x40013800
+    IRQ -> plic@37
+
+usart2: UART.SiFive_UART @ sysbus 0x40004400
+    IRQ -> plic@38
+
+usart3: UART.SiFive_UART @ sysbus 0x40004800
+    IRQ -> plic@39
+
+uart4: UART.SiFive_UART @ sysbus 0x40004C00
+    IRQ -> plic@52
+
+uart5: UART.SiFive_UART @ sysbus 0x40005000
+    IRQ -> plic@53
+
+uart6: UART.SiFive_UART @ sysbus 0x40005400
+    IRQ -> plic@71
+
+uart7: UART.SiFive_UART @ sysbus 0x40005800
+    IRQ -> plic@72
+
+uart8: UART.SiFive_UART @ sysbus 0x40005C00
+    IRQ -> plic@73
+
+// ---- GPIO ----
+gpioA: GPIOPort.SiFive_GPIO @ sysbus 0x40010800
+    [0-15] -> plic@[6-21]
+
+gpioB: GPIOPort.SiFive_GPIO @ sysbus 0x40010C00
+    [0-15] -> plic@[6-21]
+
+gpioC: GPIOPort.SiFive_GPIO @ sysbus 0x40011000
+    [0-15] -> plic@[6-21]
+
+gpioD: GPIOPort.SiFive_GPIO @ sysbus 0x40011400
+    [0-15] -> plic@[6-21]
+
+gpioE: GPIOPort.SiFive_GPIO @ sysbus 0x40011800
+    [0-15] -> plic@[6-21]
+
+// ---- Ethernet ----
+ethernet: Network.CadenceGEM @ sysbus 0x40028000
+    IRQ -> plic@61
+
+phy: Network.EthernetPhysicalLayer @ ethernet 0
+    Id1: 0x0007
+    Id2: 0xC0F1
+    AutoNegotiationAdvertisement: 0x00A1
+    AutoNegotiationLinkPartnerBasePageAbility: 0x0001
+
+sysbus:
+    init:
+        Tag <0x40021000 0x400> "RCC"
+        Tag <0x40013000 0x400> "ADC1"
+        Tag <0x40013400 0x400> "ADC2"
+        Tag <0x40005400 0x400> "I2C1"
+        Tag <0x40005800 0x400> "I2C2"
+        Tag <0x40013000 0x400> "SPI1"
+        Tag <0x40003800 0x400> "SPI2"
+        Tag <0x40003C00 0x400> "SPI3"
+        Tag <0x40006400 0x400> "CAN1"
+        Tag <0x40006800 0x400> "CAN2"
+        Tag <0x40012C00 0x400> "TIM1"
+        Tag <0x40000000 0x400> "TIM2"
+        Tag <0x40000400 0x400> "TIM3"
+        Tag <0x40000800 0x400> "TIM4"
+        Tag <0x40000C00 0x400> "TIM5"
+        Tag <0x40001000 0x400> "TIM6"
+        Tag <0x40001400 0x400> "TIM7"
+        Tag <0x40013400 0x400> "TIM8"
+        Tag <0x40014C00 0x400> "TIM9"
+        Tag <0x40015000 0x400> "TIM10"
+        Tag <0x40020000 0x400> "DMA1"
+        Tag <0x40020400 0x400> "DMA2"
+        Tag <0x40023400 0x400> "USB HS OTG"
+        Tag <0x50000000 0x400> "USB FS"
+        Tag <0x40026000 0x400> "DVP Camera"

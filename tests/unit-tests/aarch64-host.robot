@@ -30,7 +30,7 @@ Write Store Load Program RiscV32
 Create ARMv8A Machine
     Execute Command                 using sysbus
     Execute Command                 mach create "armv8"
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/cortex-a53-gicv2.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/arm/cortex-a53-gicv2.repl
     Execute Command                 cpu PC ${armv8_start_pc}
 
 Write One Plus One Program ARMv8

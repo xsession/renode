@@ -5,7 +5,7 @@ using sysbus
 $name?="STM32L072"
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/stm32l072.repl
+machine LoadPlatformDescription @platforms/cpus/st/stm32l072.repl
 
 showAnalyzer usart2
 

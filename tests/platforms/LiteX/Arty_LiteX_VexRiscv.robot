@@ -5,7 +5,7 @@ ${PROMPT}                      H2U
 Create Platform
     Execute Command            using sysbus
     Execute Command            mach create
-    Execute Command            machine LoadPlatformDescription @platforms/boards/arty_litex_vexriscv.repl
+    Execute Command            machine LoadPlatformDescription @platforms/boards/digilent/arty_litex_vexriscv.repl
     Execute Command            sysbus LoadELF @https://dl.antmicro.com/projects/renode/arty_litex_vexriscv--firmware.elf-s_438376-e20651f6e9625812f6588ce2b79c978f2c4d7eab
 
 *** Test Cases ***

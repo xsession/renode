@@ -1,0 +1,9 @@
+// STM8 blink test platform
+// Firmware loaded at 0x000000.  GPIO write (address 0x50) hits the same flat memory.
+
+cpu: CPU.STM8 @ sysbus
+    cpuType: "stm8"
+
+// Single flat memory region covering code, I/O, and data
+mem: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x020000    // 128 KB

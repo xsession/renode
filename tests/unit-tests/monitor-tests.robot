@@ -98,7 +98,7 @@ Should Not Crash On String Autocompletion
 Should Allow Passing An Array To A Property Setter
     Execute Command           mach create
     Execute Command           using sysbus
-    Execute Command           i @platforms/boards/beaglev-fire.repl
+    Execute Command           i @platforms/boards/beagle/beaglev-fire.repl
 
     Execute Command           qspi.pseFlash SFDPSignature [1]
     ${sig}=                   Execute Command  qspi.pseFlash SFDPSignature
@@ -118,7 +118,7 @@ Should Allow Passing An Array To A Property Setter
 Should Allow Select On Byte Array
     Execute Command           mach create
     Execute Command           using sysbus
-    Execute Command           i @platforms/boards/beaglev-fire.repl
+    Execute Command           i @platforms/boards/beagle/beaglev-fire.repl
 
     Execute Command           qspi.pseFlash SFDPSignature [1, 2, 3]
     ${sig}=                   Execute Command  qspi.pseFlash SFDPSignature Select ToString "x4"
@@ -127,7 +127,7 @@ Should Allow Select On Byte Array
 Should Not Crash On Invalid Scalar Type
     Execute Command           mach create
     Execute Command           using sysbus
-    Execute Command           i @platforms/boards/beaglev-fire.repl
+    Execute Command           i @platforms/boards/beagle/beaglev-fire.repl
 
     Run Keyword And Expect Error  *Cannot convert type 'string' to 'Antmicro.Renode.Peripherals.CPU.RegisterValue'*
     ...                       Execute Command  e51 STVEC a

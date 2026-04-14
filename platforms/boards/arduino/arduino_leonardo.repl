@@ -1,0 +1,24 @@
+// Arduino Leonardo — ATmega32U4, 16 MHz
+// 32 KB Flash, 2.5 KB SRAM, 1 KB EEPROM, native USB
+// On-board LED on PC7 (Arduino digital pin 13)
+// TX LED on PD5, RX LED on PB0
+
+using "platforms/cpus/microchip/atmega32u4.repl"
+
+// LED (pin 13) is on PC7
+portc:
+    7 -> led13@0
+
+led13: Miscellaneous.LED @ portc 7
+
+// TX LED on PD5
+portd:
+    5 -> txLed@0
+
+txLed: Miscellaneous.LED @ portd 5
+
+// RX LED on PB0
+portb:
+    0 -> rxLed@0
+
+rxLed: Miscellaneous.LED @ portb 0

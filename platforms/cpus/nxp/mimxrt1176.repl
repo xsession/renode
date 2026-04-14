@@ -1,0 +1,85 @@
+// NXP i.MX RT1176 — Dual Cortex-M7 @ 1 GHz + Cortex-M4 @ 400 MHz
+// 2 MB on-chip RAM, no internal flash (XIP from FlexSPI)
+// Reference: IMXRT1170RM, i.MX RT1170 Reference Manual
+// Crossover MCU with 2D GPU
+//
+// Memory map (CM7):
+//   0x00000000  ITCM (512 KB)
+//   0x20000000  DTCM (512 KB)
+//   0x20240000  OCRAM1 (512 KB)
+//   0x202C0000  OCRAM2 (512 KB)
+//   0x30000000  FlexSPI1 (NOR flash, up to 256 MB)
+//   0x60000000  FlexSPI2
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m7"
+    numberOfMPURegions: 16
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xF0
+    systickFrequency: 996000000
+    IRQ -> cpu@0
+
+itcm: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x80000
+
+dtcm: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x80000
+
+ocram1: Memory.MappedMemory @ sysbus 0x20240000
+    size: 0x80000
+
+ocram2: Memory.MappedMemory @ sysbus 0x202C0000
+    size: 0x80000
+
+flash: Memory.MappedMemory @ sysbus 0x30000000
+    size: 0x1000000
+
+usart1: UART.IMX_UART @ sysbus <0x4007C000, +0x4000>
+    IRQ -> nvic@20
+
+usart2: UART.IMX_UART @ sysbus <0x40080000, +0x4000>
+    IRQ -> nvic@21
+
+usart3: UART.IMX_UART @ sysbus <0x40084000, +0x4000>
+    IRQ -> nvic@22
+
+usart4: UART.IMX_UART @ sysbus <0x40088000, +0x4000>
+    IRQ -> nvic@23
+
+usart5: UART.IMX_UART @ sysbus <0x4008C000, +0x4000>
+    IRQ -> nvic@24
+
+usart6: UART.IMX_UART @ sysbus <0x40090000, +0x4000>
+    IRQ -> nvic@25
+
+spi1: SPI.IMX_SPI @ sysbus 0x40134000
+    -> nvic@31
+
+spi2: SPI.IMX_SPI @ sysbus 0x40138000
+    -> nvic@32
+
+spi3: SPI.IMX_SPI @ sysbus 0x4013C000
+    -> nvic@33
+
+i2c1: I2C.IMX_I2C @ sysbus 0x40104000
+    -> nvic@28
+
+i2c2: I2C.IMX_I2C @ sysbus 0x40108000
+    -> nvic@29
+
+i2c3: I2C.IMX_I2C @ sysbus 0x4010C000
+    -> nvic@30
+
+i2c4: I2C.IMX_I2C @ sysbus 0x40110000
+    -> nvic@35
+
+i2c5: I2C.IMX_I2C @ sysbus 0x40C34000
+    -> nvic@36
+
+i2c6: I2C.IMX_I2C @ sysbus 0x40C38000
+    -> nvic@37
+
+ethernet: Network.IMX_Ethernet @ sysbus 0x40424000
+    -> nvic@114

@@ -1,0 +1,13 @@
+:name: Test STM8 Blink
+:description: Quick headless test of STM8 core
+
+using sysbus
+mach create "stm8-blink"
+machine LoadPlatformDescription @tests/custom-cores/stm8_blink.repl
+sysbus LoadBinary @tests/custom-cores/blink_stm8.bin 0x000000
+cpu PC 0x000000
+log "--- STM8: starting simulation ---"
+cpu ExecutionMode SingleStep
+cpu Step 20
+log "--- STM8: executed 20 steps ---"
+quit

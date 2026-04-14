@@ -4,7 +4,7 @@ ${BIN}                                  ${URI}/shell-demo-miv.elf-s_803248-ea4dd
 
 ${PLATFORM_MIV_EXECUTABLE_ARRAY_MEM}    SEPARATOR=\n
 ...                                     """
-...                                     using "platforms/cpus/miv.repl"
+...                                     using "platforms/cpus/microchip/miv.repl"
 ...                                     // Unregister mapped memory
 ...                                     ddr: @none
 ...                                     // Register array memory and alias as ddr
@@ -14,7 +14,7 @@ ${PLATFORM_MIV_EXECUTABLE_ARRAY_MEM}    SEPARATOR=\n
 
 ${PLATFORM_MIV_MIXED_OVERLAPPING}    SEPARATOR=\n
 ...                                     """
-...                                     using "platforms/cpus/miv.repl"
+...                                     using "platforms/cpus/microchip/miv.repl"
 ...                                     ddr_overlay: Memory.ArrayMemory @ sysbus new Bus.BusPointRegistration { address: 0x80000000; cpu: cpu }
 ...                                     ${SPACE*4}size: 0x100
 ...                                     """

@@ -2,7 +2,7 @@
 ${UART}                       sysbus.usart2
 ${RTC_32KHZ}=  SEPARATOR=
 ...  """                                      ${\n}
-...  using "platforms/cpus/stm32f4.repl"      ${\n}
+...  using "platforms/cpus/st/stm32f4.repl"      ${\n}
 ...                                           ${\n}
 ...  rtc:                                     ${\n}
 ...  ${SPACE*4}wakeupTimerFrequency: 32000    ${\n}
@@ -74,7 +74,7 @@ Run Zephyr Hello World
 
 Peripheral Export File Created
     Execute Command            mach create
-    Execute Command            machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+    Execute Command            machine LoadPlatformDescription @platforms/cpus/st/stm32f4.repl
 
     ${temp_file} =             Allocate Temporary File
     Execute Command            peripherals export @${temp_file}
@@ -127,7 +127,7 @@ Configure RTC Alarm
 
 Should Fire Update Event When Counting Up
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+    Execute Command         machine LoadPlatformDescription @platforms/cpus/st/stm32f4.repl
     Execute Command         sysbus LoadELF @https://dl.antmicro.com/projects/renode/stm32f4disco-timer-upcount.elf-g2d98d1b-s_1021132-961284be838516abea9db8302c9af2dcb67b482a
 
     Create Terminal Tester  sysbus.usart2
@@ -143,7 +143,7 @@ Should Fire Update Event When Counting Up
 
 Should Fire Update Event When Counting Down
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+    Execute Command         machine LoadPlatformDescription @platforms/cpus/st/stm32f4.repl
     Execute Command         sysbus LoadELF @https://dl.antmicro.com/projects/renode/stm32f4disco-timer-downcount.elf-g2d98d1b-s_1021136-4995992fa219c49c38d7163da1381104c26c823a
 
     Create Terminal Tester  sysbus.usart2
@@ -159,7 +159,7 @@ Should Fire Update Event When Counting Down
 
 Should Print Hello World When Built With STM32CubeMX
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+    Execute Command         machine LoadPlatformDescription @platforms/cpus/st/stm32f4.repl
     Execute Command         sysbus LoadELF @https://dl.antmicro.com/projects/renode/stm32f4--cube_mx-hello_world.elf-s_625976-606092c29de896f3bd83a4e981f2c7f3a6ed3142
 
     Create Terminal Tester  sysbus.usart2
@@ -172,7 +172,7 @@ Should Print Hello World When Built With STM32CubeMX
 
 Should Print Hello World With Custom Flash Latency
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+    Execute Command         machine LoadPlatformDescription @platforms/cpus/st/stm32f4.repl
     Execute Command         sysbus LoadELF @https://dl.antmicro.com/projects/renode/stm32f4--cube_mx-hello_world.elf-s_625992-119d2b1d81ef6bb85498d1024c61736bb53cee4c
 
     Create Terminal Tester  sysbus.usart2
@@ -185,7 +185,7 @@ Should Print Hello World With Custom Flash Latency
 
 Should Block Timer Interrupt When Faultmask Is Set
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+    Execute Command         machine LoadPlatformDescription @platforms/cpus/st/stm32f4.repl
     Execute Command         sysbus LoadELF @https://dl.antmicro.com/projects/renode/stm32f4disco-faultmask.elf-s_434744-080256edf201b1e2f7c67bf15000ba1ffa031990
 
     Create Terminal Tester  sysbus.usart2
@@ -203,7 +203,7 @@ Should Block Timer Interrupt When Faultmask Is Set
 
 Should Clear FAULTMASK On Exception Exit
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+    Execute Command         machine LoadPlatformDescription @platforms/cpus/st/stm32f4.repl
     Execute Command         sysbus LoadELF @https://dl.antmicro.com/projects/renode/stm32f4disco-faultmask-noclearing.elf-s_433676-802f85357028150b4586bb3a54a5e44e7a3c2ec5
 
     Create Terminal Tester  sysbus.usart2

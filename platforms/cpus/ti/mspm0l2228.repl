@@ -1,0 +1,96 @@
+// MSPM0L2228 platform description
+// Texas Instruments MSPM0L2228 — Cortex-M0+ @ 32 MHz
+// 256 KB Flash, 32 KB SRAM, segment LCD, 12-bit ADC (1.4 MSPS)
+// MSPM0L series — mid-range with LCD driver
+// Reference: SLAU869, MSPM0 L-Series Technical Reference Manual
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0+"
+    nvic: nvic
+    init:
+        PerformanceInMips 32
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 32000000
+    -> cpu@0
+
+// ---- Memory ----
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x40000           // 256 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x8000            // 32 KB
+
+// ---- UART (4 instances) ----
+uart0: UART.PL011 @ sysbus 0x40108000
+    -> nvic@15
+
+uart1: UART.PL011 @ sysbus 0x40100000
+    -> nvic@16
+
+uart2: UART.PL011 @ sysbus 0x40102000
+    -> nvic@14
+
+uart3: UART.PL011 @ sysbus 0x40104000
+    -> nvic@17
+
+// ---- SPI (2 instances) ----
+spi0: SPI.STM32SPI @ sysbus 0x40468000
+    IRQ -> nvic@1
+
+spi1: SPI.STM32SPI @ sysbus 0x4046A000
+    IRQ -> nvic@2
+
+// ---- I2C (2 instances) ----
+i2c0: I2C.STM32F7_I2C @ sysbus 0x400F0000
+    EventInterrupt -> nvic@0
+
+i2c1: I2C.STM32F7_I2C @ sysbus 0x400F2000
+    EventInterrupt -> nvic@3
+
+// ---- Timers ----
+timer0: Timers.STM32_Timer @ sysbus 0x40860000
+    frequency: 32000000
+    initialLimit: 0xFFFF
+    -> nvic@4
+
+timer1: Timers.STM32_Timer @ sysbus 0x40862000
+    frequency: 32000000
+    initialLimit: 0xFFFF
+    -> nvic@5
+
+timer2: Timers.STM32_Timer @ sysbus 0x40864000
+    frequency: 32000000
+    initialLimit: 0xFFFF
+    -> nvic@6
+
+timer3: Timers.STM32_Timer @ sysbus 0x40866000
+    frequency: 32000000
+    initialLimit: 0xFFFF
+    -> nvic@7
+
+// ---- GPIO ----
+gpioA: GPIOPort.STM32_GPIOPort @ sysbus <0x400A0000, +0x100>
+    numberOfAFs: 16
+    [0-31] -> nvic@8
+
+gpioB: GPIOPort.STM32_GPIOPort @ sysbus <0x400A2000, +0x100>
+    numberOfAFs: 16
+    [0-31] -> nvic@9
+
+gpioC: GPIOPort.STM32_GPIOPort @ sysbus <0x400A4000, +0x100>
+    numberOfAFs: 16
+    [0-31] -> nvic@10
+
+sysbus:
+    init:
+        Tag <0x40420000 0x2000> "SYSCTL"
+        Tag <0x40440000 0x2000> "COMP0"
+        Tag <0x40442000 0x2000> "COMP1"
+        Tag <0x40500000 0x4000> "ADC0"
+        Tag <0x40504000 0x1000> "DAC0"
+        Tag <0x40800000 0x2000> "DMA"
+        Tag <0x400C0000 0x2000> "CRC"
+        Tag <0x40080000 0x2000> "WWDT0"
+        Tag <0x40880000 0x2000> "RTC"
+        Tag <0x40900000 0x4000> "LCD — Segment LCD Controller"

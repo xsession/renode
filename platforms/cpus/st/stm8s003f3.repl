@@ -1,0 +1,40 @@
+//
+// STM8S003F3 platform description.
+// Memory map:
+//   Flash : 0x008000 - 0x009FFF  (8 KB)
+//   SRAM  : 0x000000 - 0x0003FF  (1 KB)
+// Peripheral base addresses match STM8S003/103 datasheet.
+//
+cpu: CPU.STM8 @ sysbus
+    cpuType: "stm8s003f3"
+
+flash: Memory.MappedMemory @ sysbus 0x008000
+    size: 0x2000
+
+sram: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x0400
+
+uart1: UART.STM8_UART @ sysbus <0x005230, +0x7>
+    -> cpu@0
+
+gpio_a: GPIOPort.STM8_GPIO @ sysbus <0x005000, +0x5>
+
+gpio_c: GPIOPort.STM8_GPIO @ sysbus <0x00500A, +0x5>
+
+timer2: Timers.STM8_Timer @ sysbus <0x005300, +0x13>
+    -> cpu@3
+
+// ---- SPI (0x5200) ----
+spi: SPI.STM8_SPI @ sysbus <0x005200, +0x05>
+    -> cpu@0
+
+// ---- I2C (0x5210) ----
+i2c: I2C.STM8_I2C @ sysbus <0x005210, +0x0D>
+    -> cpu@0
+
+// ---- ADC1 (0x53E0) ----
+adc: Analog.STM8_ADC @ sysbus <0x0053E0, +0x08>
+    -> cpu@0
+
+// ---- IWDG (0x50E0) ----
+iwdg: Timers.STM8_IWDG @ sysbus <0x0050E0, +0x03>

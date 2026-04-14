@@ -4,7 +4,7 @@ ${URI}                        @https://dl.antmicro.com/projects/renode
 
 ${MB85RC1MT}=     SEPARATOR=
 ...  """                                         ${\n}
-...  using "platforms/cpus/stm32l072.repl"       ${\n}
+...  using "platforms/cpus/st/stm32l072.repl"       ${\n}
 ...  sht45: I2C.SHT45 @ i2c1 0x44                ${\n}
 ...  """
 

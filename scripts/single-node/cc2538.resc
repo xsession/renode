@@ -6,7 +6,7 @@ $bin?=@https://dl.antmicro.com/projects/renode/cc2538-contiki_hello_world.elf-s_
 
 mach create $name
 using sysbus
-machine LoadPlatformDescription @platforms/cpus/cc2538.repl
+machine LoadPlatformDescription @platforms/cpus/ti/cc2538.repl
 
 machine PyDevFromFile @scripts/pydev/rolling-bit.py 0x400D2004 0x4 True "sysctrl"
 

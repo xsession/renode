@@ -1,0 +1,70 @@
+// NXP LPC1768 — Cortex-M3, 100 MHz, 512 KB Flash, 64 KB SRAM
+// Reference: UM10360, LPC176x/175x User Manual
+// Classic mbed platform MCU
+//
+// Memory map:
+//   0x00000000  Flash (512 KB)
+//   0x10000000  Main SRAM (32 KB)
+//   0x2007C000  AHB SRAM0 (16 KB)
+//   0x20080000  AHB SRAM1 (16 KB)
+//   0x40000000  APB0 peripherals
+//   0x40080000  APB1 peripherals
+//   0x20098000  GPIO port
+//   0x50000000  AHB peripherals
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m3"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xF8
+    systickFrequency: 100000000
+    IRQ -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x80000
+
+sram_main: Memory.MappedMemory @ sysbus 0x10000000
+    size: 0x8000
+
+sram_ahb0: Memory.MappedMemory @ sysbus 0x2007C000
+    size: 0x4000
+
+sram_ahb1: Memory.MappedMemory @ sysbus 0x20080000
+    size: 0x4000
+
+uart0: UART.LPC_UART @ sysbus <0x4000C000, +0x68>
+    -> nvic@5
+
+uart1: UART.LPC_UART @ sysbus <0x40010000, +0x68>
+    -> nvic@6
+
+uart2: UART.LPC_UART @ sysbus <0x40098000, +0x68>
+    -> nvic@7
+
+uart3: UART.LPC_UART @ sysbus <0x4009C000, +0x68>
+    -> nvic@8
+
+timer0: Timers.LPC_Timer @ sysbus <0x40004000, +0x80>
+    -> nvic@1
+
+timer1: Timers.LPC_Timer @ sysbus <0x40008000, +0x80>
+    -> nvic@2
+
+timer2: Timers.LPC_Timer @ sysbus <0x40090000, +0x80>
+    -> nvic@3
+
+timer3: Timers.LPC_Timer @ sysbus <0x40094000, +0x80>
+    -> nvic@4
+
+i2c0: I2C.LPC_I2C @ sysbus 0x4001C000
+    -> nvic@10
+
+i2c1: I2C.LPC_I2C @ sysbus 0x4005C000
+    -> nvic@11
+
+i2c2: I2C.LPC_I2C @ sysbus 0x400A0000
+    -> nvic@12
+
+spi: SPI.LPC_SPI @ sysbus 0x40020000
+    -> nvic@13

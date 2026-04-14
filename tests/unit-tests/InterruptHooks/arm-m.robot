@@ -1,5 +1,5 @@
 *** Variables ***
-${PLATFROM}                     @platforms/boards/stm32f7_discovery-bb.repl
+${PLATFROM}                     @platforms/boards/st/stm32f7_discovery-bb.repl
 ${BIN}                          @https://dl.antmicro.com/projects/renode/stm32f746g_disco--zephyr-custom_gpio_button.elf-s_302336-4b097ec2f848449980149053eafcbae55beeacdb
 ${LOG_KWD_START}                INTERRUPT_STARTED
 ${LOG_KWD_END}                  INTERRUPT_ENDED

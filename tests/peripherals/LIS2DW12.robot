@@ -14,7 +14,7 @@ Execute Python Script
 Create Machine
     Execute Command         using sysbus
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/cpus/stm32l072.repl
+    Execute Command         machine LoadPlatformDescription @platforms/cpus/st/stm32l072.repl
     Execute Command         machine LoadPlatformDescriptionFromString 'accel: Sensors.LIS2DW12 @ i2c1 0x2d'
     Create Terminal Tester  ${UART}
     Create Log Tester       0

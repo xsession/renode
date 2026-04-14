@@ -23,7 +23,7 @@ Create Machine
 
     Execute Command               using sysbus
     Execute Command               mach create
-    ${PLATFORM} =  Get File       ${CURDIR}/../../platforms/cpus/cortex-a53-gicv${gic_version}.repl
+    ${PLATFORM} =  Get File       ${CURDIR}/../../platforms/cpus/arm/cortex-a53-gicv${gic_version}.repl
     IF  "${cpu_model}" != "cortex-a53"
         ${PLATFORM} =  Replace String    ${PLATFORM}  cortex-a53  ${cpu_model}
     END

@@ -1,0 +1,9 @@
+using sysbus
+mach create "stm8-test"
+machine LoadPlatformDescription @tests/custom-cores/stm8_blink.repl
+sysbus LoadBinary @tests/custom-cores/blink_stm8.bin 0x000000
+cpu PC 0x000000
+log ">>> stm8: starting <<<"
+emulation RunFor "0.0001"
+log ">>> stm8: completed <<<"
+quit

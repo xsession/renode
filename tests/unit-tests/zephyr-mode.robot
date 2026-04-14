@@ -6,7 +6,7 @@ ${MPFS_ICYCLE_TICKLESS_KERNEL_ELF}  @https://dl.antmicro.com/projects/renode/zep
 Create Machine
     Execute Command          $elf=@https://dl.antmicro.com/projects/renode/zephyr-custom_k_busy_wait.elf-s_383952-e634ad4735a09c71058c885c75df67b8be827ce9
     Execute Command          mach create
-    Execute Command          machine LoadPlatformDescription @platforms/cpus/sifive-fu740.repl
+    Execute Command          machine LoadPlatformDescription @platforms/cpus/sifive/sifive-fu740.repl
     Execute Command          sysbus LoadELF $elf
 
 *** Test Cases ***
@@ -24,7 +24,7 @@ Should Pass 10 Second Wait
 # This test depends on correct time flow counting in Zephyr. It will fail if EnableZephyrMode with `disableIfSymbolsPresent` logic does not work.
 Should Pass Zephyr "tickless_kernel" test suite on mpfs_icicle_polarfire with ZephyrMode enabled and symbols excluded
     Execute Command          using sysbus
-    Execute Command          include @platforms/boards/mpfs-icicle-kit.repl
+    Execute Command          include @platforms/boards/microchip/mpfs-icicle-kit.repl
     Execute Command          sysbus LoadELF ${MPFS_ICYCLE_TICKLESS_KERNEL_ELF}
 
     Create Terminal Tester   sysbus.mmuart0

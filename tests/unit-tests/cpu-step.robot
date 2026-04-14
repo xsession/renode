@@ -7,7 +7,7 @@ Create Machine
     [Arguments]    ${step_blocking}=false
     Execute Command             using sysbus
     Execute Command             mach create
-    Execute Command             machine LoadPlatformDescription @platforms/cpus/sifive-fu540.repl
+    Execute Command             machine LoadPlatformDescription @platforms/cpus/sifive/sifive-fu540.repl
 
     Execute Command             sysbus LoadELF ${URI}/hifive-unleashed--bbl.elf-s_17219640-c7e1b920bf81be4062f467d9ecf689dbf7f29c7a
     Execute Command             sysbus LoadFdt ${URI}/hifive-unleashed--devicetree.dtb-s_10532-70cd4fc9f3b4df929eba6e6f22d02e6ce4c17bd1 0x81000000 "earlyconsole mem=256M@0x80000000"

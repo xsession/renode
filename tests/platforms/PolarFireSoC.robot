@@ -5,7 +5,7 @@ ${SCRIPT}                       ${CURDIR}/../../scripts/single-node/polarfire-so
 *** Keywords ***
 Prepare Machine
     Execute Command           mach create
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/polarfire-soc.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/microchip/polarfire-soc.repl
     Execute Command           sysbus LoadELF ${binary}
 
 Run Should Ignore Writing Other Values Test

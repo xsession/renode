@@ -1,0 +1,14 @@
+// TI LP-MSPM0L1306 — MSPM0L1306 LaunchPad
+// Cortex-M0+ @ 32 MHz, 64 KB Flash, 4 KB SRAM
+// 1 user LED (PA0), 1 user button (PA14)
+// XDS110 on-board debug probe
+
+using "platforms/cpus/ti/mspm0l1306.repl"
+
+gpioA:
+    0 -> userLed@0
+
+userLed: Miscellaneous.LED @ gpioA 0
+
+s1: Miscellaneous.Button @ gpioA
+    -> gpioA@14

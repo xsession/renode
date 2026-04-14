@@ -2,7 +2,7 @@ using sysbus
 $name?="Microwatt"
 
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/microwatt.repl
+machine LoadPlatformDescription @platforms/cpus/others/microwatt.repl
 
 $bin?=@https://dl.antmicro.com/projects/renode/microwatt--micropython.elf-s_2282296-072a8aac5d4d9897425f72ec2ca8ca123e6d624f
 

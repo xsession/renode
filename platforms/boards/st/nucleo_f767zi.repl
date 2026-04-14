@@ -1,0 +1,20 @@
+// ST Nucleo-F767ZI — STM32F767ZIT6, Cortex-M7 @ 216 MHz
+// 2 MB Flash, 512 KB SRAM, Nucleo-144 form factor
+// User LEDs: LD1 (PB0 green), LD2 (PB7 blue), LD3 (PB14 red)
+// User button (B1) on PC13
+
+using "platforms/cpus/st/stm32f767.repl"
+
+gpioPortB:
+    0 -> led1@0
+    7 -> led2@0
+    14 -> led3@0
+
+led1: Miscellaneous.LED @ gpioPortB 0
+
+led2: Miscellaneous.LED @ gpioPortB 7
+
+led3: Miscellaneous.LED @ gpioPortB 14
+
+userButton: Miscellaneous.Button @ gpioPortC
+    -> gpioPortC@13

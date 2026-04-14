@@ -1,5 +1,5 @@
 *** Variables ***
-${PLATFROM}                         platforms/boards/stm32f7_discovery-bb.repl
+${PLATFROM}                         platforms/boards/st/stm32f7_discovery-bb.repl
 ${BIN}                              https://dl.antmicro.com/projects/renode/stm32f746g--zephyr-i2c-akm09918c.elf-s_700820-475c7207bf761d676c9e9d4380375a778448e72c
 ${UART}                             sysbus.usart1
 ${SENSOR}                           sysbus.i2c1.ak09918

@@ -5,7 +5,7 @@ using sysbus
 $name?="Zedboard"
 mach create $name
 
-machine LoadPlatformDescription @platforms/boards/zedboard.repl
+machine LoadPlatformDescription @platforms/boards/digilent/zedboard.repl
 showAnalyzer uart0
 sysbus Redirect 0xC0000000 0x0 0x10000000
 
