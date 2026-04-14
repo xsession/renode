@@ -3,7 +3,7 @@ Test Setup                          Create Machine and Start FPU
 
 *** Variables ***
 ${START_ADDRESS}                    0x0
-${PLATFORM}                         @platforms/cpus/renesas-r7fa8m1a.repl
+${PLATFORM}                         @platforms/cpus/renesas/renesas-r7fa8m1a.repl
 
 *** Keywords ***
 Load Program And Execute

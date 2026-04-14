@@ -3,7 +3,7 @@ ${URI}                                   @https://dl.antmicro.com/projects/renod
 ${PROMPT}                                zynq>
 ${UART}                                  sysbus.uart0
 ${SCRIPT}                                ${CURDIR}/../../../scripts/single-node/zynq_verilated_fpga_isp.resc
-${PLATFORM}                              @platforms/boards/mars_zx3.repl
+${PLATFORM}                              @platforms/boards/enclustra/mars_zx3.repl
 ${FPGA_ISP_NATIVE_LINUX}                 ${URI}/libVfpga_isp-Linux-x86_64-12904733885.so-s_2507680-9d567ef5ddf2569d75b2d90abd6acbfe12ffbfd4
 ${FPGA_ISP_NATIVE_WINDOWS}               ${URI}/libVfpga_isp-Windows-x86_64-12904733885.dll-s_3690794-0986cf74a6351ec50710e40372316d5712659531
 ${FPGA_ISP_NATIVE_MACOS}                 ${URI}/libVfpga_isp-macOS-x86_64-12904733885.dylib-s_470408-8a990124cc9ce7bd7235bef19210c2b99ba31131

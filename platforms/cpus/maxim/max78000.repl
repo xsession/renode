@@ -1,0 +1,70 @@
+// Analog Devices MAX78000 — Cortex-M4F + RISC-V, 100 MHz, 512 KB Flash, 128 KB SRAM
+// Ultra-low-power AI accelerator MCU — CNN engine for edge inference
+// Reference: MAX78000 User Guide (UG7370)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xE0
+    systickFrequency: 100000000
+    -> cpu@0
+
+// ---- Memory ----
+flash: Memory.MappedMemory @ sysbus 0x10000000
+    size: 0x80000           // 512 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x20000           // 128 KB
+
+// CNN accelerator weight memory
+cnnWeights: Memory.MappedMemory @ sysbus 0x50000000
+    size: 0x80000           // 512 KB
+
+// CNN data SRAM
+cnnData: Memory.MappedMemory @ sysbus 0x50400000
+    size: 0x40000           // 256 KB
+
+// Info block (ROM)
+infoblock: Memory.MappedMemory @ sysbus 0x10800000
+    size: 0x4000
+
+// ---- UART ----
+uart0: UART.PL011 @ sysbus 0x40042000
+    -> nvic@14
+
+uart1: UART.PL011 @ sysbus 0x40043000
+    -> nvic@15
+
+uart2: UART.PL011 @ sysbus 0x40044000
+    -> nvic@34
+
+// ---- SPI ----
+spi0: SPI.STM32SPI @ sysbus 0x40046000
+    IRQ -> nvic@16
+
+spi1: SPI.STM32SPI @ sysbus 0x40047000
+    IRQ -> nvic@17
+
+// ---- I2C ----
+i2c0: I2C.STM32F7_I2C @ sysbus 0x4001D000
+    EventInterrupt -> nvic@13
+
+i2c1: I2C.STM32F7_I2C @ sysbus 0x4001E000
+    EventInterrupt -> nvic@36
+
+sysbus:
+    init:
+        Tag <0x40000000 0x400> "GCR — Global Control"
+        Tag <0x40000400 0x400> "SIR — System Init"
+        Tag <0x40004000 0x1000> "WDT0"
+        Tag <0x40006000 0x3000> "TMR0-TMR3"
+        Tag <0x40010000 0x1000> "DMA"
+        Tag <0x40020000 0x8000> "GPIO0-GPIO3"
+        Tag <0x40080000 0x1000> "RTC"
+        Tag <0x40090000 0x1000> "PWRSEQ"
+        Tag <0x40100000 0x40000> "CNN — Convolutional Neural Network"
+        Tag <0x400B0000 0x1000> "CameraIF — Parallel Camera"
+        Tag <0x400C0000 0x1000> "I2S"
+        Tag <0x400F0000 0x1000> "USB"

@@ -1,0 +1,87 @@
+// NXP i.MX RT1062 — Cortex-M7, 600 MHz, 1 MB on-chip RAM
+// No internal flash — boots from external NOR/NAND via FlexSPI
+// Reference: IMXRT1060RM, i.MX RT1060 Reference Manual
+// Used in PJRC Teensy 4.0 / 4.1
+//
+// Memory map:
+//   0x00000000  Boot ROM (128 KB)
+//   0x00200000  FlexRAM Region (512 KB, configurable ITCM/DTCM/OCRAM)
+//   0x20000000  DTCM (512 KB max, from FlexRAM)
+//   0x20200000  OCRAM2 (512 KB)
+//   0x60000000  FlexSPI (external NOR flash, XIP capable, up to 256 MB)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m7"
+    numberOfMPURegions: 16
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xF0
+    systickFrequency: 600000000
+    IRQ -> cpu@0
+
+bootrom: Memory.MappedMemory @ sysbus 0x00200000
+    size: 0x20000
+
+itcm: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x80000
+
+dtcm: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x80000
+
+ocram: Memory.MappedMemory @ sysbus 0x20200000
+    size: 0x80000
+
+flash: Memory.MappedMemory @ sysbus 0x60000000
+    size: 0x800000
+
+usart1: UART.IMX_UART @ sysbus <0x40184000, +0x4000>
+    IRQ -> nvic@20
+
+usart2: UART.IMX_UART @ sysbus <0x40188000, +0x4000>
+    IRQ -> nvic@21
+
+usart3: UART.IMX_UART @ sysbus <0x4018C000, +0x4000>
+    IRQ -> nvic@22
+
+usart4: UART.IMX_UART @ sysbus <0x40190000, +0x4000>
+    IRQ -> nvic@23
+
+usart5: UART.IMX_UART @ sysbus <0x40194000, +0x4000>
+    IRQ -> nvic@24
+
+usart6: UART.IMX_UART @ sysbus <0x40198000, +0x4000>
+    IRQ -> nvic@25
+
+usart7: UART.IMX_UART @ sysbus <0x4019C000, +0x4000>
+    IRQ -> nvic@26
+
+usart8: UART.IMX_UART @ sysbus <0x401A0000, +0x4000>
+    IRQ -> nvic@27
+
+spi1: SPI.IMX_SPI @ sysbus 0x40394000
+    -> nvic@31
+
+spi2: SPI.IMX_SPI @ sysbus 0x40398000
+    -> nvic@32
+
+spi3: SPI.IMX_SPI @ sysbus 0x4039C000
+    -> nvic@33
+
+spi4: SPI.IMX_SPI @ sysbus 0x403A0000
+    -> nvic@34
+
+i2c1: I2C.IMX_I2C @ sysbus 0x403F0000
+    -> nvic@28
+
+i2c2: I2C.IMX_I2C @ sysbus 0x403F4000
+    -> nvic@29
+
+i2c3: I2C.IMX_I2C @ sysbus 0x403F8000
+    -> nvic@30
+
+i2c4: I2C.IMX_I2C @ sysbus 0x403FC000
+    -> nvic@35
+
+ethernet: Network.IMX_Ethernet @ sysbus 0x402D8000
+    -> nvic@114

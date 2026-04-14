@@ -1,0 +1,85 @@
+// TMS320F28379D platform description
+// Texas Instruments TMS320F28379D — Dual-core C28x (Delfino series)
+// Reference: SPRS880, TMS320F2837xD Technical Reference Manual (SPRUHM8)
+//
+// Memory map (CPU1 view):
+//   0x000000–0x0007FF  M0+M1 Local RAM (4 KB, 2 × 2 KB blocks)
+//   0x008000–0x009FFF  LS0-LS7 shared RAM (8 KB, CPU1/CPU2)
+//   0x080000–0x0FFFFF  Flash (512 KB, BANK0 0x080000, BANK1 0x0A0000)
+//   0x300000–0x303FFF  CPU1.CLA1 RAM / message RAM
+//   0x3F8000–0x3F9FFF  Boot ROM (8 KB)
+//   0x3FFFC0           Reset vector (boot ROM)
+//
+// Peripheral Frame 1 (PF1): 0x7F0000–0x7F0FFF
+// Peripheral Frame 2 (PF2): 0x7F1000–0x7F1FFF
+
+cpu: CPU.C2000 @ sysbus
+    cpuType: "tms320f28379d"
+
+// ---- Local RAM ----
+m0m1ram: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x000800    // M0+M1 merged (2 KB)
+
+lsram: Memory.MappedMemory @ sysbus 0x008000
+    size: 0x002000    // LS0-LS1 local shared SRAM (8 KB)
+
+// ---- Flash (BANK0) ----
+flash: Memory.MappedMemory @ sysbus 0x080000
+    size: 0x040000    // 256 KB (BANK0; full device has 512 KB across two banks)
+
+// ---- Boot ROM ----
+bootrom: Memory.MappedMemory @ sysbus 0x3F8000
+    size: 0x002000    // 8 KB (read-only in hardware; modelled as RAM for init)
+
+// ---- CPU Timer 0 (general purpose → INT1) ----
+// Register base: PF1 0x7F0C00
+timer0: Timers.C2000_CPUTimer @ sysbus <0x7F0C00, +0x08>
+    baseFrequency: 200000000
+    -> cpu@0
+
+// ---- CPU Timer 1 (OS reserved → INT13) ----
+timer1: Timers.C2000_CPUTimer @ sysbus <0x7F0C08, +0x08>
+    baseFrequency: 200000000
+    -> cpu@0
+
+// ---- CPU Timer 2 (BIOS/watchdog → INT14) ----
+timer2: Timers.C2000_CPUTimer @ sysbus <0x7F0C10, +0x08>
+    baseFrequency: 200000000
+    -> cpu@0
+
+// ---- SCI-A (UART-A) ----
+// Register base: PF1 0x7F0040 (SCIA regs at 0x7F0040)
+uart_a: UART.C2000_SCI @ sysbus <0x7F0040, +0x10>
+    -> cpu@0
+
+// ---- SCI-B (UART-B) ----
+uart_b: UART.C2000_SCI @ sysbus <0x7F0060, +0x10>
+    -> cpu@0
+
+// ---- GPIO (Port A: GPIO0-GPIO31, Port B: GPIO32-GPIO63, Port C: GPIO64-GPIO95) ----
+// GPIO Data/Control registers base: PF1 0x7F0F00
+gpio: GPIOPort.C2000_GPIO @ sysbus <0x7F0F00, +0x60>
+    numberOfPorts: 3
+
+// ---- DCAN-A (CAN 2.0B) @ 0x048000 ----
+can_a: CAN.C2000_eCAN @ sysbus <0x048000, +0x200>
+    IRQ0 -> cpu@0
+    IRQ1 -> cpu@0
+
+// ---- DCAN-B (CAN 2.0B) @ 0x04A000 ----
+can_b: CAN.C2000_eCAN @ sysbus <0x04A000, +0x200>
+    IRQ0 -> cpu@0
+    IRQ1 -> cpu@0
+
+// ---- Watchdog ----
+wdt: Timers.C2000_Watchdog @ sysbus <0x007022, +0x08>
+    baseFrequency: 200000000
+
+// ---- DMA ----
+dma: DMA.C2000_DMA @ sysbus <0x001000, +0x1C0>
+
+// ---- PIE (Peripheral Interrupt Expansion) ----
+pie: Miscellaneous.C2000_PIE @ sysbus <0x000D00, +0x200>
+
+// ---- Flash Control ----
+flashCtrl: Miscellaneous.C2000_Flash @ sysbus <0x05F000, +0x0E>

@@ -1,0 +1,84 @@
+// dsPIC33CK256MP508 platform description
+// Microchip dsPIC33CK256MP508 — 256 KB Flash, 24 KB RAM, 100-pin
+//
+// Memory map:
+//   0x000000–0x02AFFF  Program Flash (24-bit word addressed; phantom byte model)
+//   0x800000–0x805FFF  Data RAM (24 KB)
+//   0x840000–0x87FFFF  SFR region
+//
+// IVT base address: 0x000004 (as byte address)
+
+cpu: CPU.DSPIC33 @ sysbus
+    cpuType: "dspic33ck256mp508"
+
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x02B000    // 176 KB usable code space (176,128 bytes)
+
+ram: Memory.MappedMemory @ sysbus 0x800000
+    size: 0x006000    // 24 KB data RAM
+
+// ---- UART1 (U1) at SFR base 0x840210 ----
+uart1: UART.dsPIC33_UART @ sysbus <0x840210, +0x0A>
+    -> cpu@0
+
+// ---- UART2 (U2) ----
+uart2: UART.dsPIC33_UART @ sysbus <0x840230, +0x0A>
+    -> cpu@0
+
+// ---- Timer1 (general-purpose, type A) ----
+timer1: Timers.dsPIC33_Timer @ sysbus <0x840006, +0x06>
+    baseFrequency: 40000000
+    -> cpu@0
+
+// ---- Timer2 (general-purpose, type B) ----
+timer2: Timers.dsPIC33_Timer @ sysbus <0x840016, +0x06>
+    baseFrequency: 40000000
+    -> cpu@0
+
+// ---- GPIO Port A ----
+gpio_porta: GPIOPort.dsPIC33_GPIO @ sysbus <0x840400, +0x12>
+    -> cpu@0
+
+// ---- GPIO Port B ----
+gpio_portb: GPIOPort.dsPIC33_GPIO @ sysbus <0x840420, +0x12>
+    -> cpu@0
+
+// ---- GPIO Port C ----
+gpio_portc: GPIOPort.dsPIC33_GPIO @ sysbus <0x840440, +0x12>
+    -> cpu@0
+
+// ---- CAN-FD (ECAN / CAN with Flexible Data-rate) ----
+// SFR: C1CON at 0x840600
+ecan1: CAN.dsPIC33_ECAN @ sysbus <0x840600, +0x100>
+    -> cpu@0
+
+// ---- SPI1 ----
+// SFR: SPI1CON1 at 0x840800
+spi1: SPI.dsPIC33_SPI @ sysbus <0x840800, +0x08>
+    -> cpu@0
+
+// ---- SPI2 ----
+spi2: SPI.dsPIC33_SPI @ sysbus <0x840820, +0x08>
+    -> cpu@0
+
+// ---- I2C1 ----
+// SFR: I2C1RCV at 0x840200
+i2c1: I2C.dsPIC33_I2C @ sysbus <0x840200, +0x20>
+    -> cpu@0
+
+// ---- ADC1 (12-bit) ----
+// SFR: AD1CON1 at 0x840300
+adc1: Analog.dsPIC33_ADC @ sysbus <0x840300, +0x0C>
+    -> cpu@0
+
+// ---- PWM1 (Output Compare / PWM) ----
+pwm1: Timers.dsPIC33_PWM @ sysbus <0x840180, +0x0C>
+    -> cpu@0
+
+// ---- DMA Controller ----
+dma: DMA.dsPIC33_DMA @ sysbus <0x840380, +0x40>
+    -> cpu@0
+
+// ---- Watchdog Timer ----
+wdt: Timers.dsPIC33_WDT @ sysbus <0x840080, +0x02>
+    -> cpu@0

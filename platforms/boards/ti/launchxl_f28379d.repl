@@ -1,0 +1,6 @@
+// TI LAUNCHXL-F28379D — TMS320F28379D LaunchPad
+// Dual C28x @ 200 MHz, 512 KB Flash
+// 2 user LEDs (GPIO31/34), 2 buttons (GPIO67/22)
+// XDS110 on-board debug probe, BoosterPack headers
+
+using "platforms/cpus/ti/tms320f28379d.repl"

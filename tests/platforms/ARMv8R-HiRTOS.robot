@@ -10,11 +10,11 @@ ${HELLO_PARTITIONS_ELF}             ${URI}/cortex-r52--hirtos-hello_partitions.e
 *** Keywords ***
 Create Machine
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/cortex-r52.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/arm/cortex-r52.repl
 
 Create Multicore Machine
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/cortex-r52_smp.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/arm/cortex-r52_smp.repl
     Execute Command                 machine SetSerialExecution True
 
 Wait For Lines Per Thread

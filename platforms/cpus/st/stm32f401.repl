@@ -1,0 +1,21 @@
+// STM32F401 — Cortex-M4F, 84 MHz, 512 KB Flash, 96 KB SRAM
+// Reference: RM0368, STM32F401 Reference Manual
+using "./stm32f4.repl"
+
+cpu:
+    cpuType: "cortex-m4f"
+
+nvic:
+    systickFrequency: 84000000
+
+flash:
+    size: 0x80000
+
+sram:
+    size: 0x18000
+
+usart6: UART.STM32_UART @ sysbus <0x40011400, +0x100>
+    -> nvic@71
+
+spi4: SPI.STM32SPI @ sysbus 0x40013400
+    IRQ -> nvic@84

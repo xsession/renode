@@ -1,0 +1,57 @@
+// WCH CH32V003 — RISC-V RV32EC, 48 MHz, 16 KB Flash, 2 KB SRAM
+// QingKe V2A core — ultra-low-cost RISC-V MCU (~$0.10)
+// Reference: CH32V003 Reference Manual
+
+cpu: CPU.RiscV32 @ sysbus
+    cpuType: "rv32ec"
+    privilegedArchitecture: PrivilegedArchitecture.Priv1_10
+    timeProvider: clint
+    hartId: 0
+
+// Programmable Fast Interrupt Controller (PFIC) — simplified as PLIC
+plic: IRQControllers.PlatformLevelInterruptController @ sysbus 0xE000E000
+    0 -> cpu@11
+    numberOfSources: 32
+    numberOfContexts: 1
+
+clint: IRQControllers.CoreLevelInterruptor @ sysbus 0xE0000000
+    [0, 1] -> cpu@[3, 7]
+    frequency: 48000000
+
+// ---- Memory ----
+flash: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x4000            // 16 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x800             // 2 KB
+
+// Boot area
+bootrom: Memory.MappedMemory @ sysbus 0x1FFFF000
+    size: 0x1000
+
+// ---- USART ----
+usart1: UART.SiFive_UART @ sysbus 0x40013800
+    IRQ -> plic@28
+
+// ---- GPIO ----
+gpioA: GPIOPort.SiFive_GPIO @ sysbus 0x40010800
+    [0-7] -> plic@[6-13]
+
+gpioC: GPIOPort.SiFive_GPIO @ sysbus 0x40011000
+    [0-7] -> plic@[6-13]
+
+gpioD: GPIOPort.SiFive_GPIO @ sysbus 0x40011400
+    [0-7] -> plic@[6-13]
+
+sysbus:
+    init:
+        Tag <0x40021000 0x400> "RCC"
+        Tag <0x40013000 0x400> "ADC1"
+        Tag <0x40003800 0x400> "SPI1"
+        Tag <0x40005400 0x400> "I2C1"
+        Tag <0x40012C00 0x400> "TIM1"
+        Tag <0x40000000 0x400> "TIM2"
+        Tag <0x40020000 0x400> "DMA1"
+        Tag <0x40006C00 0x400> "PWR"
+        Tag <0x40010000 0x400> "AFIO"
+        Tag <0x40010400 0x400> "EXTI"

@@ -1,0 +1,7 @@
+// TI MSP-EXP430FR5994 — MSP430FR5994 LaunchPad
+// MSP430X @ 16 MHz, 256 KB FRAM, 8 KB SRAM, LEA
+// 2 LEDs: LED1 (P1.0 red), LED2 (P1.1 green)
+// 2 buttons: S1 (P5.6), S2 (P5.5)
+// eZ-FET debug probe, SD card socket, super-cap for energy harvesting
+
+using "platforms/cpus/ti/msp430fr5994.repl"

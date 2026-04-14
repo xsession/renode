@@ -4,7 +4,7 @@
 Prepare Machine
     Execute Command                 mach clear
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/boards/mimxrt700_evk.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/boards/nxp/mimxrt700_evk.repl
 
 Load Zephyr Binary
     [Arguments]                     ${binary}  ${core}  ${disable_other_core}=True

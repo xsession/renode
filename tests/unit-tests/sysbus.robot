@@ -465,7 +465,7 @@ Symbols Should Be Dynamically Loaded and Unloaded On Request
     ${main_symbol_name}=           Set Variable  "main"
     ${main_symbol_address}=        Set Variable  0x0000000008007644
 
-    Execute Command                include @platforms/cpus/stm32l072.repl
+    Execute Command                include @platforms/cpus/st/stm32l072.repl
 
     # LoadELF without cpu context argument loads symbols in the global scope
     Execute Command                sysbus LoadELF ${bin}

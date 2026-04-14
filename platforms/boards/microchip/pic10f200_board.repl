@@ -1,0 +1,5 @@
+// PIC10F200 DIP Board
+// Microchip PIC10F200 on generic DIP-8 breakout board
+// 4 I/O pins, minimal MCU for simple control tasks
+
+using "platforms/cpus/microchip/pic10f200.repl"

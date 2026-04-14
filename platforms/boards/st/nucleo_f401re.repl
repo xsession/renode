@@ -1,0 +1,13 @@
+// ST Nucleo-F401RE — STM32F401RET6, Cortex-M4F @ 84 MHz
+// 512 KB Flash, 96 KB SRAM
+// User LED (LD2) on PA5, User button (B1) on PC13
+
+using "platforms/cpus/st/stm32f401.repl"
+
+gpioPortA:
+    5 -> userLed@0
+
+userLed: Miscellaneous.LED @ gpioPortA 5
+
+userButton: Miscellaneous.Button @ gpioPortC
+    -> gpioPortC@13

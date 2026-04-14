@@ -104,7 +104,7 @@ Prepare Trivial Platform
 *** Test Cases ***
 Should Pass Zephyr FPU Sharing Generic Tests
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/nxp-k6xf.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/nxp/nxp-k6xf.repl
     Create Terminal Tester          sysbus.uart0
     Execute Command                 sysbus LoadELF ${ZEPHYR_GENERIC_BIN}
 

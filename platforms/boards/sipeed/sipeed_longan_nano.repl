@@ -1,0 +1,7 @@
+// Sipeed Longan Nano — GD32VF103CBT6, RISC-V RV32IMAC @ 108 MHz
+// 128 KB Flash, 32 KB SRAM, 0.96" 160×80 LCD (ST7735S)
+// RGB LED: Red (PC13), Green (PA1), Blue (PA2)
+// 1 button (BOOT0 on PA8)
+// USB-C connector, TF card slot
+
+using "platforms/cpus/gd/gd32vf103.repl"

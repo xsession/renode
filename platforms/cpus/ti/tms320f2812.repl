@@ -1,0 +1,107 @@
+// TMS320F2812 platform description
+// Texas Instruments TMS320F2812 — Single-core C28x (legacy, no FPU)
+// 150 MHz, 128 KB Flash, 18 KB SARAM
+// Reference: SPRS174, TMS320F2812 Technical Reference Manual (SPRU078)
+//
+// Memory map:
+//   0x000000–0x0003FF  M0 SARAM (1 KB)
+//   0x000400–0x0007FF  M1 SARAM (1 KB)
+//   0x008000–0x009FFF  L0+L1 SARAM (8 KB)
+//   0x00A000–0x00BFFF  H0 SARAM (8 KB)
+//   0x3D8000–0x3F7FFF  Flash (128 KB; Sectors A-J)
+//   0x3FF000–0x3FFFFF  Boot ROM (4 KB)
+
+cpu: CPU.C2000 @ sysbus
+    cpuType: "tms320f2812"
+
+// ---- SARAM ----
+m0m1saram: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x000800    // M0+M1 merged (2 KB)
+
+l0l1saram: Memory.MappedMemory @ sysbus 0x008000
+    size: 0x002000    // L0+L1: 8 KB
+
+h0saram: Memory.MappedMemory @ sysbus 0x00A000
+    size: 0x002000    // H0: 8 KB
+
+// ---- Flash ----
+flash: Memory.MappedMemory @ sysbus 0x3D8000
+    size: 0x020000    // 128 KB
+
+// ---- Boot ROM ----
+bootrom: Memory.MappedMemory @ sysbus 0x3FF000
+    size: 0x001000    // 4 KB
+
+// ---- CPU Timers ----
+timer0: Timers.C2000_CPUTimer @ sysbus <0x000C00, +0x08>
+    baseFrequency: 150000000
+    -> cpu@0
+
+timer1: Timers.C2000_CPUTimer @ sysbus <0x000C08, +0x08>
+    baseFrequency: 150000000
+    -> cpu@0
+
+timer2: Timers.C2000_CPUTimer @ sysbus <0x000C10, +0x08>
+    baseFrequency: 150000000
+    -> cpu@0
+
+// ---- SCI-A (UART-A) ----
+uart_a: UART.C2000_SCI @ sysbus <0x007050, +0x10>
+    -> cpu@0
+
+// ---- SCI-B (UART-B) ----
+uart_b: UART.C2000_SCI @ sysbus <0x007750, +0x10>
+    -> cpu@0
+
+// ---- SPI-A ----
+spi_a: SPI.C2000_SPI @ sysbus <0x007040, +0x10>
+    -> cpu@0
+
+// ---- I2C-A ----
+i2c_a: I2C.C2000_I2C @ sysbus <0x007900, +0x18>
+    -> cpu@0
+
+// ---- ADC (12-bit) ----
+adc: Analog.C2000_ADC12 @ sysbus <0x000B00, +0x80>
+    -> cpu@0
+
+// ---- ePWM1-3 ----
+epwm1: Timers.C2000_ePWM @ sysbus <0x006800, +0x40>
+    -> cpu@0
+
+epwm2: Timers.C2000_ePWM @ sysbus <0x006840, +0x40>
+    -> cpu@0
+
+epwm3: Timers.C2000_ePWM @ sysbus <0x006880, +0x40>
+    -> cpu@0
+
+// ---- eCAP1-2 ----
+ecap1: Timers.C2000_eCAP @ sysbus <0x006A00, +0x40>
+    -> cpu@0
+
+ecap2: Timers.C2000_eCAP @ sysbus <0x006A40, +0x40>
+    -> cpu@0
+
+// ---- eCAN-A ----
+ecan_a: CAN.C2000_eCAN @ sysbus <0x006000, +0x200>
+    IRQ0 -> cpu@0
+    IRQ1 -> cpu@0
+
+// ---- eCAN-B ----
+ecan_b: CAN.C2000_eCAN @ sysbus <0x006200, +0x200>
+    IRQ0 -> cpu@0
+    IRQ1 -> cpu@0
+
+// ---- GPIO ----
+gpio: GPIOPort.C2000_GPIO @ sysbus <0x006F80, +0x60>
+    numberOfPorts: 2
+
+// ---- Watchdog ----
+wdt: Timers.C2000_Watchdog @ sysbus <0x007022, +0x08>
+    baseFrequency: 150000000
+
+// ---- PIE (Peripheral Interrupt Expansion) ----
+pie: Miscellaneous.C2000_PIE @ sysbus <0x000D00, +0x200>
+
+// ---- Flash Control ----
+flashCtrl: Miscellaneous.C2000_Flash @ sysbus <0x000A80, +0x0E>

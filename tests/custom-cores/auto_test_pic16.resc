@@ -1,0 +1,9 @@
+using sysbus
+mach create "pic16-test"
+machine LoadPlatformDescription @tests/custom-cores/pic16_blink.repl
+sysbus LoadBinary @tests/custom-cores/blink_pic16.bin 0x000000
+cpu PC 0x000000
+log ">>> pic16: starting <<<"
+emulation RunFor "0.0001"
+log ">>> pic16: completed <<<"
+quit

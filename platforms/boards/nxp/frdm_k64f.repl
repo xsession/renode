@@ -1,0 +1,6 @@
+// NXP FRDM-K64F — MK64FN1M0VLL12, Cortex-M4F @ 120 MHz
+// 1 MB Flash, 256 KB SRAM, Ethernet, mbed-enabled
+// RGB LED: Red (PTB22), Green (PTE26), Blue (PTB21)
+// 2 push buttons (SW2: PTC6, SW3: PTA4), accelerometer FXOS8700CQ
+
+using "platforms/cpus/nxp/mk64f12.repl"

@@ -4,7 +4,7 @@ ${INIT_PERIPHBASE_ADDRESS}          0xAE000000
 ${INIT_PERIPHBASE}                  0x57000
 ${NEW_PERIPHBASE_ADDRESS}           0x80000000
 ${NEW_PERIPHBASE}                   0x40000
-${REPL_PATH}                        platforms/cpus/cortex-r8_smp.repl
+${REPL_PATH}                        platforms/cpus/arm/cortex-r8_smp.repl
 ${SIGNALS_UNIT}                     signalsUnit
 
 ${GIC_MODEL}                        Antmicro.Renode.Peripherals.IRQControllers.ARM_GenericInterruptController

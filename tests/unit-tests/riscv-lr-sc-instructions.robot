@@ -1,7 +1,7 @@
 *** Variables ***
 ${UART}                             sysbus.mmuart1
 ${URI}                              @https://dl.antmicro.com/projects/renode
-${PLATFORM}                         @platforms/cpus/polarfire-soc.repl
+${PLATFORM}                         @platforms/cpus/microchip/polarfire-soc.repl
 ${SHARED_VARIABLE_ADDRESS}          0x81000000
 ${VARIABLE_ADDRESS_CPU1}            0x81000000
 ${VARIABLE_ADDRESS_CPU2}            0x81000100

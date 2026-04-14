@@ -7,7 +7,7 @@ using sysbus.cluster
 $name?="Renesas-RZ/G2l"
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/renesas_rz_g2l.repl
+machine LoadPlatformDescription @platforms/cpus/renesas/renesas_rz_g2l.repl
 
 $atf_elf?=   @https://dl.antmicro.com/projects/renode/renesas_rzg2l-bl31.elf-s_60936-06cc2a2879b3573f5bb928bbf0d7b74e6fda8010
 $linux?=     @https://dl.antmicro.com/projects/renode/renesas_rzg2l-openamp-Image-s_24375808-9b309c976b8f5de7403877ac7119a8d632edaf6c

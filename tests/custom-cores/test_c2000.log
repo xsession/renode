@@ -1,0 +1,10 @@
+16:47:25.4935 [INFO] Loaded monitor commands from: /mnt/c/GIT/renode/scripts/monitor.py
+16:47:25.5110 [INFO] Monitor available in telnet mode on port 1234
+16:47:25.5620 [INFO] Including script(s): /mnt/c/GIT/renode/tests/custom-cores/auto_test_c2000.resc
+16:47:25.5935 [INFO] System bus created.
+16:47:26.4284 [INFO] sysbus: Loading block of 10 bytes length at 0x0.
+16:47:26.8248 [INFO] Script: >>> c2000: starting <<<
+16:47:26.9809 [INFO] c2000-test: Machine started.
+16:47:27.0237 [INFO] c2000-test: Machine paused.
+16:47:27.0245 [INFO] Script: >>> c2000: completed <<<
+timeout: the monitored command dumped core

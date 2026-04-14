@@ -2,7 +2,7 @@ using sysbus
 $name?="andes_ae350"
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/andes_ae350_n25.repl
+machine LoadPlatformDescription @platforms/cpus/andes/andes_ae350_n25.repl
 showAnalyzer uart1
 
 macro reset

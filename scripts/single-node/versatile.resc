@@ -6,7 +6,7 @@ using sysbus
 $name?="Versatile"
 mach create $name
 
-machine LoadPlatformDescription @platforms/boards/versatile.repl
+machine LoadPlatformDescription @platforms/boards/arm/versatile.repl
 
 sysbus Redirect 0xC0000000 0x0 0x10000000
 

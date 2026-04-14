@@ -1,0 +1,9 @@
+using sysbus
+mach create "c2000-test"
+machine LoadPlatformDescription @tests/custom-cores/c2000_blink.repl
+sysbus LoadBinary @tests/custom-cores/blink_c2000.bin 0x000000
+cpu PC 0x000000
+log ">>> c2000: starting <<<"
+emulation RunFor "0.0001"
+log ">>> c2000: completed <<<"
+quit

@@ -1,7 +1,7 @@
 *** Variables ***
 ${UART}                       sysbus.cr_uart1
 ${URI}                        @https://dl.antmicro.com/projects/renode
-${PLATFORM}                   platforms/boards/nuvoton_npcx9m6fb_evb.repl
+${PLATFORM}                   platforms/boards/nuvoton/nuvoton_npcx9m6fb_evb.repl
 
 ${BOARD_WITH_LED}=  SEPARATOR=
 ...  """                                                            ${\n}

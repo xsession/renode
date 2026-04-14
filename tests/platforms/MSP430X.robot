@@ -7,7 +7,7 @@ Create MSP430F2619 Machine
     [Arguments]                     ${ELF}=${EMPTY}
 
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/msp430f2619.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/ti/msp430f2619.repl
     Execute Command                 sysbus.cpu PerformanceInMips 1
     Run Keyword If                  "${ELF}" != "${EMPTY}"
     ...                             Execute Command  sysbus LoadELF ${ELF}

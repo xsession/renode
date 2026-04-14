@@ -1,0 +1,64 @@
+//
+// PIC18F4520 platform description.
+// Memory map:
+//   Flash     : 0x000000 - 0x007FFF  (32 KB program memory)
+//   Data SRAM : 0xA00000 - 0xA005FF  (1536 bytes)
+//   SFR space : 0xA00F00 - 0xA00FFF  (256 bytes, top of data bank 15)
+//
+cpu: CPU.PIC18 @ sysbus
+    cpuType: "pic18f4520"
+
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x8000
+
+sram: Memory.MappedMemory @ sysbus 0xA00000
+    size: 0x600
+
+// EUSART1: SFR @ 0xFAB (RCSTA), 0xFAC (TXSTA), etc. — simplified flat map
+eusart1: UART.PIC18_EUSART @ sysbus <0xA00FAB, +0x7>
+    -> cpu@1
+
+// PORTA @ 0xF92, TRISA @ 0xF93, LATA @ 0xF89
+porta: GPIOPort.PIC18_GPIO @ sysbus <0xA00F89, +0x1>
+    pinCount: 7
+
+portb: GPIOPort.PIC18_GPIO @ sysbus <0xA00F8A, +0x1>
+
+portc: GPIOPort.PIC18_GPIO @ sysbus <0xA00F8B, +0x1>
+
+portd: GPIOPort.PIC18_GPIO @ sysbus <0xA00F8C, +0x1>
+
+// Timer0 @ TMR0L=0xFD6, TMR0H=0xFD7, T0CON=0xFD5
+timer0: Timers.PIC18_Timer0 @ sysbus <0xA00FD5, +0x3>
+    -> cpu@1
+
+// Timer1 @ T1CON=0xFCD, TMR1L=0xFCE, TMR1H=0xFCF
+timer1: Timers.PIC18_Timer1 @ sysbus <0xA00FCD, +0x3>
+    -> cpu@1
+
+// Timer2 @ T2CON=0xFCA, PR2=0xFCB, TMR2=0xFCC
+timer2: Timers.PIC18_Timer2 @ sysbus <0xA00FCA, +0x3>
+    -> cpu@1
+
+// Watchdog @ WDTCON=0xFD1
+wdt: Timers.PIC18_WDT @ sysbus <0xA00FD1, +0x1>
+
+// EEPROM @ EECON1=0xFA6, EECON2=0xFA7, EEDATA=0xFA8, EEADR=0xFA9
+eeprom: Memory.PIC18_EEPROM @ sysbus <0xA00FA6, +0x4>
+    size: 256
+
+// ADC @ ADCON2=0xFC0, ADCON1=0xFC1, ADCON0=0xFC2, ADRESL=0xFC3, ADRESH=0xFC4
+adc: Analog.PIC18_ADC @ sysbus <0xA00FC0, +0x5>
+    -> cpu@1
+
+// CCP1 @ CCP1CON=0xFBD, CCPR1L=0xFBE, CCPR1H=0xFBF
+ccp1: Timers.PIC18_CCP @ sysbus <0xA00FBD, +0x3>
+    -> cpu@1
+
+// MSSP (SPI mode) @ SSPCON=0xFC6, SSPSTAT=0xFC7, SSPADD=0xFC8, SSPBUF=0xFC9
+mssp_spi: SPI.PIC18_MSSP_SPI @ sysbus <0xA00FC6, +0x4>
+    -> cpu@1
+
+// PortE @ LATE=0xF8D (3 pins)
+porte: GPIOPort.PIC18_GPIO @ sysbus <0xA00F8D, +0x1>
+    pinCount: 3

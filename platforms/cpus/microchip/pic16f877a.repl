@@ -1,0 +1,70 @@
+//
+// PIC16F877A platform description.
+// Memory map:
+//   Flash (prog): 0x000000 - 0x001FFF  (8K words = 16 KB)
+//   Data  (SRAM): 0x200000 - 0x20016F  (~368 bytes)
+//   SFR   basis : 0x200000 (register 0x00 → addr 0x200000)
+//
+cpu: CPU.PIC16 @ sysbus
+    cpuType: "pic16f877a"
+
+// Program memory (16-bit wide, 14-bit valid per word)
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x4000
+
+// Data SRAM — starts at 0x200020 to avoid overlapping SFR peripherals
+// (SFRs at 0x200000-0x20001F handled by peripheral models)
+sram: Memory.MappedMemory @ sysbus 0x200020
+    size: 0x150     // GPR: 0x20-0x6F per bank (~368 bytes effective)
+
+// UART (file registers 0x18/0x19/0x1A/0x1B in bank 0)
+usart: UART.PIC16_USART @ sysbus <0x200018, +0x4>
+    -> cpu@0
+
+// PORTA (file reg 0x05), TRISA @ 0x85 (bank 1) — simplified, map PORT only
+porta: GPIOPort.PIC16_GPIO @ sysbus <0x200005, +0x1>
+    pinCount: 6
+
+portb: GPIOPort.PIC16_GPIO @ sysbus <0x200006, +0x1>
+
+portc: GPIOPort.PIC16_GPIO @ sysbus <0x200007, +0x1>
+
+portd: GPIOPort.PIC16_GPIO @ sysbus <0x200008, +0x1>
+
+// TMR0 at 0x01, OPTION at 0x81 — simplified, expose as one peripheral
+timer0: Timers.PIC16_Timer0 @ sysbus <0x200001, +0x3>
+    -> cpu@0
+
+// Timer1 @ TMR1L=0x0E, TMR1H=0x0F, T1CON=0x10
+timer1: Timers.PIC16_Timer1 @ sysbus <0x20000E, +0x3>
+    -> cpu@0
+
+// Timer2 @ TMR2=0x11, T2CON=0x12, PR2=0x92 (linearized)
+timer2: Timers.PIC16_Timer2 @ sysbus <0x200011, +0x3>
+    -> cpu@0
+
+// Watchdog Timer
+wdt: Timers.PIC16_WDT @ sysbus <0x200097, +0x1>
+
+// EEPROM @ EECON1=0x18C, EECON2=0x18D, EEDATA=0x18E, EEADR=0x18F
+eeprom: Memory.PIC16_EEPROM @ sysbus <0x20018C, +0x4>
+    size: 256
+
+// ADC @ ADRESH=0x1E, ADCON0=0x1F, ADRESL=0x9E, ADCON1=0x9F
+adc: Analog.PIC16_ADC @ sysbus <0x20001E, +0x4>
+    -> cpu@0
+
+// CCP1 @ CCPR1L=0x15, CCPR1H=0x16, CCP1CON=0x17
+ccp1: Timers.PIC16_CCP @ sysbus <0x200015, +0x3>
+    -> cpu@0
+
+// Comparator @ CMCON=0x1C
+comparator: Analog.PIC16_Comparator @ sysbus <0x20001C, +0x2>
+
+// MSSP (SPI mode) @ SSPBUF=0x13, SSPCON=0x14
+mssp_spi: SPI.PIC16_MSSP_SPI @ sysbus <0x200013, +0x3>
+    -> cpu@0
+
+// PortE @ SFR 0x09 (3 pins)
+porte: GPIOPort.PIC16_GPIO @ sysbus <0x200009, +0x1>
+    pinCount: 3

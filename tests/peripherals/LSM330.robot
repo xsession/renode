@@ -4,7 +4,7 @@ ${URI}                        @https://dl.antmicro.com/projects/renode
 
 ${LSM330}=     SEPARATOR=
 ...  """                                                 ${\n}
-...  using "platforms/cpus/nrf52840.repl"                ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"                ${\n}
 ...                                                      ${\n}
 ...  lsm330_a: Sensors.LSM330_Accelerometer @ twi0 0x1d  ${\n}
 ...                                                      ${\n}

@@ -1,0 +1,6 @@
+// PJRC Teensy 4.0 — MIMXRT1062DVJ6A, Cortex-M7 @ 600 MHz
+// No on-chip flash (FlexSPI XIP), 1 MB RAM, 2 MB external flash
+// On-board LED on pin 13 (GPIO_B0_03 / GPIO2_IO03)
+// USB-C connector, Arduino-compatible pinout
+
+using "platforms/cpus/nxp/mimxrt1062.repl"

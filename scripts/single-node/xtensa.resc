@@ -2,7 +2,7 @@ using sysbus
 
 # create the platform
 mach create
-machine LoadPlatformDescription @platforms/cpus/xtensa-sample-controller.repl
+machine LoadPlatformDescription @platforms/cpus/others/xtensa-sample-controller.repl
 
 # display the UART analyzer window
 showAnalyzer cpu.uartSemihosting

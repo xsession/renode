@@ -11,7 +11,7 @@ $manufacturingTrimValues?=@https://dl.antmicro.com/projects/renode/renesas_da145
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/renesas-da14592.repl
+machine LoadPlatformDescription @platforms/cpus/renesas/renesas-da14592.repl
 
 showAnalyzer uart1
 

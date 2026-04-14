@@ -1,0 +1,11 @@
+// ESP32-C3-DevKitM-1 — ESP32-C3, RV32IMC @ 160 MHz
+// 4 MB external flash, 400 KB SRAM, WiFi + BLE 5.0
+// On-board addressable RGB LED on GPIO8
+
+using "platforms/cpus/espressif/esp32c3.repl"
+
+// RGB LED — modeled as single LED on GPIO8
+gpio:
+    8 -> rgbLed@0
+
+rgbLed: Miscellaneous.LED @ gpio 8

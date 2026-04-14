@@ -1,0 +1,10 @@
+// Nordic nRF52833 — Cortex-M4F, 64 MHz, 512 KB Flash, 128 KB RAM
+// Reference: nRF52833 Product Specification v1.5
+// Bluetooth 5.1, 802.15.4 (Thread/Zigbee), Direction Finding
+using "./nrf52840.repl"
+
+flash:
+    size: 0x80000
+
+ram:
+    size: 0x20000

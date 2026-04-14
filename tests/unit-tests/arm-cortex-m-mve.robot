@@ -6,7 +6,7 @@ Library                             String
 *** Variables ***
 ${START_ADDRESS}                    0x100
 ${DATA_ADDRESS}                     0x22000000
-${PLATFORM}                         @platforms/cpus/renesas-r7fa8m1a.repl
+${PLATFORM}                         @platforms/cpus/renesas/renesas-r7fa8m1a.repl
 
 *** Keywords ***
 Load Program And Execute

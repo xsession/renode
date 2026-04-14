@@ -6,7 +6,7 @@ using sysbus
 mach create $name
 
 $bin?=@https://dl.antmicro.com/projects/renode/virt_x86--zephyr-hello_world.elf-s_520128-5c9e280582e8d48eaf28399cd5dda7406f31bcec
-machine LoadPlatformDescription @platforms/cpus/x86.repl
+machine LoadPlatformDescription @platforms/cpus/intel/x86.repl
 
 # set the D flag for Executable code segment
 cpu SetDescriptor CS 0x0 0x0 0x0 0x400000

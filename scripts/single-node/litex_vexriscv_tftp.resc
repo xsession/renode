@@ -8,7 +8,7 @@ $micropython?=@https://dl.antmicro.com/projects/renode/litex_vexriscv-micropytho
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/litex_vexriscv_tftp.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_vexriscv_tftp.repl
 
 emulation CreateSwitch "switch"
 connector Connect ethmac switch

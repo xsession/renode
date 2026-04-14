@@ -1,7 +1,7 @@
 :name: MIMXRT700-EVK (i.MX RT700)
 :description: This script runs Zephyr I2S audio samples on MIMXRT700-EVK.
 
-i @platforms/boards/mimxrt700_evk.repl
+i @platforms/boards/nxp/mimxrt700_evk.repl
 
 # Signed 16-bit PCM, Little-endian, 2 Channels (Stereo), Sample rate: 16000 Hz
 # https://github.com/zephyrproject-rtos/zephyr/tree/e98920d6958525e74f14b0250b56241388c88bf4/samples/drivers/i2s/i2s_codec

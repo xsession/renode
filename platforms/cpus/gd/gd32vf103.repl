@@ -1,0 +1,87 @@
+// GigaDevice GD32VF103 — RISC-V RV32IMAC, 108 MHz, 128 KB Flash, 32 KB SRAM
+// Bumblebee core (Nuclei N205), ECLIC interrupt controller
+// Pin-compatible drop-in for STM32F103
+// Reference: GD32VF103 User Manual
+
+cpu: CPU.RiscV32 @ sysbus
+    cpuType: "rv32imac_zicsr_zifencei"
+    privilegedArchitecture: PrivilegedArchitecture.Priv1_10
+    timeProvider: clint
+    hartId: 0
+
+// Bumblebee uses ECLIC, approximated with PLIC for now
+plic: IRQControllers.PlatformLevelInterruptController @ sysbus 0xD2000000
+    0 -> cpu@11
+    numberOfSources: 87
+    numberOfContexts: 1
+
+clint: IRQControllers.CoreLevelInterruptor @ sysbus 0xD1000000
+    [0, 1] -> cpu@[3, 7]
+    frequency: 108000000
+
+// ---- Memory ----
+flash: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x20000           // 128 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x8000            // 32 KB
+
+// Boot ROM
+bootrom: Memory.MappedMemory @ sysbus 0x1FFFB000
+    size: 0x5000
+
+// ---- USART ----
+usart0: UART.SiFive_UART @ sysbus 0x40013800
+    IRQ -> plic@37
+
+usart1: UART.SiFive_UART @ sysbus 0x40004400
+    IRQ -> plic@38
+
+usart2: UART.SiFive_UART @ sysbus 0x40004800
+    IRQ -> plic@39
+
+uart3: UART.SiFive_UART @ sysbus 0x40004C00
+    IRQ -> plic@52
+
+uart4: UART.SiFive_UART @ sysbus 0x40005000
+    IRQ -> plic@53
+
+// ---- GPIO ----
+gpioA: GPIOPort.SiFive_GPIO @ sysbus 0x40010800
+    [0-15] -> plic@[6-21]
+
+gpioB: GPIOPort.SiFive_GPIO @ sysbus 0x40010C00
+    [0-15] -> plic@[6-21]
+
+gpioC: GPIOPort.SiFive_GPIO @ sysbus 0x40011000
+    [0-15] -> plic@[6-21]
+
+gpioD: GPIOPort.SiFive_GPIO @ sysbus 0x40011400
+    [0-15] -> plic@[6-21]
+
+gpioE: GPIOPort.SiFive_GPIO @ sysbus 0x40011800
+    [0-15] -> plic@[6-21]
+
+sysbus:
+    init:
+        Tag <0x40021000 0x400> "RCU – Reset and Clock Unit"
+        Tag <0x40013000 0x400> "ADC0"
+        Tag <0x40013400 0x400> "ADC1"
+        Tag <0x40006C00 0x400> "I2C0"
+        Tag <0x40005800 0x400> "I2C1"
+        Tag <0x40013000 0x400> "SPI0"
+        Tag <0x40003800 0x400> "SPI1"
+        Tag <0x40003C00 0x400> "SPI2"
+        Tag <0x40006400 0x400> "CAN0"
+        Tag <0x40006800 0x400> "CAN1"
+        Tag <0x40007000 0x400> "DAC"
+        Tag <0x40022000 0x400> "DMA0"
+        Tag <0x40020000 0x400> "DMA1"
+        Tag <0x40012C00 0x400> "Timer0"
+        Tag <0x40000000 0x400> "Timer1"
+        Tag <0x40000400 0x400> "Timer2"
+        Tag <0x40000800 0x400> "Timer3"
+        Tag <0x40000C00 0x400> "Timer4"
+        Tag <0x40001000 0x400> "Timer5"
+        Tag <0x40001400 0x400> "Timer6"
+        Tag <0x40015000 0x400> "USBFS"

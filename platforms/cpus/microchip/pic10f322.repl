@@ -1,0 +1,51 @@
+//
+// PIC10F322 platform description.
+// Microchip PIC10F322 — Enhanced midrange 8-bit MCU (14-bit instruction set)
+// 512 × 14-bit Flash, 64 bytes SRAM, 4 I/O pins, SOT-23/DFN-8
+// Reference: DS40001585, PIC10(L)F320/322 Data Sheet
+//
+// Memory map (Renode flat):
+//   0x000000–0x0003FF  Program Flash (512 words × 2 bytes)
+//   0x200000 + sfr     Data space
+//     PORTA: SFR 0x0C   TRISA: SFR 0x8C (simplified to +0x02)
+//     TMR0: SFR 0x15    OPTION: SFR 0x0E
+//     TMR2: SFR 0x1A    PR2: SFR 0x1B    T2CON: SFR 0x1C
+//     ADRES: SFR 0x1E   ADCON: SFR 0x1F
+//     GPR: 0x20–0x5F (64 bytes)
+
+cpu: CPU.PIC10 @ sysbus
+    cpuType: "pic10f322"
+
+// ---- Program Flash ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x400     // 512 words × 2 bytes = 1 KB
+
+// ---- Data SRAM (GPR 0x20-0x5F) ----
+sram: Memory.MappedMemory @ sysbus 0x200020
+    size: 0x40      // 64 bytes
+
+// ---- GPIO Port A (4 pins: RA0-RA3) ----
+porta: GPIOPort.PIC16_GPIO @ sysbus <0x20000C, +0x02>
+    pinCount: 4
+
+// ---- Timer0 (8-bit) ----
+timer0: Timers.PIC16_Timer0 @ sysbus <0x200015, +0x03>
+    -> cpu@0
+
+// ---- Timer2 (8-bit with period register) ----
+// T2CON=0x1C, TMR2=0x1A, PR2=0x1B
+timer2: Timers.PIC16_Timer2 @ sysbus <0x20001A, +0x03>
+    -> cpu@0
+
+// ---- ADC (8-bit, 3 channels) ----
+// ADRES=0x1E, ADCON=0x1F
+adc: Analog.PIC16_ADC @ sysbus <0x20001E, +0x04>
+    -> cpu@0
+
+// ---- Watchdog Timer ----
+wdt: Timers.PIC16_WDT @ sysbus <0x200097, +0x01>
+    -> cpu@0
+
+// ---- CCP/PWM ----
+ccp: Timers.PIC16_CCP @ sysbus <0x200291, +0x04>
+    -> cpu@0

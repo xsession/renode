@@ -20,7 +20,7 @@ emulation CreateBLEMedium "wireless"
 
 # Create a machine named "central" based on the nRF52840 platform and set it as active.
 mach create "central"
-machine LoadPlatformDescription @platforms/cpus/nrf52840.repl
+machine LoadPlatformDescription @platforms/cpus/nordic/nrf52840.repl
 connector Connect sysbus.radio wireless
 
 # Create a UART analyzer for the "central" machine. 
@@ -31,7 +31,7 @@ showAnalyzer uart0
 
 # Create a machine named "peripheral" based on the nRF52840 platform and set it as active.
 mach create "peripheral"
-machine LoadPlatformDescription @platforms/cpus/nrf52840.repl
+machine LoadPlatformDescription @platforms/cpus/nordic/nrf52840.repl
 connector Connect sysbus.radio wireless
 
 # Create a UART analyzer for the "peripheral" machine.

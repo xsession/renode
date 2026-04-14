@@ -1,0 +1,120 @@
+// dsPIC30F5011 platform description
+// Microchip dsPIC30F5011 — 16-bit DSP/MCU (dsPIC30 family)
+// Reference: DS70082, dsPIC30F5011/5013 Data Sheet
+//
+// Memory map (16-bit data space, byte addresses):
+//   0x0000–0x07FF  SFR region (2 KB)
+//   0x0800–0x17FF  Data RAM (4 KB: X-data + Y-data combined)
+//   0x7FFC00       Configuration registers
+//
+// Program memory (24-bit word-addressed):
+//   0x000000–0x00ABFF  Program Flash (66 KB, 22K instruction words)
+//   0x7FF000–0x7FFFFF  Device configuration
+//
+// dsPIC30 shares the dsPIC33 tlib instruction set core.
+
+cpu: CPU.DSPIC33 @ sysbus
+    cpuType: "dspic30f5011"
+
+// ---- Program Flash ----
+// NOTE: dsPIC30F is Harvard architecture. Program memory mapped at 0x100000
+// to avoid overlap with data-space SFR/SRAM on the flat sysbus.
+flash: Memory.MappedMemory @ sysbus 0x100000
+    size: 0x00AC00    // 66 KB program flash (phantom-byte model)
+
+// ---- Data RAM ----
+ram: Memory.MappedMemory @ sysbus 0x001000
+    size: 0x001000    // 4 KB data RAM (page-aligned)
+
+// ---- UART1 (U1) ----
+// SFR: UxMODE at 0x020C (dsPIC30F5011)
+uart1: UART.dsPIC30_UART @ sysbus <0x00020C, +0x0A>
+    -> cpu@0
+
+// ---- UART2 (U2) ----
+// SFR: U2MODE at 0x0216
+uart2: UART.dsPIC30_UART @ sysbus <0x000216, +0x0A>
+    -> cpu@0
+
+// ---- SPI1 ----
+// SFR: SPI1STAT at 0x0220
+spi1: SPI.dsPIC30_SPI @ sysbus <0x000220, +0x06>
+    -> cpu@0
+
+// ---- SPI2 ----
+// SFR: SPI2STAT at 0x0226
+spi2: SPI.dsPIC30_SPI @ sysbus <0x000226, +0x06>
+    -> cpu@0
+
+// ---- I2C ----
+// SFR: I2CRCV at 0x0230
+i2c: I2C.dsPIC30_I2C @ sysbus <0x000230, +0x0C>
+    -> cpu@0
+
+// ---- Timer1 (Type A) ----
+// SFR: TMR1 at 0x0100
+timer1: Timers.dsPIC30_Timer @ sysbus <0x000100, +0x06>
+    baseFrequency: 30000000
+    -> cpu@0
+
+// ---- Timer2 (Type B) ----
+// SFR: TMR2 at 0x0106
+timer2: Timers.dsPIC30_Timer @ sysbus <0x000106, +0x04>
+    baseFrequency: 30000000
+    -> cpu@0
+
+// ---- Timer3 (Type B) ----
+// SFR: TMR3 at 0x010A
+timer3: Timers.dsPIC30_Timer @ sysbus <0x00010A, +0x04>
+    baseFrequency: 30000000
+    -> cpu@0
+
+// ---- Timer4 (Type B) ----
+timer4: Timers.dsPIC30_Timer @ sysbus <0x000110, +0x04>
+    baseFrequency: 30000000
+    -> cpu@0
+
+// ---- Timer5 (Type B) ----
+timer5: Timers.dsPIC30_Timer @ sysbus <0x000116, +0x04>
+    baseFrequency: 30000000
+    -> cpu@0
+
+// ---- ADC (10-bit) ----
+// SFR: ADCON1 at 0x02A0
+adc: Analog.dsPIC30_ADC @ sysbus <0x0002A0, +0x20>
+    -> cpu@0
+
+// ---- GPIO Port B ----
+// SFR: TRISB at 0x02C6
+gpio_portb: GPIOPort.dsPIC30_GPIO @ sysbus <0x0002C6, +0x06>
+    -> cpu@0
+
+// ---- GPIO Port C ----
+// SFR: TRISC at 0x02CC
+gpio_portc: GPIOPort.dsPIC30_GPIO @ sysbus <0x0002CC, +0x06>
+    -> cpu@0
+
+// ---- GPIO Port D ----
+// SFR: TRISD at 0x02D2
+gpio_portd: GPIOPort.dsPIC30_GPIO @ sysbus <0x0002D2, +0x06>
+    -> cpu@0
+
+// ---- GPIO Port F ----
+// SFR: TRISF at 0x02DE
+gpio_portf: GPIOPort.dsPIC30_GPIO @ sysbus <0x0002DE, +0x06>
+    -> cpu@0
+
+// ---- CAN1 (CAN 2.0B module) ----
+// SFR: C1RXF0SID at 0x0300
+can1: CAN.dsPIC30_CAN @ sysbus <0x000300, +0x90>
+    -> cpu@0
+
+// ---- Watchdog Timer ----
+wdt: Timers.dsPIC30_WDT @ sysbus <0x000900, +0x02>
+    -> cpu@0
+
+// ---- PWM Module (4 channels) ----
+// SFR: OC1 output compare base
+pwm: Timers.dsPIC30_PWM @ sysbus <0x000180, +0x18>
+    channels: 4
+    -> cpu@0

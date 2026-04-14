@@ -1,0 +1,41 @@
+//
+// PIC10F200 platform description.
+// Microchip PIC10F200 — Baseline 8-bit MCU (12-bit instruction set)
+// 256 × 12-bit Flash, 16 bytes SRAM, 4 I/O pins, SOT-23/DIP-8
+// Reference: DS40001239, PIC10F200/202/204/206 Data Sheet
+//
+// NOTE: Baseline PIC10F200 uses 12-bit instructions (subset of midrange).
+//       The pic16 tlib handles the common instruction subset.
+//
+// Memory map (Renode flat):
+//   0x000000–0x0001FF  Program Flash (256 words × 2 bytes)
+//   0x200000 + sfr     Data space (SFRs + 16 bytes GPR)
+//     SFR 0x00: INDF      SFR 0x01: TMR0       SFR 0x02: PCL
+//     SFR 0x03: STATUS    SFR 0x04: FSR         SFR 0x05: OSCCAL
+//     SFR 0x06: GPIO      SFR 0x06 (bank1): TRISIO
+//     GPR: 0x10–0x1F (16 bytes)
+
+cpu: CPU.PIC10 @ sysbus
+    cpuType: "pic10f200"
+
+// ---- Program Flash ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x200     // 256 words × 2 bytes = 512 B
+
+// ---- Data SRAM (GPR 0x10-0x1F) ----
+sram: Memory.MappedMemory @ sysbus 0x200010
+    size: 0x10      // 16 bytes
+
+// ---- GPIO (4 pins: GP0-GP3) ----
+// SFR 0x06 = GPIO, TRISIO mapped as offset +1
+gpio: GPIOPort.PIC16_GPIO @ sysbus <0x200006, +0x02>
+    pinCount: 4
+
+// ---- Timer0 (8-bit) ----
+// SFR 0x01 = TMR0
+timer0: Timers.PIC16_Timer0 @ sysbus <0x200001, +0x03>
+    -> cpu@0
+
+// ---- Watchdog Timer ----
+wdt: Timers.PIC16_WDT @ sysbus <0x200080, +0x01>
+    -> cpu@0

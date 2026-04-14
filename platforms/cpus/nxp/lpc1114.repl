@@ -1,0 +1,41 @@
+// NXP LPC1114 — Cortex-M0, 50 MHz, 32 KB Flash, 8 KB SRAM
+// Reference: UM10398, LPC111x/LPC11Cxx User Manual
+// Popular low-cost entry-level ARM MCU
+//
+// Memory map:
+//   0x00000000  Flash (32 KB)
+//   0x10000000  SRAM (8 KB)
+//   0x40000000  APB peripherals
+//   0x50000000  AHB peripherals (GPIO)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 50000000
+    IRQ -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x8000
+
+sram: Memory.MappedMemory @ sysbus 0x10000000
+    size: 0x2000
+
+uart: UART.LPC_UART @ sysbus <0x40008000, +0x68>
+    -> nvic@21
+
+timer0: Timers.LPC_Timer @ sysbus <0x4000C000, +0x80>
+    -> nvic@16
+
+timer1: Timers.LPC_Timer @ sysbus <0x40010000, +0x80>
+    -> nvic@17
+
+i2c: I2C.LPC_I2C @ sysbus 0x40000000
+    -> nvic@15
+
+spi0: SPI.LPC_SPI @ sysbus 0x40040000
+    -> nvic@18
+
+spi1: SPI.LPC_SPI @ sysbus 0x40058000
+    -> nvic@29

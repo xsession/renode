@@ -1,0 +1,25 @@
+// STM32F411 — Cortex-M4F, 100 MHz, 512 KB Flash, 128 KB SRAM
+// Reference: RM0383, STM32F411 Reference Manual
+// Popular "Black Pill" MCU
+using "./stm32f4.repl"
+
+cpu:
+    cpuType: "cortex-m4f"
+
+nvic:
+    systickFrequency: 100000000
+
+flash:
+    size: 0x80000
+
+sram:
+    size: 0x20000
+
+usart6: UART.STM32_UART @ sysbus <0x40011400, +0x100>
+    -> nvic@71
+
+spi4: SPI.STM32SPI @ sysbus 0x40013400
+    IRQ -> nvic@84
+
+spi5: SPI.STM32SPI @ sysbus 0x40015000
+    IRQ -> nvic@85

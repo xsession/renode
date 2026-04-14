@@ -1,6 +1,6 @@
 $name?="RT595"
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/imxrt500.repl
+machine LoadPlatformDescription @platforms/cpus/nxp/imxrt500.repl
 
 $bin?=@https://dl.antmicro.com/projects/renode/mimxrt595_evk--shell_module.elf-s_2471248-db5ac4a6c0ea5bfbfbde39a708b267114f693a63
 

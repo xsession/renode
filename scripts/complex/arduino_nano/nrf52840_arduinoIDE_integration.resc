@@ -2,7 +2,7 @@ using sysbus
 logLevel 3
 
 mach create
-machine LoadPlatformDescription @platforms/boards/arduino_nano_33_ble.repl
+machine LoadPlatformDescription @platforms/boards/arduino/arduino_nano_33_ble.repl
 
 showAnalyzer uart0
 

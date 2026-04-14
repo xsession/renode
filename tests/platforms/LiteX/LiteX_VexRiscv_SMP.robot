@@ -3,7 +3,7 @@ Create Platform
     Execute Command           using sysbus
 
     Execute Command           mach create
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/litex_vexriscv_smp.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/litex/litex_vexriscv_smp.repl
 
     Execute Command           sysbus LoadBinary @https://dl.antmicro.com/projects/renode/litex_vexriscv_smp--opensbi.bin-s_45360-dcfe5f7b149bd1e0232609d87fb698f95f5e33c4 0x40F00000
     Execute Command           sysbus LoadBinary @https://dl.antmicro.com/projects/renode/litex_vexriscv_smp--linux_kernel.bin-s_3009892-d77e1e2a896ab0767452ee9b1186e117b606ba39 0x40000000

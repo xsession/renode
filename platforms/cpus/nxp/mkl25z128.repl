@@ -1,0 +1,48 @@
+// NXP Kinetis KL25Z128 (MKL25Z128VLK4) — Cortex-M0+, 48 MHz
+// 128 KB Flash, 16 KB SRAM
+// Reference: KL25 Sub-Family Reference Manual (KL25P80M48SF0RM)
+// FRDM-KL25Z freedom board MCU
+//
+// Memory map:
+//   0x00000000  Flash (128 KB)
+//   0x1FFFF000  SRAM_L (4 KB, lower)
+//   0x20000000  SRAM_U (12 KB, upper)
+//   0x40000000  Peripheral bridge (AIPS-Lite)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0+"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 48000000
+    IRQ -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x20000
+
+sram_l: Memory.MappedMemory @ sysbus 0x1FFFF000
+    size: 0x1000
+
+sram_u: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x3000
+
+uart0: UART.Kinetis_UART @ sysbus 0x4006A000
+    -> nvic@12
+
+uart1: UART.Kinetis_UART @ sysbus 0x4006B000
+    -> nvic@13
+
+uart2: UART.Kinetis_UART @ sysbus 0x4006C000
+    -> nvic@14
+
+spi0: SPI.Kinetis_SPI @ sysbus 0x40076000
+    -> nvic@10
+
+spi1: SPI.Kinetis_SPI @ sysbus 0x40077000
+    -> nvic@11
+
+i2c0: I2C.Kinetis_I2C @ sysbus 0x40066000
+    -> nvic@8
+
+i2c1: I2C.Kinetis_I2C @ sysbus 0x40067000
+    -> nvic@9

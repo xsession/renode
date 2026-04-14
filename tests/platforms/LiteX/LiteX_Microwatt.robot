@@ -6,7 +6,7 @@ ${BIOS}                       litex_microwatt--bios.bin-s_31172-0833ddddcf3d4aff
 *** Keywords ***
 Create Platform
     Execute Command           mach create
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/litex_microwatt.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/litex/litex_microwatt.repl
 
     Execute Command           sysbus LoadBinary ${URI}/${BIOS} 0x0
     Execute Command           sysbus.cpu PC 0x0

@@ -1,0 +1,7 @@
+// TI MSP-EXP430G2ET — MSP430G2553 LaunchPad (Value Line)
+// MSP430 @ 16 MHz, 16 KB Flash, 512 B RAM
+// 2 LEDs: LED1 (P1.0 red), LED2 (P1.6 green)
+// 1 button: S2 (P1.3)
+// 20-pin DIP socket, eZ-FET debug probe
+
+using "platforms/cpus/ti/msp430g2553.repl"

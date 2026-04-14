@@ -4,7 +4,7 @@ $name?="Murax"
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/murax_vexriscv.repl
+machine LoadPlatformDescription @platforms/cpus/others/murax_vexriscv.repl
 
 showAnalyzer sysbus.uart
 

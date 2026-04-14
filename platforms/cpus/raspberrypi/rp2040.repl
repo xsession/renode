@@ -1,0 +1,92 @@
+// RP2040 (Raspberry Pi Pico) platform description
+// Dual ARM Cortex-M0+ @ 133 MHz
+// Reference: RP2040 Datasheet (Raspberry Pi Ltd.)
+//
+// Memory map:
+//   0x00000000–0x00FFFFFF  ROM (16 KB boot ROM)
+//   0x10000000–0x10FFFFFF  XIP (external flash via QSPI — up to 16 MB)
+//   0x20000000–0x20041FFF  SRAM (264 KB total, 6 banks: 4×64KB + 2×4KB)
+//   0x40000000–0x40FFFFFF  APB peripherals
+//   0x50000000–0x50FFFFFF  AHB-Lite peripherals
+//   0xD0000000–0xD0FFFFFF  SIO (single-cycle IO)
+//   0xE0000000             ARM PPB (SysTick, NVIC, etc.)
+
+cpu0: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0+"
+    nvic: nvic0
+
+nvic0: IRQControllers.NVIC @ sysbus 0xE000E000
+    -> cpu0@0
+
+// ---- ROM (boot) ----
+rom: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x4000    // 16 KB
+
+// ---- XIP Flash (external, memory-mapped) ----
+flash: Memory.MappedMemory @ sysbus 0x10000000
+    size: 0x200000  // 2 MB (typical W25Q16JV; up to 16 MB)
+
+// ---- SRAM ----
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x42000   // 264 KB (SRAM0-SRAM5 contiguous)
+
+// ---- UART0 (PL011) ----
+uart0: UART.RP2040_UART @ sysbus <0x40034000, +0x1000>
+    -> nvic0@20
+
+// ---- UART1 (PL011) ----
+uart1: UART.RP2040_UART @ sysbus <0x40038000, +0x1000>
+    -> nvic0@21
+
+// ---- SPI0 (PL022) ----
+spi0: SPI.RP2040_SPI @ sysbus <0x4003C000, +0x1000>
+    -> nvic0@18
+
+// ---- SPI1 (PL022) ----
+spi1: SPI.RP2040_SPI @ sysbus <0x40040000, +0x1000>
+    -> nvic0@19
+
+// ---- I2C0 (DW_apb_i2c) ----
+i2c0: I2C.RP2040_I2C @ sysbus <0x40044000, +0x1000>
+    -> nvic0@23
+
+// ---- I2C1 (DW_apb_i2c) ----
+i2c1: I2C.RP2040_I2C @ sysbus <0x40048000, +0x1000>
+    -> nvic0@24
+
+// ---- ADC (12-bit, 5 channels) ----
+adc: Analog.RP2040_ADC @ sysbus <0x4004C000, +0x1000>
+    -> nvic0@22
+
+// ---- PWM (8 slices × 2 channels) ----
+pwm: Timers.RP2040_PWM @ sysbus <0x40050000, +0x1000>
+    -> nvic0@4
+
+// ---- System Timer (64-bit, 1 MHz) ----
+timer: Timers.RP2040_Timer @ sysbus <0x40054000, +0x1000>
+    -> nvic0@0
+
+// ---- GPIO (SIO-side, 30 pins) ----
+gpio: GPIOPort.RP2040_GPIO @ sysbus <0xD0000000, +0x1000>
+    numberOfPins: 30
+
+// ---- Watchdog ----
+watchdog: Timers.RP2040_Watchdog @ sysbus <0x40058000, +0x1000>
+    -> nvic0@0
+
+// ---- DMA (12 channels) ----
+dma: DMA.RP2040_DMA @ sysbus <0x50000000, +0x1000>
+    IRQ0 -> nvic0@11
+    IRQ1 -> nvic0@12
+
+// ---- PIO0 (Programmable IO block 0) ----
+pio0: Miscellaneous.RP2040_PIO @ sysbus <0x50200000, +0x1000>
+    -> nvic0@7
+
+// ---- PIO1 (Programmable IO block 1) ----
+pio1: Miscellaneous.RP2040_PIO @ sysbus <0x50300000, +0x1000>
+    -> nvic0@9
+
+// ---- SSI (QSPI flash controller — XIP) ----
+ssi: SPI.RP2040_SSI @ sysbus <0x18000000, +0x1000>
+    -> nvic0@6

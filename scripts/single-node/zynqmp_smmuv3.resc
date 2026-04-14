@@ -9,7 +9,7 @@ mach create $name
 emulation SetGlobalSerialExecution true
 
 machine LoadPlatformDescriptionFromString """
-using "platforms/boards/zynqmp-zcu102-revB.repl"
+using "platforms/boards/xilinx/zynqmp-zcu102-revB.repl"
 
 smmu: MemoryControllers.ARM_SMMUv3 @ sysbus 0xfd800000
     context: apu0

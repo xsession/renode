@@ -4,7 +4,7 @@ ${URI}                        @https://dl.antmicro.com/projects/renode
 
 ${LSM303DLHC}=     SEPARATOR=
 ...  """                                                        ${\n}
-...  using "platforms/cpus/nrf52840.repl"                       ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"                       ${\n}
 ...                                                             ${\n}
 ...  lsm303dlhc_a: Sensors.LSM303DLHC_Accelerometer @ twi1 0x19 ${\n}
 ...  ${SPACE*4}\[IRQ0,IRQ1\] -> gpio0@\[26,27\]                 ${\n}

@@ -1,5 +1,5 @@
 *** Variables ***
-${PLATFORM}                         @platforms/cpus/cortex-a53-gicv2.repl
+${PLATFORM}                         @platforms/cpus/arm/cortex-a53-gicv2.repl
 ${LOG_WFI_ENTER}                    WFI_ENTER
 ${LOG_WFI_END}                      WFI_EXIT
 

@@ -7,7 +7,7 @@ $input_file?=@https://dl.antmicro.com/projects/renode/sine440_with_beep_aligned.
 using sysbus
 
 mach create
-machine LoadPlatformDescription @platforms/cpus/litex_zephyr_vexriscv_i2s.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_zephyr_vexriscv_i2s.repl
 
 showAnalyzer sysbus.uart
 

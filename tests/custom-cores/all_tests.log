@@ -1,0 +1,32 @@
+========================================
+ Custom CPU Core Blink Tests
+========================================
+
+
+--- stm8 ---
+  PASS: Machine started and paused successfully
+  Log: /mnt/c/GIT/renode/tests/custom-cores/test_stm8.log
+
+--- mcs51 ---
+  PASS: Machine started and paused successfully
+  Log: /mnt/c/GIT/renode/tests/custom-cores/test_mcs51.log
+
+--- pic16 ---
+  PASS: Machine started and paused successfully
+  Log: /mnt/c/GIT/renode/tests/custom-cores/test_pic16.log
+
+--- pic18 ---
+  PASS: Machine started and paused successfully
+  Log: /mnt/c/GIT/renode/tests/custom-cores/test_pic18.log
+
+--- c2000 ---
+  PASS: Machine started and paused successfully
+  Log: /mnt/c/GIT/renode/tests/custom-cores/test_c2000.log
+
+--- dspic33 ---
+  PASS: Machine started and paused successfully
+  Log: /mnt/c/GIT/renode/tests/custom-cores/test_dspic33.log
+
+========================================
+ Results: 6 passed, 0 failed (of 6)
+========================================

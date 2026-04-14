@@ -8,7 +8,7 @@ ${a3}                         0xd
 *** Keywords ***
 Create Machine
     Execute Command        mach create
-    Execute Command        machine LoadPlatformDescription @platforms/cpus/litex_ibex.repl
+    Execute Command        machine LoadPlatformDescription @platforms/cpus/litex/litex_ibex.repl
     Execute Command        using sysbus
 
     Execute Command        cpu PC 0x0

@@ -7,7 +7,7 @@ Setup Machine
     [Arguments]             ${elf}
 
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/boards/eos-s3-quickfeather.repl
+    Execute Command         machine LoadPlatformDescription @platforms/boards/quicklogic/eos-s3-quickfeather.repl
 
     Execute Command         sysbus LoadELF ${URI}/${elf}
     Create Terminal Tester  ${UART}

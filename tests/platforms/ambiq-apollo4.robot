@@ -6,7 +6,7 @@ Create Machine
     Execute Command           using sysbus
     Execute Command           mach create "Ambiq Apollo4"
 
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/ambiq-apollo4.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/ambiq/ambiq-apollo4.repl
     Create Terminal Tester    sysbus.uart2  10
 
 Load Example

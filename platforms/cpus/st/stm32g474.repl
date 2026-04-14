@@ -1,0 +1,20 @@
+// STM32G474 — Cortex-M4F, 170 MHz, 512 KB Flash, 128 KB SRAM
+// Reference: RM0440, STM32G4 Reference Manual
+// Extended G4 with HRTIM, USB, more ADCs
+using "./stm32g431.repl"
+
+flash:
+    size: 0x80000
+
+sram:
+    size: 0x18000
+
+ccmram:
+    size: 0x8000
+
+can2: CAN.STMCAN @ sysbus <0x40006800, +0x400>
+    [0-3] -> nvic@[63-66]
+    master: can1
+
+can3: CAN.STMCAN @ sysbus <0x40006C00, +0x400>
+    [0-3] -> nvic@[78-81]

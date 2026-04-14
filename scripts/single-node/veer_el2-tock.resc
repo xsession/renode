@@ -7,7 +7,7 @@ $app?=@https://dl.antmicro.com/projects/renode/Veer_EL2_Tock_Rot13_Demo.tbf-s_20
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/tock_veer_el2_sim.repl
+machine LoadPlatformDescription @platforms/cpus/others/tock_veer_el2_sim.repl
 
 macro reset
 """

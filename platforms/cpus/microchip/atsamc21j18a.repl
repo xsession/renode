@@ -1,0 +1,85 @@
+// Microchip ATSAMC21J18A — Cortex-M0+, 48 MHz, 256 KB Flash, 32 KB SRAM
+// SAM C21 series — CAN bus, 5V tolerant, industrial
+// Reference: DS60001479 (SAMC21 Family Datasheet)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0+"
+    nvic: nvic
+    init:
+        PerformanceInMips 48
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 48000000
+    -> cpu@0
+
+dwt: Miscellaneous.DWT @ sysbus 0xE0001000
+    frequency: 48000000
+
+// ---- Memory ----
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x40000           // 256 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x8000            // 32 KB
+
+// ---- SERCOM (UART) ----
+sercom0: UART.SAMD5_UART @ sysbus 0x42000400
+    -> nvic@9
+
+sercom1: UART.SAMD5_UART @ sysbus 0x42000800
+    -> nvic@10
+
+sercom2: UART.SAMD5_UART @ sysbus 0x42000C00
+    -> nvic@11
+
+sercom3: UART.SAMD5_UART @ sysbus 0x42001000
+    -> nvic@12
+
+sercom4: UART.SAMD5_UART @ sysbus 0x42001400
+    -> nvic@13
+
+sercom5: UART.SAMD5_UART @ sysbus 0x42001800
+    -> nvic@14
+
+// ---- Timers ----
+tc0: Timers.SAMD21_Timer @ sysbus 0x42002000
+    baseFrequency: 48000000
+    IRQ -> nvic@15
+
+tc1: Timers.SAMD21_Timer @ sysbus 0x42002400
+    baseFrequency: 48000000
+    IRQ -> nvic@16
+
+tc2: Timers.SAMD21_Timer @ sysbus 0x42002800
+    baseFrequency: 48000000
+    IRQ -> nvic@17
+
+tc3: Timers.SAMD21_Timer @ sysbus 0x42002C00
+    baseFrequency: 48000000
+    IRQ -> nvic@18
+
+tc4: Timers.SAMD21_Timer @ sysbus 0x42003000
+    baseFrequency: 48000000
+    IRQ -> nvic@19
+
+// ---- GPIO ----
+gpio_a: GPIOPort.SAMD21_GPIO @ sysbus 0x41004400
+
+gpio_b: GPIOPort.SAMD21_GPIO @ sysbus 0x41004480
+
+// ---- RTC ----
+rtc: Timers.SAMD21_RTC @ sysbus 0x40001400
+    IRQ -> nvic@3
+
+sysbus:
+    init:
+        Tag <0x40000000 0x80> "PAC"
+        Tag <0x40000400 0x80> "PM"
+        Tag <0x40000800 0x80> "MCLK"
+        Tag <0x40000C00 0x80> "OSCCTRL"
+        Tag <0x40001000 0x80> "OSC32KCTRL"
+        Tag <0x40001000 0x80> "GCLK"
+        Tag <0x40002000 0x100> "WDT"
+        Tag <0x41006000 0x100> "DMAC"
+        Tag <0x42003400 0x100> "CAN0"
+        Tag <0x42003800 0x100> "CAN1"

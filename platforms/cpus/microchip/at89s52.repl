@@ -1,0 +1,64 @@
+// AT89S52 platform description
+// Atmel AT89S52 — 8 KB Flash, 256 B IRAM, 64 KB XDATA
+//
+// Memory layout (tlib conventions):
+//   0x000000–0x001FFF  Program Flash (CODE space, 8 KB)
+//   0x100000–0x1000FF  Internal RAM (IRAM, 256 bytes)
+//   0x200000–0x20FFFF  External Data (XDATA, 64 KB)
+//   0x300000+sfr_addr  Special Function Registers (SFR, 0x80-0xFF)
+//
+// Clock: 11.0592 MHz crystal typical (12 clocks per machine cycle)
+// Reset vector: 0x0000
+
+cpu: CPU.MCS51 @ sysbus
+    cpuType: "at89s52"
+
+// ---- Program Flash (CODE) ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x002000    // 8 KB
+
+// ---- Internal RAM ----
+iram: Memory.MappedMemory @ sysbus 0x100000
+    size: 0x000100    // 256 bytes
+
+// ---- External Data Memory ----
+xdata: Memory.MappedMemory @ sysbus 0x200000
+    size: 0x010000    // 64 KB
+
+// ---- SFR Space (0x80-0xFF mapped at 0x300080-0x3000FF) ----
+sfr: Memory.MappedMemory @ sysbus 0x300000
+    size: 0x000100    // 256 bytes (only 0x80-0xFF used)
+
+// ---- UART (SCON at SFR 0x98, SBUF at 0x99) ----
+// Mapped relative to SFR base: offset 0x98
+uart: UART.MCS51_UART @ sysbus <0x300098, +0x03>
+    baseFrequency: 11059200
+    -> cpu@0
+
+// ---- Timer 0/1 (TCON at 0x88, TMOD at 0x89, TL0/TH0/TL1/TH1) ----
+timer: Timers.MCS51_Timer @ sysbus <0x300088, +0x06>
+    baseFrequency: 11059200
+    -> cpu@0
+
+// ---- Port 0 (SFR 0x80) ----
+port0: GPIOPort.MCS51_GPIO @ sysbus <0x300080, +0x01>
+
+// ---- Port 1 (SFR 0x90) ----
+port1: GPIOPort.MCS51_GPIO @ sysbus <0x300090, +0x01>
+
+// ---- Port 2 (SFR 0xA0) ----
+port2: GPIOPort.MCS51_GPIO @ sysbus <0x3000A0, +0x01>
+
+// ---- Port 3 (SFR 0xB0) ----
+port3: GPIOPort.MCS51_GPIO @ sysbus <0x3000B0, +0x01>
+
+// ---- Timer 2 (T2CON at SFR 0xC8) ----
+timer2: Timers.MCS51_Timer2 @ sysbus <0x3000C8, +0x05>
+    baseFrequency: 11059200
+    -> cpu@0
+
+// ---- Watchdog (WDTRST at SFR 0xA6) ----
+wdt: Timers.MCS51_WDT @ sysbus <0x3000A6, +0x01>
+
+// ---- Interrupt Enable (IE at SFR 0xA8) ----
+ie: Miscellaneous.MCS51_IE @ sysbus <0x3000A8, +0x02>

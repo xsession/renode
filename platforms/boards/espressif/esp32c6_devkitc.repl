@@ -1,0 +1,11 @@
+// ESP32-C6-DevKitC-1 — ESP32-C6, RV32IMAC @ 160 MHz
+// 8 MB external flash, 512 KB SRAM, WiFi 6 + BLE 5.3 + Thread/Zigbee
+// On-board addressable RGB LED on GPIO8
+
+using "platforms/cpus/espressif/esp32c6.repl"
+
+// RGB LED — modeled as single LED on GPIO8
+gpio:
+    8 -> rgbLed@0
+
+rgbLed: Miscellaneous.LED @ gpio 8

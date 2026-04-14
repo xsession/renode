@@ -1,0 +1,10 @@
+16:15:06.6168 [INFO] Loaded monitor commands from: /mnt/c/GIT/renode/scripts/monitor.py
+16:15:06.6366 [INFO] Monitor available in telnet mode on port 1234
+16:15:06.6924 [INFO] Including script(s): /mnt/c/GIT/renode/tests/custom-cores/test_stm8.resc
+16:15:06.7249 [INFO] System bus created.
+16:15:07.6459 [INFO] sysbus: Loading block of 10 bytes length at 0x0.
+16:15:08.0865 [INFO] Script: --- STM8: starting simulation ---
+16:15:08.2455 [INFO] stm8-blink: Machine started.
+16:15:08.2683 [INFO] stm8-blink: Machine paused.
+16:15:08.2694 [INFO] Script: --- STM8: simulation finished ---
+16:16:03.2739 [INFO] stm8-blink: Disposed.

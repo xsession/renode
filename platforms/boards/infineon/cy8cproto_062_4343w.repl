@@ -1,0 +1,13 @@
+// Infineon CY8CPROTO-062-4343W — PSoC 6 + CYW4343W WiFi/BLE
+// Dual CM4F + CM0+, 2 MB Flash, 1 MB SRAM
+// User LED (P13_7), User button (P0_4)
+// WiFi 802.11 b/g/n + BLE 4.2
+
+using "platforms/cpus/infineon/cy8c6247.repl"
+
+// Larger PSoC 62 variant memory
+flash: Memory.MappedMemory @ sysbus 0x10000000
+    size: 0x200000          // 2 MB
+
+sram0: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x100000          // 1 MB

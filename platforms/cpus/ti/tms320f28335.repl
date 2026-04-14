@@ -1,0 +1,149 @@
+// TMS320F28335 platform description
+// Texas Instruments TMS320F28335 — Single-core C28x + FPU (Delfino series)
+// 150 MHz, 256 KB Flash, 34 KB SARAM, FPU32
+// Reference: SPRS439, TMS320F2833x Technical Reference Manual (SPRUFB0)
+//
+// Memory map:
+//   0x000000–0x0003FF  M0 SARAM (1 KB)
+//   0x000400–0x0007FF  M1 SARAM (1 KB)
+//   0x008000–0x009FFF  L0-L3 SARAM (8 KB, 4 × 2 KB)
+//   0x00A000–0x00BFFF  L4-L7 SARAM (8 KB, 4 × 2 KB)
+//   0x00C000–0x00DFFF  L8-L9 SARAM (8 KB DMA-accessible)
+//   0x300000–0x33FFFF  Flash (256 KB)
+//   0x3FE000–0x3FFFFF  Boot ROM (8 KB)
+
+cpu: CPU.C2000 @ sysbus
+    cpuType: "tms320f28335"
+
+// ---- SARAM ----
+m0m1saram: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x000800    // M0+M1 merged (2 KB)
+
+l0l3saram: Memory.MappedMemory @ sysbus 0x008000
+    size: 0x002000    // L0-L3: 8 KB
+
+l4l7saram: Memory.MappedMemory @ sysbus 0x00A000
+    size: 0x002000    // L4-L7: 8 KB
+
+l8l9saram: Memory.MappedMemory @ sysbus 0x00C000
+    size: 0x002000    // L8-L9: 8 KB (DMA accessible)
+
+// ---- Flash ----
+flash: Memory.MappedMemory @ sysbus 0x300000
+    size: 0x040000    // 256 KB
+
+// ---- Boot ROM ----
+bootrom: Memory.MappedMemory @ sysbus 0x3FE000
+    size: 0x002000    // 8 KB
+
+// ---- CPU Timer 0 ----
+timer0: Timers.C2000_CPUTimer @ sysbus <0x000C00, +0x08>
+    baseFrequency: 150000000
+    -> cpu@0
+
+// ---- CPU Timer 1 ----
+timer1: Timers.C2000_CPUTimer @ sysbus <0x000C08, +0x08>
+    baseFrequency: 150000000
+    -> cpu@0
+
+// ---- CPU Timer 2 ----
+timer2: Timers.C2000_CPUTimer @ sysbus <0x000C10, +0x08>
+    baseFrequency: 150000000
+    -> cpu@0
+
+// ---- SCI-A (UART-A) @ 0x7050 ----
+uart_a: UART.C2000_SCI @ sysbus <0x007050, +0x10>
+    -> cpu@0
+
+// ---- SCI-B (UART-B) @ 0x7750 ----
+uart_b: UART.C2000_SCI @ sysbus <0x007750, +0x10>
+    -> cpu@0
+
+// ---- SCI-C (UART-C) @ 0x7770 ----
+uart_c: UART.C2000_SCI @ sysbus <0x007770, +0x10>
+    -> cpu@0
+
+// ---- SPI-A @ 0x7040 ----
+spi_a: SPI.C2000_SPI @ sysbus <0x007040, +0x10>
+    -> cpu@0
+
+// ---- SPI-B @ 0x7740 ----  (DMA accessible)
+spi_b: SPI.C2000_SPI @ sysbus <0x007740, +0x10>
+    -> cpu@0
+
+// ---- SPI-C @ 0x7760 ----
+spi_c: SPI.C2000_SPI @ sysbus <0x007760, +0x10>
+    -> cpu@0
+
+// ---- I2C-A @ 0x7900 ----
+i2c_a: I2C.C2000_I2C @ sysbus <0x007900, +0x18>
+    -> cpu@0
+
+// ---- ADC (12-bit) @ 0x0B00 ----
+adc: Analog.C2000_ADC12 @ sysbus <0x000B00, +0x80>
+    -> cpu@0
+
+// ---- ePWM1-6 ----
+epwm1: Timers.C2000_ePWM @ sysbus <0x006800, +0x40>
+    -> cpu@0
+
+epwm2: Timers.C2000_ePWM @ sysbus <0x006840, +0x40>
+    -> cpu@0
+
+epwm3: Timers.C2000_ePWM @ sysbus <0x006880, +0x40>
+    -> cpu@0
+
+epwm4: Timers.C2000_ePWM @ sysbus <0x0068C0, +0x40>
+    -> cpu@0
+
+epwm5: Timers.C2000_ePWM @ sysbus <0x006900, +0x40>
+    -> cpu@0
+
+epwm6: Timers.C2000_ePWM @ sysbus <0x006940, +0x40>
+    -> cpu@0
+
+// ---- eCAP1-6 ----
+ecap1: Timers.C2000_eCAP @ sysbus <0x006A00, +0x40>
+    -> cpu@0
+
+ecap2: Timers.C2000_eCAP @ sysbus <0x006A40, +0x40>
+    -> cpu@0
+
+ecap3: Timers.C2000_eCAP @ sysbus <0x006A80, +0x40>
+    -> cpu@0
+
+ecap4: Timers.C2000_eCAP @ sysbus <0x006AC0, +0x40>
+    -> cpu@0
+
+ecap5: Timers.C2000_eCAP @ sysbus <0x006B00, +0x40>
+    -> cpu@0
+
+ecap6: Timers.C2000_eCAP @ sysbus <0x006B40, +0x40>
+    -> cpu@0
+
+// ---- eCAN-A ----
+ecan_a: CAN.C2000_eCAN @ sysbus <0x006000, +0x200>
+    IRQ0 -> cpu@0
+    IRQ1 -> cpu@0
+
+// ---- eCAN-B ----
+ecan_b: CAN.C2000_eCAN @ sysbus <0x006200, +0x200>
+    IRQ0 -> cpu@0
+    IRQ1 -> cpu@0
+
+// ---- GPIO (3 ports: A=GPIO0-31, B=GPIO32-63, C=GPIO64-87) ----
+gpio: GPIOPort.C2000_GPIO @ sysbus <0x006F80, +0x60>
+    numberOfPorts: 3
+
+// ---- Watchdog ----
+wdt: Timers.C2000_Watchdog @ sysbus <0x007022, +0x08>
+    baseFrequency: 150000000
+
+// ---- DMA ----
+dma: DMA.C2000_DMA @ sysbus <0x001000, +0x1C0>
+
+// ---- PIE (Peripheral Interrupt Expansion) ----
+pie: Miscellaneous.C2000_PIE @ sysbus <0x000D00, +0x200>
+
+// ---- Flash Control ----
+flashCtrl: Miscellaneous.C2000_Flash @ sysbus <0x000A80, +0x0E>

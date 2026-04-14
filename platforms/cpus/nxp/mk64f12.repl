@@ -1,0 +1,66 @@
+// NXP Kinetis K64F (MK64FN1M0VLL12) — Cortex-M4F, 120 MHz
+// 1 MB Flash, 256 KB SRAM
+// Reference: K64 Sub-Family Reference Manual (K64P144M120SF5RM)
+// FRDM-K64F freedom board MCU
+//
+// Memory map:
+//   0x00000000  Flash (1 MB)
+//   0x1FFF0000  SRAM_L (64 KB, lower)
+//   0x20000000  SRAM_U (192 KB, upper)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xF0
+    systickFrequency: 120000000
+    IRQ -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x100000
+
+sram_l: Memory.MappedMemory @ sysbus 0x1FFF0000
+    size: 0x10000
+
+sram_u: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x30000
+
+uart0: UART.Kinetis_UART @ sysbus 0x4006A000
+    -> nvic@47
+
+uart1: UART.Kinetis_UART @ sysbus 0x4006B000
+    -> nvic@49
+
+uart2: UART.Kinetis_UART @ sysbus 0x4006C000
+    -> nvic@51
+
+uart3: UART.Kinetis_UART @ sysbus 0x4006D000
+    -> nvic@53
+
+uart4: UART.Kinetis_UART @ sysbus 0x400EA000
+    -> nvic@55
+
+uart5: UART.Kinetis_UART @ sysbus 0x400EB000
+    -> nvic@57
+
+spi0: SPI.Kinetis_SPI @ sysbus 0x4002C000
+    -> nvic@26
+
+spi1: SPI.Kinetis_SPI @ sysbus 0x4002D000
+    -> nvic@27
+
+spi2: SPI.Kinetis_SPI @ sysbus 0x400AC000
+    -> nvic@65
+
+i2c0: I2C.Kinetis_I2C @ sysbus 0x40066000
+    -> nvic@24
+
+i2c1: I2C.Kinetis_I2C @ sysbus 0x40067000
+    -> nvic@25
+
+i2c2: I2C.Kinetis_I2C @ sysbus 0x400E6000
+    -> nvic@74
+
+ethernet: Network.Kinetis_ENET @ sysbus 0x400C0000
+    -> nvic@83

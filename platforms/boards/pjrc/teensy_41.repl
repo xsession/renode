@@ -1,0 +1,11 @@
+// PJRC Teensy 4.1 — MIMXRT1062DVJ6A, Cortex-M7 @ 600 MHz
+// Same MCU as Teensy 4.0, larger form factor
+// 8 MB external flash, 1 MB RAM, Ethernet PHY (10/100), SD card slot
+// On-board LED on pin 13 (GPIO_B0_03 / GPIO2_IO03)
+// Optional PSRAM (up to 16 MB) and extra flash (up to 256 MB)
+
+using "platforms/cpus/nxp/mimxrt1062.repl"
+
+// Additional external PSRAM (optional, commonly populated)
+psram: Memory.MappedMemory @ sysbus 0x70000000
+    size: 0x800000           // 8 MB (1x 8MB PSRAM chip)

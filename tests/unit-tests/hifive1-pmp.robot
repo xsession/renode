@@ -3,7 +3,7 @@ ${URI}                          @https://dl.antmicro.com/projects/renode
 
 ${HIFIVE1}=     SEPARATOR=
 ...  """                                        ${\n}
-...  using "platforms/cpus/sifive-fe310.repl"   ${\n}
+...  using "platforms/cpus/sifive/sifive-fe310.repl"   ${\n}
 ...                                             ${\n}
 ...  clint:                                     ${\n}
 ...  ${SPACE*4}frequency: 16000000              ${\n}

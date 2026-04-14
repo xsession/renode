@@ -1,7 +1,7 @@
 using sysbus
 $name?="SAM E70"
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/sam_e70.repl
+machine LoadPlatformDescription @platforms/cpus/microchip/sam_e70.repl
 
 cpu PerformanceInMips 125
 

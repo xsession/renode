@@ -4,7 +4,7 @@ ${URI}                        @https://dl.antmicro.com/projects/renode
 
 ${BMP180}=     SEPARATOR=
 ...  """                                         ${\n}
-...  using "platforms/cpus/nrf52840.repl"        ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"        ${\n}
 ...                                              ${\n}
 ...  bmp180: Sensors.BMP180 @ twi0 0x77          ${\n}
 ...  """

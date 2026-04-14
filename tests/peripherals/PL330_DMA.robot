@@ -1,7 +1,7 @@
 *** Variables ***
 ${PROJECT_URL}                      https://dl.antmicro.com/projects/renode
 
-${PLATFORM}                         platforms/cpus/cortex-a53-gicv3.repl
+${PLATFORM}                         platforms/cpus/arm/cortex-a53-gicv3.repl
 ${ZEPHYR-BIN}                       ${PROJECT_URL}/cortex-a53--zephyr-pl330-dma_loop_tests.elf-s_70008-bdfc1e055c0dc33dbc846d085bab60e1cdd33352
 
 ${LINUX-SCRIPT}                     scripts/single-node/zedboard.resc

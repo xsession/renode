@@ -1,0 +1,5 @@
+// TI controlCARD F28335 — TMS320F28335 evaluation module
+// C28x + FPU @ 150 MHz, 256 KB Flash
+// DIMM-100 form factor, plugs into docking station
+
+using "platforms/cpus/ti/tms320f28335.repl"

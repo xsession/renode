@@ -1,0 +1,6 @@
+// PIC12F1822 Curiosity Board
+// Microchip PIC12F1822 on Curiosity development board
+// 6 I/O pins, EUSART, MSSP (SPI/I2C), ADC, CCP/PWM
+// On-board LED, potentiometer, push button
+
+using "platforms/cpus/microchip/pic12f1822.repl"

@@ -1,0 +1,82 @@
+//
+// PIC12F1822 platform description.
+// Microchip PIC12F1822 — Enhanced midrange 8-bit MCU (14-bit instruction set)
+// 2048 × 14-bit Flash, 128 bytes SRAM, 256 bytes EEPROM, 6 I/O pins
+// Reference: DS41413, PIC12(L)F1822/PIC16(L)F1823 Data Sheet
+//
+// Features: EUSART, MSSP (SPI/I2C), 10-bit ADC, Timer0/1/2,
+//           CCP/PWM, Comparator, EEPROM, WDT
+//
+// Memory map (Renode flat):
+//   0x000000–0x000FFF  Program Flash (2K words × 2 bytes = 4 KB)
+//   0x200000 + sfr     Data space (enhanced midrange banking)
+//     PORTA=0x00C   TRISA=0x08C
+//     TMR0=0x015    OPTION_REG=0x095
+//     TMR1L=0x016   TMR1H=0x017   T1CON=0x018   T1GCON=0x019
+//     TMR2=0x01A    PR2=0x01B     T2CON=0x01C
+//     CCP1CON=0x293 CCPR1L=0x291  CCPR1H=0x292
+//     SSPBUF=0x211  SSPADD=0x212  SSPSTAT=0x214  SSPCON1=0x215
+//     ADRESL=0x09B  ADRESH=0x09C  ADCON0=0x09D   ADCON1=0x09E
+//     RCREG=0x199   TXREG=0x19A   SPBRG=0x19B    RCSTA=0x19D   TXSTA=0x19E
+//     EEADRL=0x191  EEDATL=0x193  EECON1=0x195   EECON2=0x196
+//     GPR: 0x020–0x06F, 0x0A0–0x0EF (128 bytes)
+
+cpu: CPU.PIC12 @ sysbus
+    cpuType: "pic12f1822"
+
+// ---- Program Flash ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x1000    // 2K words × 2 bytes = 4 KB
+
+// ---- Data SRAM ----
+sram: Memory.MappedMemory @ sysbus 0x200020
+    size: 0x80      // 128 bytes GPR
+
+// ---- GPIO Port A (6 pins: RA0-RA5) ----
+porta: GPIOPort.PIC16_GPIO @ sysbus <0x20000C, +0x02>
+    pinCount: 6
+
+// ---- Timer0 (8-bit) ----
+timer0: Timers.PIC16_Timer0 @ sysbus <0x200015, +0x03>
+    -> cpu@0
+
+// ---- Timer1 (16-bit) ----
+timer1: Timers.PIC16_Timer1 @ sysbus <0x200016, +0x03>
+    -> cpu@0
+
+// ---- Timer2 (8-bit with period register) ----
+timer2: Timers.PIC16_Timer2 @ sysbus <0x20001A, +0x03>
+    -> cpu@0
+
+// ---- EUSART ----
+usart: UART.PIC16_USART @ sysbus <0x200199, +0x04>
+    -> cpu@0
+
+// ---- MSSP SPI mode ----
+spi: SPI.PIC16_MSSP_SPI @ sysbus <0x200211, +0x06>
+    -> cpu@0
+
+// ---- MSSP I2C mode ----
+i2c: I2C.PIC16_MSSP_I2C @ sysbus <0x200211, +0x06>
+    -> cpu@0
+
+// ---- ADC (10-bit, 4 channels) ----
+adc: Analog.PIC16_ADC @ sysbus <0x20009B, +0x04>
+    -> cpu@0
+
+// ---- Comparator ----
+comparator: Analog.PIC16_Comparator @ sysbus <0x200111, +0x02>
+    -> cpu@0
+
+// ---- CCP/PWM ----
+ccp1: Timers.PIC16_CCP @ sysbus <0x200291, +0x04>
+    -> cpu@0
+
+// ---- Data EEPROM (256 bytes) ----
+eeprom: Memory.PIC16_EEPROM @ sysbus <0x200195, +0x04>
+    eepromSize: 256
+    -> cpu@0
+
+// ---- Watchdog Timer ----
+wdt: Timers.PIC16_WDT @ sysbus <0x200097, +0x01>
+    -> cpu@0

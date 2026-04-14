@@ -11,7 +11,7 @@ $name?="Quark-C1000"
 mach create $name
 
 # Load the hardware description from the REPL file.
-machine LoadPlatformDescription @platforms/boards/arduino_101-shield.repl
+machine LoadPlatformDescription @platforms/boards/arduino/arduino_101-shield.repl
 
 # This is a sample shell binary:
 $bin ?= @https://dl.antmicro.com/projects/renode/zephyr_shell.elf-s_398140-ed6b1a68e94b1cb8ac3cc7d80fb4d36e36a22766

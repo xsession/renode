@@ -1,0 +1,92 @@
+// Microchip ATSAME51J20A — Cortex-M4F, 120 MHz, 1 MB Flash, 256 KB SRAM
+// SAM E51 series — high-performance, single-core, USB, CAN-FD
+// Reference: DS60001507 (SAME51 Family Datasheet)
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xE0
+    systickFrequency: 120000000
+    -> cpu@0
+
+dwt: Miscellaneous.DWT @ sysbus 0xE0001000
+    frequency: 120000000
+
+// ---- Memory ----
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x100000          // 1 MB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x40000           // 256 KB
+
+// Data-flash / SmartEEPROM region
+dataflash: Memory.MappedMemory @ sysbus 0x00400000
+    size: 0x2000
+
+// Backup SRAM
+bkupsram: Memory.MappedMemory @ sysbus 0x47000000
+    size: 0x2000
+
+// CMCC (Cortex M Cache Controller) SRAM
+cmccSram: Memory.MappedMemory @ sysbus 0x03000000
+    size: 0x1000
+
+// ---- SERCOM (UART) ----
+sercom0: UART.SAMD5_UART @ sysbus 0x40003000
+    -> nvic@46
+
+sercom1: UART.SAMD5_UART @ sysbus 0x40003400
+    -> nvic@47
+
+sercom2: UART.SAMD5_UART @ sysbus 0x41012000
+    -> nvic@48
+
+sercom3: UART.SAMD5_UART @ sysbus 0x41014000
+    -> nvic@49
+
+sercom4: UART.SAMD5_UART @ sysbus 0x43000000
+    -> nvic@50
+
+sercom5: UART.SAMD5_UART @ sysbus 0x43000400
+    -> nvic@51
+
+// ---- Timers ----
+tc0: Timers.SAMD21_Timer @ sysbus 0x40003800
+    baseFrequency: 120000000
+    IRQ -> nvic@107
+
+tc1: Timers.SAMD21_Timer @ sysbus 0x40003C00
+    baseFrequency: 120000000
+    IRQ -> nvic@108
+
+tc2: Timers.SAMD21_Timer @ sysbus 0x4101A000
+    baseFrequency: 120000000
+    IRQ -> nvic@109
+
+tc3: Timers.SAMD21_Timer @ sysbus 0x4101C000
+    baseFrequency: 120000000
+    IRQ -> nvic@110
+
+// ---- GPIO ----
+gpio_a: GPIOPort.SAMD21_GPIO @ sysbus 0x41008000
+
+gpio_b: GPIOPort.SAMD21_GPIO @ sysbus 0x41008080
+
+// ---- RTC ----
+rtc: Timers.SAMD21_RTC @ sysbus 0x40002400
+    IRQ -> nvic@11
+
+sysbus:
+    init:
+        Tag <0x40000000 0x100> "Peripheral Access Controller"
+        Tag <0x40000400 0x80> "DSU – Device Service Unit"
+        Tag <0x40000800 0x80> "NVMCTRL"
+        Tag <0x40001400 0x80> "OSCCTRL"
+        Tag <0x40001800 0x80> "OSC32KCTRL"
+        Tag <0x41004000 0x80> "MCLK"
+        Tag <0x41006000 0x200> "DMAC"
+        Tag <0x41008000 0x200> "PORT"
+        Tag <0x42000000 0x100> "USB"
+        Tag <0x42000800 0x100> "CAN0"

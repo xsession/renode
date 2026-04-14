@@ -8,7 +8,7 @@ using sysbus.cluster1
 $name?="ZynqUS+"
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/zynqmp.repl
+machine LoadPlatformDescription @platforms/cpus/xilinx/zynqmp.repl
 machine LoadPlatformDescriptionFromString 'virtio: Storage.VirtIOBlockDevice @ sysbus 0xfe400000 { IRQ->apuGic@32 }'
 machine SetSerialExecution True
 showAnalyzer uart1

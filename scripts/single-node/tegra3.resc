@@ -5,7 +5,7 @@ using sysbus
 $name?="Tegra-3"
 mach create $name
 
-machine LoadPlatformDescription @platforms/boards/tegra3.repl
+machine LoadPlatformDescription @platforms/boards/nvidia/tegra3.repl
 
 sysbus Redirect 0xC0000000 0x80000000 0x40000000
 

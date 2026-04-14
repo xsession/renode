@@ -1,0 +1,10 @@
+// dsPIC33 blink test platform
+// Code at 0x000000 (24-bit instructions in 32-bit words, LE).
+// The blink loop loads alternating values into W0 and loops.
+
+cpu: CPU.dsPIC33 @ sysbus
+    cpuType: "dspic33"
+
+// Unified memory (covers program flash + data, 256 KB)
+mem: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x040000

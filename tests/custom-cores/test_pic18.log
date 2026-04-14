@@ -1,0 +1,10 @@
+16:47:20.9077 [INFO] Loaded monitor commands from: /mnt/c/GIT/renode/scripts/monitor.py
+16:47:20.9262 [INFO] Monitor available in telnet mode on port 1234
+16:47:20.9766 [INFO] Including script(s): /mnt/c/GIT/renode/tests/custom-cores/auto_test_pic18.resc
+16:47:21.0083 [INFO] System bus created.
+16:47:21.9798 [INFO] sysbus: Loading block of 12 bytes length at 0x0.
+16:47:22.3956 [INFO] Script: >>> pic18: starting <<<
+16:47:22.5314 [INFO] pic18-test: Machine started.
+16:47:22.5491 [INFO] pic18-test: Machine paused.
+16:47:22.5498 [INFO] Script: >>> pic18: completed <<<
+16:47:22.5721 [INFO] pic18-test: Disposed.

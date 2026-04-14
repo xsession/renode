@@ -1,0 +1,41 @@
+// Arduino Nano Every — ATmega4809 (mapped as similar to mega2560 subset)
+// 48 KB Flash, 6 KB SRAM, 256 B EEPROM, 20 MHz
+// On-board LED on PF5 (Arduino pin 13)
+// Note: megaAVR 0-series uses different register map from classic AVR
+
+cpu: CPU.AVR @ sysbus
+    cpuType: "atmega4809"
+
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x00C000    // 48 KB
+
+sram: Memory.MappedMemory @ sysbus 0x800100
+    size: 0x001800    // 6 KB
+
+// USART0
+usart0: UART.AVR_USART @ sysbus <0x800800, +0x07>
+    baseFrequency: 20000000
+    -> cpu@0
+
+// USART1
+usart1: UART.AVR_USART @ sysbus <0x800820, +0x07>
+    baseFrequency: 20000000
+    -> cpu@0
+
+// USART2
+usart2: UART.AVR_USART @ sysbus <0x800840, +0x07>
+    baseFrequency: 20000000
+    -> cpu@0
+
+// USART3
+usart3: UART.AVR_USART @ sysbus <0x800860, +0x07>
+    baseFrequency: 20000000
+    -> cpu@0
+
+// GPIO ports
+porta: GPIOPort.AVR_GPIO @ sysbus <0x800400, +0x03>
+portb: GPIOPort.AVR_GPIO @ sysbus <0x800420, +0x03>
+portc: GPIOPort.AVR_GPIO @ sysbus <0x800440, +0x03>
+portd: GPIOPort.AVR_GPIO @ sysbus <0x800460, +0x03>
+porte: GPIOPort.AVR_GPIO @ sysbus <0x800480, +0x03>
+portf: GPIOPort.AVR_GPIO @ sysbus <0x8004A0, +0x03>

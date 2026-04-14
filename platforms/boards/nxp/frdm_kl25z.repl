@@ -1,0 +1,6 @@
+// NXP FRDM-KL25Z — MKL25Z128VLK4, Cortex-M0+ @ 48 MHz
+// 128 KB Flash, 16 KB SRAM
+// RGB LED: Red (PTB18), Green (PTB19), Blue (PTD1)
+// Capacitive touch slider, accelerometer MMA8451Q
+
+using "platforms/cpus/nxp/mkl25z128.repl"

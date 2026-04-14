@@ -8,7 +8,7 @@ ${CLK_SRC_OFFSET}              0x4
 
 *** Keywords ***
 Create Machine
-    Execute Command            include @platforms/cpus/egis_et171.repl
+    Execute Command            include @platforms/cpus/others/egis_et171.repl
     Execute Command            cpu0 PC ${PROGRAM_COUNTER}
     Execute Command            cpu0 AssembleBlock ${RESET_VECTOR_VALUE} "loop: j loop"
     Create Log Tester          0

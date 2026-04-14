@@ -1,0 +1,7 @@
+// TI MSP-EXP430FR6989 — MSP430FR6989 LaunchPad
+// MSP430X @ 16 MHz, 128 KB FRAM, 2 KB SRAM, segment LCD
+// 2 LEDs: LED1 (P1.0 red), LED2 (P9.7 green)
+// 2 buttons: S1 (P1.1), S2 (P1.2)
+// On-board segment LCD, eZ-FET debug probe
+
+using "platforms/cpus/ti/msp430fr6989.repl"

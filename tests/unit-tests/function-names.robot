@@ -4,7 +4,7 @@ ${ZEPHYR_BIN}         @https://dl.antmicro.com/projects/renode/zephyr-3.6.0--sam
 *** Test Cases ***
 LogFunctionNames Should Output Function Names Not ABS Symbols
     Execute Command           mach create
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/cortex-r8.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/arm/cortex-r8.repl
 
     Execute Command           sysbus LoadELF ${ZEPHYR_BIN}
     Execute Command           cpu0 LogFunctionNames true true

@@ -8,7 +8,7 @@ Create Machine
     [Arguments]  ${bin}
 
     Execute Command          mach create
-    Execute Command          machine LoadPlatformDescription @platforms/boards/crosslink-nx-evn.repl
+    Execute Command          machine LoadPlatformDescription @platforms/boards/lattice/crosslink-nx-evn.repl
 
     Execute Command          sysbus LoadBinary ${URI}/${bin} 0x0
     Execute Command          sysbus.cpu PC 0x0

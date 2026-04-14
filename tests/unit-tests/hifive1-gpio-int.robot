@@ -1,6 +1,6 @@
 *** Variables ***
 ${URI}                          @https://dl.antmicro.com/projects/renode
-${HIFIVE1}                      @platforms/cpus/sifive-fe310.repl
+${HIFIVE1}                      @platforms/cpus/sifive/sifive-fe310.repl
 
 
 *** Keywords ***

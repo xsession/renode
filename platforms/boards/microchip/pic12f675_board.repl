@@ -1,0 +1,5 @@
+// PIC12F675 Board
+// Microchip PIC12F675 on generic DIP-8 breakout board
+// 6 I/O pins, 10-bit ADC, comparator, Timer0/1, EEPROM
+
+using "platforms/cpus/microchip/pic12f675.repl"

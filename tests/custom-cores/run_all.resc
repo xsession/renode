@@ -1,0 +1,56 @@
+logLevel 0  # DEBUG
+echo "===== Testing stm8 ====="
+include @tests/custom-cores/stm8_blink.resc
+emulation RunFor "0.0001"
+echo "  stm8: PC = "
+cpu PC
+echo "  stm8: DONE"
+mach clear
+
+logLevel 0  # DEBUG
+echo "===== Testing mcs51 ====="
+include @tests/custom-cores/mcs51_blink.resc
+emulation RunFor "0.0001"
+echo "  mcs51: PC = "
+cpu PC
+echo "  mcs51: DONE"
+mach clear
+
+logLevel 0  # DEBUG
+echo "===== Testing pic16 ====="
+include @tests/custom-cores/pic16_blink.resc
+emulation RunFor "0.0001"
+echo "  pic16: PC = "
+cpu PC
+echo "  pic16: DONE"
+mach clear
+
+logLevel 0  # DEBUG
+echo "===== Testing pic18 ====="
+include @tests/custom-cores/pic18_blink.resc
+emulation RunFor "0.0001"
+echo "  pic18: PC = "
+cpu PC
+echo "  pic18: DONE"
+mach clear
+
+logLevel 0  # DEBUG
+echo "===== Testing c2000 ====="
+include @tests/custom-cores/c2000_blink.resc
+emulation RunFor "0.0001"
+echo "  c2000: PC = "
+cpu PC
+echo "  c2000: DONE"
+mach clear
+
+logLevel 0  # DEBUG
+echo "===== Testing dspic33 ====="
+include @tests/custom-cores/dspic33_blink.resc
+emulation RunFor "0.0001"
+echo "  dspic33: PC = "
+cpu PC
+echo "  dspic33: DONE"
+mach clear
+
+echo "===== ALL TESTS COMPLETE ====="
+quit

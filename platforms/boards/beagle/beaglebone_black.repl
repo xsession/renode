@@ -1,0 +1,6 @@
+// BeagleBone Black — TI AM3358, Cortex-A8 @ 1 GHz
+// 512 MB DDR3L, 4 GB eMMC, microSD, Ethernet 10/100
+// 4 user LEDs (USR0-USR3), 1 user button (S2/BOOT), power button (S3)
+// HDMI via TDA19988, USB host + USB client
+
+using "platforms/cpus/ti/am3358.repl"

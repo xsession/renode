@@ -4,7 +4,7 @@ ${URI}                        @https://dl.antmicro.com/projects/renode
 
 ${LIS2DS12}=     SEPARATOR=
 ...  """                                                 ${\n}
-...  using "platforms/cpus/nrf52840.repl"                ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"                ${\n}
 ...                                                      ${\n}
 ...  lis2ds12: Sensors.LIS2DS12 @ twi1 0x1c              ${\n}
 ...  ${SPACE*4}IRQ -> gpio0@28                           ${\n}

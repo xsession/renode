@@ -5,7 +5,7 @@ using sysbus
 $name?="Vybrid"
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/vybrid.repl
+machine LoadPlatformDescription @platforms/cpus/nxp/vybrid.repl
 
 sysbus Redirect 0xC0000000 0x80000000 0x10000000
 sysbus LoadAtags "rw mem=256M console=ttymxc1,115200n8 root=/dev/ram init=/sbin/init initrd=0x88300000,8M" 0x10000000 0x80000100

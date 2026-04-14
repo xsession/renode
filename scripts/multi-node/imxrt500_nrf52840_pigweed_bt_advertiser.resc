@@ -31,22 +31,22 @@ cpu.PC = cpu.LR
 """
 
 mach create "beacon_host"
-machine LoadPlatformDescription @platforms/cpus/imxrt500.repl
+machine LoadPlatformDescription @platforms/cpus/nxp/imxrt500.repl
 connector Connect flexcomm0 hci_beacon
 showAnalyzer flexcomm12
 
 mach create "beacon_controller"
-machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+machine LoadPlatformDescription @platforms/boards/nordic/nrf52840dk_nrf52840.repl
 connector Connect uart1 hci_beacon
 connector Connect radio wireless
 
 mach create "observer_host"
-machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+machine LoadPlatformDescription @platforms/boards/nordic/nrf52840dk_nrf52840.repl
 connector Connect uart1 hci_observer
 showAnalyzer uart0
 
 mach create "observer_controller"
-machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+machine LoadPlatformDescription @platforms/boards/nordic/nrf52840dk_nrf52840.repl
 connector Connect uart1 hci_observer
 connector Connect radio wireless
 

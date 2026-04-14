@@ -1,0 +1,102 @@
+// Nordic nRF5340 — Dual Cortex-M33, 128/64 MHz
+// Application core: Cortex-M33 @ 128 MHz, 1 MB Flash, 512 KB RAM
+// Network core: Cortex-M33 @ 64 MHz, 256 KB Flash, 64 KB RAM
+// Reference: nRF5340 Product Specification v2.0
+// Bluetooth 5.3, 802.15.4, NFC, USB
+
+// ---- Application Core ----
+cpu0: CPU.CortexM @ sysbus
+    cpuType: "cortex-m33"
+    nvic: nvic0
+
+nvic0: IRQControllers.NVIC @ sysbus 0xE000E000
+    systickFrequency: 128000000
+    -> cpu0@0
+
+// ---- Application Flash ----
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x100000
+
+// ---- Application RAM ----
+ram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x80000
+
+// ---- Network Core Flash ----
+net_flash: Memory.MappedMemory @ sysbus 0x01000000
+    size: 0x40000
+
+// ---- Network Core RAM ----
+net_ram: Memory.MappedMemory @ sysbus 0x21000000
+    size: 0x10000
+
+// ---- Peripherals (Application Core address space) ----
+uart0: UART.NRF52840_UART @ sysbus 0x40002000
+    easyDMA: true
+    -> nvic0@8
+
+uart1: UART.NRF52840_UART @ sysbus 0x40003000
+    easyDMA: true
+    -> nvic0@9
+
+uart2: UART.NRF52840_UART @ sysbus 0x4000B000
+    easyDMA: true
+    -> nvic0@11
+
+uart3: UART.NRF52840_UART @ sysbus 0x4000C000
+    easyDMA: true
+    -> nvic0@12
+
+spi0: SPI.NRF52840_SPI @ sysbus 0x40008000
+    -> nvic0@8
+
+spi1: SPI.NRF52840_SPI @ sysbus 0x40009000
+    -> nvic0@9
+
+spi2: SPI.NRF52840_SPI @ sysbus 0x4000A000
+    -> nvic0@10
+
+spi3: SPI.NRF52840_SPI @ sysbus 0x4000B000
+    -> nvic0@11
+
+twi0: I2C.NRF52840_I2C @ sysbus 0x40008000
+    -> nvic0@8
+
+twi1: I2C.NRF52840_I2C @ sysbus 0x40009000
+    -> nvic0@9
+
+gpio0: GPIOPort.NRF52840_GPIO @ sysbus 0x50842500
+
+gpio1: GPIOPort.NRF52840_GPIO @ sysbus 0x50842800
+
+gpiote: GPIOPort.NRF52840_GPIOTasksEvents @ sysbus 0x4001A000
+    port0: gpio0
+    port1: gpio1
+    -> nvic0@26
+
+timer0: Timers.NRF52840_Timer @ sysbus 0x4000F000
+    numberOfEvents: 6
+    -> nvic0@15
+
+timer1: Timers.NRF52840_Timer @ sysbus 0x40010000
+    numberOfEvents: 6
+    -> nvic0@16
+
+timer2: Timers.NRF52840_Timer @ sysbus 0x40011000
+    numberOfEvents: 6
+    -> nvic0@17
+
+rtc0: Timers.NRF52840_RTC @ sysbus 0x40014000
+    numberOfEvents: 4
+    -> nvic0@20
+
+rtc1: Timers.NRF52840_RTC @ sysbus 0x40015000
+    numberOfEvents: 4
+    -> nvic0@21
+
+wdt0: Timers.NRF52840_Watchdog @ sysbus 0x40018000
+    -> nvic0@24
+
+clock: Miscellaneous.NRF_CLOCK @ sysbus 0x40005000
+    -> nvic0@5
+
+i2s: Sound.NRF52840_I2S @ sysbus 0x40028000

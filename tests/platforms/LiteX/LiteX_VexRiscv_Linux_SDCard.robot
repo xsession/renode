@@ -6,7 +6,7 @@ Create Platform
     [Arguments]                ${device_tree}        ${sdcard_image}
     Execute Command            using sysbus
     Execute Command            mach create
-    Execute Command            machine LoadPlatformDescription @platforms/cpus/litex_linux_vexriscv_sdcard.repl
+    Execute Command            machine LoadPlatformDescription @platforms/cpus/litex/litex_linux_vexriscv_sdcard.repl
 
     Execute Command            set device_tree @https://dl.antmicro.com/projects/renode/${device_tree}
 

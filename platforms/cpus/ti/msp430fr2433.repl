@@ -1,0 +1,111 @@
+// MSP430FR2433 platform description
+// Texas Instruments MSP430FR2433 — MSP430 FRAM (16-bit), 16 MHz
+// 16 KB FRAM, 4 KB SRAM, low-power
+// Reference: SLASE59, MSP430FR2433 Datasheet
+//
+// Memory map:
+//   0x2000–0x2FFF   SRAM (4 KB)
+//   0xC400–0xFFFF   FRAM (15 KB main)
+//   0x1800–0x19FF   Information FRAM (512 B)
+
+cpu: CPU.MSP430X @ sysbus
+    cpuType: "msp430x"
+
+// ---- SRAM ----
+ram: Memory.ArrayMemory @ sysbus 0x2000
+    size: 0x1000            // 4 KB
+
+// ---- FRAM (main) ----
+code: Memory.ArrayMemory @ sysbus 0xC400
+    size: 0x3C00            // ~15 KB (0xC400–0xFFFF)
+
+// ---- Information memory ----
+info_mem: Memory.ArrayMemory @ sysbus 0x1800
+    size: 0x200
+
+// ---- BSL ----
+bsl: Memory.ArrayMemory @ sysbus 0x1000
+    size: 0x800
+
+// ---- Watchdog ----
+wdt: Timers.MSP430F2XXX_Watchdog @ {
+    sysbus 0x15C;
+    sysbus new Bus.BusMultiRegistration { address: 0x0000; size: 0x1; region: "interruptEnable" };
+    sysbus new Bus.BusMultiRegistration { address: 0x0002; size: 0x1; region: "interruptStatus" }
+}
+    baseFrequency: 32768
+
+// ---- Timer_A0 (3 CC) ----
+timer_a0: Timers.MSP430_Timer @ {
+    sysbus <0x340, +0x20>;
+    sysbus new Bus.BusMultiRegistration { address: 0x012E; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 6
+    baseFrequency: 1_048_576
+    IRQ0->cpu@6
+    IRQ_IV->cpu@7
+
+// ---- Timer_A1 (3 CC) ----
+timer_a1: Timers.MSP430_Timer @ {
+    sysbus <0x380, +0x20>;
+    sysbus new Bus.BusMultiRegistration { address: 0x011E; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 2
+    baseFrequency: 1_048_576
+    IRQ0->cpu@2
+    IRQ_IV->cpu@3
+
+// ---- Timer_A2 ----
+timer_a2: Timers.MSP430_Timer @ {
+    sysbus <0x400, +0x20>;
+    sysbus new Bus.BusMultiRegistration { address: 0x011C; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 4
+    baseFrequency: 1_048_576
+    IRQ0->cpu@4
+    IRQ_IV->cpu@5
+
+// ---- Timer_A3 ----
+timer_a3: Timers.MSP430_Timer @ {
+    sysbus <0x440, +0x20>;
+    sysbus new Bus.BusMultiRegistration { address: 0x011A; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 10
+    baseFrequency: 1_048_576
+    IRQ0->cpu@10
+    IRQ_IV->cpu@11
+
+// ---- eUSCI_A0 (UART) ----
+usci_a0: UART.MSP430_eUSCI @ sysbus 0x500
+    -> cpu@12
+
+// ---- eUSCI_A1 (UART) ----
+usci_a1: UART.MSP430_eUSCI @ sysbus 0x540
+    -> cpu@13
+
+// ---- GPIO Port 1 ----
+gpio_p1: GPIOPort.MSP430_GPIO @ sysbus <0x200, +0x08>
+    -> cpu@4
+
+// ---- GPIO Port 2 ----
+gpio_p2: GPIOPort.MSP430_GPIO @ sysbus <0x208, +0x08>
+    -> cpu@5
+
+// ---- GPIO Port 3 ----
+gpio_p3: GPIOPort.MSP430_GPIO @ sysbus <0x220, +0x08>
+
+// ---- SPI (eUSCI_B0) ----
+spi_b0: SPI.MSP430_SPI @ sysbus <0x580, +0x07>
+    -> cpu@14
+
+// ---- I2C (eUSCI_B0) ----
+i2c_b0: I2C.MSP430_I2C @ sysbus <0x580, +0x0C>
+    -> cpu@15
+
+// ---- ADC ----
+adc: Analog.MSP430_ADC @ sysbus <0x700, +0x40>
+    -> cpu@16

@@ -7,7 +7,7 @@ mach create $name
 
 $bin?=@https://dl.antmicro.com/projects/renode/redboot.elf-s_881357-5e10ad9d866f42a5d7e80ba0555ed0be2adfd591
 
-machine LoadPlatformDescription @platforms/cpus/mpc5567.repl
+machine LoadPlatformDescription @platforms/cpus/nxp/mpc5567.repl
 
 showAnalyzer sysbus.uart
 

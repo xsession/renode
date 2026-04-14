@@ -5,7 +5,7 @@ ${PROJECT_URL}                      https://dl.antmicro.com/projects/renode
 ${ECHO_SERVER}                      ${PROJECT_URL}/nucleo_f429zi-zephyr-echo_server.elf-s_3529768-a44aca7749d2850302350f4c2fb4647aecaa8c72
 ${ECHO_CLIENT}                      ${PROJECT_URL}/nucleo_f429zi-zephyr-echo_client.elf-s_3478872-614b8752844ac17e9335fcd12ad9fcec742571d5
 
-${PLATFORM}                         @platforms/boards/stm32f4_discovery-kit.repl
+${PLATFORM}                         @platforms/boards/st/stm32f4_discovery-kit.repl
 
 *** Keywords ***
 Create Setup

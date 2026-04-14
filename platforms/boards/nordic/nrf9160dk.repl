@@ -1,0 +1,35 @@
+// Nordic nRF9160 DK (PCA10090) — nRF9160, Cortex-M33 @ 64 MHz
+// 1 MB Flash, 256 KB RAM, LTE-M/NB-IoT cellular
+// 4 LEDs (P0.02, P0.03, P0.04, P0.05), 4 buttons (P0.06-P0.09)
+
+using "platforms/cpus/nordic/nrf9160.repl"
+
+gpio0:
+    2 -> led0@0
+    3 -> led1@0
+    4 -> led2@0
+    5 -> led3@0
+
+led0: Miscellaneous.LED @ gpio0 2
+    invert: true
+
+led1: Miscellaneous.LED @ gpio0 3
+    invert: true
+
+led2: Miscellaneous.LED @ gpio0 4
+    invert: true
+
+led3: Miscellaneous.LED @ gpio0 5
+    invert: true
+
+sw0: Miscellaneous.Button @ gpio0 6
+    -> gpio0@6
+
+sw1: Miscellaneous.Button @ gpio0 7
+    -> gpio0@7
+
+sw2: Miscellaneous.Button @ gpio0 8
+    -> gpio0@8
+
+sw3: Miscellaneous.Button @ gpio0 9
+    -> gpio0@9

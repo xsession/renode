@@ -1,0 +1,10 @@
+// C2000 (TMS320C28x) blink test platform
+// Code at 0x000000.  No memory store instruction implemented yet,
+// so the blink loop just toggles ACC.
+
+cpu: CPU.C2000 @ sysbus
+    cpuType: "c2000"
+
+// Unified memory (covers code + data, 256 KB)
+mem: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x040000

@@ -5,7 +5,7 @@ using sysbus
 $name?="GR716"
 mach create $name
 
-machine LoadPlatformDescription @platforms/boards/gr716-devboard.repl
+machine LoadPlatformDescription @platforms/boards/gaisler/gr716-devboard.repl
 
 $bin?=@https://dl.antmicro.com/projects/renode/gr716a--zephyr-shell_module.elf-s_1038132-b035a01232d05b332074a6cc99e1d27abe0245b2
 

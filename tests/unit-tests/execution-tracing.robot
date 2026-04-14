@@ -74,7 +74,7 @@ Trace The Execution On The Versatile Platform
 
 Trace The Execution On The STM Platform
     [Arguments]                                 ${trace_format}  ${is_binary}
-    Execute Command                             include @platforms/cpus/stm32f103.repl
+    Execute Command                             include @platforms/cpus/st/stm32f103.repl
 
     # movs r0, #16
     Execute Command                             sysbus WriteWord 0x0 0x2010 cpu
@@ -197,7 +197,7 @@ Run Program and Trace Registers on ARM
     ...                             ${value}=0x0
 
     Execute Command                 mach create
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/a20.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/allwinner/a20.repl
 
     ${start_address}=               Set Variable  0x0
     # Load Program And Execute
@@ -532,7 +532,7 @@ Should Trace In ARM and Thumb State
 
 Should Trace in ARM and Thumb State ARMv8R
     Execute Command                             mach create
-    Execute Command                             machine LoadPlatformDescription "${CURDIR}/../../platforms/cpus/cortex-r52.repl"
+    Execute Command                             machine LoadPlatformDescription "${CURDIR}/../../platforms/cpus/arm/cortex-r52.repl"
 
     Prepare Program With ARM and Thumb
 
@@ -895,7 +895,7 @@ Should Be Able To Add Amo Operands To The Trace In Binary Format
 
 Should Trace in ZynQMP
     Execute Command                             mach create
-    Execute Command                             machine LoadPlatformDescription @platforms/cpus/zynqmp.repl
+    Execute Command                             machine LoadPlatformDescription @platforms/cpus/xilinx/zynqmp.repl
 
     Execute Command                             sysbus WriteDoubleWord 0x00006000 0xE321F0D1 sysbus.cluster1.rpu0
     Execute Command                             sysbus WriteDoubleWord 0x00006004 0xEE113F10 sysbus.cluster1.rpu0

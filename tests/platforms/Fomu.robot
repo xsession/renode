@@ -13,7 +13,7 @@ List Fomu in Linux
 
     # Create FOMU board
     Execute Command               mach create "fomu"
-    Execute Command               machine LoadPlatformDescription @platforms/cpus/fomu.repl
+    Execute Command               machine LoadPlatformDescription @platforms/cpus/others/fomu.repl
     Execute Command               sysbus LoadELF @https://dl.antmicro.com/projects/renode/fomu--foboot.elf-s_112080-c31fe1f32fba7894338f3cf4bfb82ec2a8265683
     Execute Command               connector Connect valenty usb_connector
 

@@ -1,0 +1,82 @@
+// TI TM4C123GH6PM — Cortex-M4F, 80 MHz, 256 KB Flash, 32 KB SRAM
+// Reference: SPMS376E, TM4C123GH6PM Data Sheet
+// Tiva C Series LaunchPad MCU (EK-TM4C123GXL)
+//
+// Memory map:
+//   0x00000000  Flash (256 KB)
+//   0x20000000  SRAM (32 KB)
+//   0x40000000  Peripherals
+//   0xE0000000  ARM PPB
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m4f"
+    nvic: nvic
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xE0
+    systickFrequency: 80000000
+    IRQ -> cpu@0
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x40000
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x8000
+
+uart0: UART.PL011 @ sysbus <0x4000C000, +0x1000>
+    -> nvic@5
+
+uart1: UART.PL011 @ sysbus <0x4000D000, +0x1000>
+    -> nvic@6
+
+uart2: UART.PL011 @ sysbus <0x4000E000, +0x1000>
+    -> nvic@33
+
+uart3: UART.PL011 @ sysbus <0x4000F000, +0x1000>
+    -> nvic@59
+
+uart4: UART.PL011 @ sysbus <0x40010000, +0x1000>
+    -> nvic@60
+
+uart5: UART.PL011 @ sysbus <0x40011000, +0x1000>
+    -> nvic@61
+
+uart6: UART.PL011 @ sysbus <0x40012000, +0x1000>
+    -> nvic@62
+
+uart7: UART.PL011 @ sysbus <0x40013000, +0x1000>
+    -> nvic@63
+
+ssi0: SPI.Kinetis_SPI @ sysbus 0x40008000
+    -> nvic@7
+
+ssi1: SPI.Kinetis_SPI @ sysbus 0x40009000
+    -> nvic@34
+
+ssi2: SPI.Kinetis_SPI @ sysbus 0x4000A000
+    -> nvic@57
+
+ssi3: SPI.Kinetis_SPI @ sysbus 0x4000B000
+    -> nvic@58
+
+i2c0: I2C.STM32F1_I2C @ sysbus 0x40020000
+    EventInterrupt -> nvic@8
+    ErrorInterrupt -> nvic@8
+
+i2c1: I2C.STM32F1_I2C @ sysbus 0x40021000
+    EventInterrupt -> nvic@37
+    ErrorInterrupt -> nvic@37
+
+i2c2: I2C.STM32F1_I2C @ sysbus 0x40022000
+    EventInterrupt -> nvic@68
+    ErrorInterrupt -> nvic@68
+
+i2c3: I2C.STM32F1_I2C @ sysbus 0x40023000
+    EventInterrupt -> nvic@69
+    ErrorInterrupt -> nvic@69
+
+can0: CAN.STMCAN @ sysbus <0x40040000, +0x1000>
+    [0-3] -> nvic@[39, 40, 41, 0]
+
+can1: CAN.STMCAN @ sysbus <0x40041000, +0x1000>
+    [0-3] -> nvic@[55, 56, 0, 0]

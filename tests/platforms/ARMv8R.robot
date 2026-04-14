@@ -62,7 +62,7 @@ ${HIVECS_DUMMY_MEMORY}                                                         S
 
 ${GIC_V2_SMP}                                                                                                           SEPARATOR=
 ...  """                                                                                                                ${\n}
-...  using "platforms/cpus/cortex-r52_smp_4.repl"                                                                       ${\n}
+...  using "platforms/cpus/arm/cortex-r52_smp_4.repl"                                                                       ${\n}
 ...                                                                                                                     ${\n}
 ...  gic: @ {                                                                                                           ${\n}
 ...  ${SPACE*4}sysbus new Bus.BusMultiRegistration { address: 0xAF000000; size: 0x010000; region: \"distributor\" };    ${\n}
@@ -401,7 +401,7 @@ Initialize Emulation
     Execute Command                                        numbersMode Hexadecimal
 
     Execute Command                                        mach create
-    Execute Command                                        machine LoadPlatformDescription @platforms/cpus/cortex-r52.repl
+    Execute Command                                        machine LoadPlatformDescription @platforms/cpus/arm/cortex-r52.repl
     Execute Command                                        sysbus.cpu ExecutionMode ${exec_mode}
 
     # Map all addresses as read/write and executable for EL2, EL1, and EL0
@@ -1045,7 +1045,7 @@ Test Reading From Overlapping MPU Regions
 Run Zephyr SMP Pi Sample On 4 Cores with GICv3
     [Tags]                             Demos
 
-    Execute Command                    i @platforms/cpus/cortex-r52_smp_4.repl
+    Execute Command                    i @platforms/cpus/arm/cortex-r52_smp_4.repl
     Execute Command                    sysbus LoadELF ${URI}/fvp_baser_aemv8r_aarch32--zephyr-arch-smp-pi.elf-s_610540-6034d4eb76ea1b158f34bdd92ffcff2365f2c2e6
 
     Execute Command                    showAnalyzer ${UART}

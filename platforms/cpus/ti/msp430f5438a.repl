@@ -1,0 +1,125 @@
+// MSP430F5438A platform description
+// Texas Instruments MSP430F5438A — MSP430X (16/20-bit), 25 MHz
+// 256 KB Flash, 16 KB RAM, 87 I/O pins
+// Reference: SLAS612, MSP430F5438A Datasheet
+//
+// Memory map:
+//   0x1C00–0x5BFF   RAM (16 KB)
+//   0x5C00–0x45BFF  Flash (256 KB)
+//   0x1800–0x19FF   Information memory (512 B)
+
+cpu: CPU.MSP430X @ sysbus
+    cpuType: "msp430x"
+
+// ---- RAM ----
+ram: Memory.ArrayMemory @ sysbus 0x1C00
+    size: 0x4000            // 16 KB
+
+// ---- Flash ----
+code: Memory.ArrayMemory @ sysbus 0x5C00
+    size: 0x40000           // 256 KB
+
+// ---- Information memory ----
+info_mem: Memory.ArrayMemory @ sysbus 0x1800
+    size: 0x200
+
+// ---- BSL ----
+bsl: Memory.ArrayMemory @ sysbus 0x1000
+    size: 0x800
+
+// ---- Watchdog ----
+wdt: Timers.MSP430F2XXX_Watchdog @ {
+    sysbus 0x15C;
+    sysbus new Bus.BusMultiRegistration { address: 0x0000; size: 0x1; region: "interruptEnable" };
+    sysbus new Bus.BusMultiRegistration { address: 0x0002; size: 0x1; region: "interruptStatus" }
+}
+    baseFrequency: 32768
+
+// ---- Timer_A0 (5 CC) ----
+timer_a0: Timers.MSP430_Timer @ {
+    sysbus <0x340, +0x30>;
+    sysbus new Bus.BusMultiRegistration { address: 0x012E; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 6
+    baseFrequency: 1_048_576
+    IRQ0->cpu@6
+    IRQ_IV->cpu@7
+
+// ---- Timer_A1 (3 CC) ----
+timer_a1: Timers.MSP430_Timer @ {
+    sysbus <0x380, +0x20>;
+    sysbus new Bus.BusMultiRegistration { address: 0x011E; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 2
+    baseFrequency: 1_048_576
+    IRQ0->cpu@2
+    IRQ_IV->cpu@3
+
+// ---- Timer_B0 (7 CC) ----
+timer_b0: Timers.MSP430_Timer @ {
+    sysbus <0x3C0, +0x40>;
+    sysbus new Bus.BusMultiRegistration { address: 0x011C; size: 0x2; region: "interruptVector" }
+}
+    cpu: cpu
+    acknowledgeInterrupt: 4
+    baseFrequency: 1_048_576
+    IRQ0->cpu@4
+    IRQ_IV->cpu@5
+
+// ---- eUSCI_A0 (UART) ----
+usci_a0: UART.MSP430_eUSCI @ sysbus 0x5C0
+    -> cpu@12
+
+// ---- eUSCI_A1 (UART) ----
+usci_a1: UART.MSP430_eUSCI @ sysbus 0x600
+    -> cpu@13
+
+// ---- eUSCI_A2 (UART) ----
+usci_a2: UART.MSP430_eUSCI @ sysbus 0x640
+    -> cpu@14
+
+// ---- eUSCI_A3 (UART) ----
+usci_a3: UART.MSP430_eUSCI @ sysbus 0x680
+    -> cpu@15
+
+// ---- GPIO Port 1 ----
+gpio_p1: GPIOPort.MSP430_GPIO @ sysbus <0x200, +0x08>
+    -> cpu@4
+
+// ---- GPIO Port 2 ----
+gpio_p2: GPIOPort.MSP430_GPIO @ sysbus <0x208, +0x08>
+    -> cpu@5
+
+// ---- GPIO Port 3-11 ----
+gpio_p3: GPIOPort.MSP430_GPIO @ sysbus <0x220, +0x08>
+gpio_p4: GPIOPort.MSP430_GPIO @ sysbus <0x228, +0x08>
+gpio_p5: GPIOPort.MSP430_GPIO @ sysbus <0x240, +0x08>
+gpio_p6: GPIOPort.MSP430_GPIO @ sysbus <0x248, +0x08>
+gpio_p7: GPIOPort.MSP430_GPIO @ sysbus <0x260, +0x08>
+gpio_p8: GPIOPort.MSP430_GPIO @ sysbus <0x268, +0x08>
+gpio_p9: GPIOPort.MSP430_GPIO @ sysbus <0x280, +0x08>
+gpio_p10: GPIOPort.MSP430_GPIO @ sysbus <0x288, +0x08>
+gpio_p11: GPIOPort.MSP430_GPIO @ sysbus <0x2A0, +0x08>
+
+// ---- DMA (3 channels) ----
+dma: Memory.MSP430F261X_DMA @ {
+    sysbus <0x500, +0x8>;
+    sysbus new Bus.BusMultiRegistration { address: 0x510; size: 0x24; region: "channelRegisters" }
+}
+
+// ---- ADC12 ----
+adc: Analog.MSP430_ADC @ sysbus <0x700, +0x40>
+    -> cpu@16
+
+// ---- SPI (eUSCI_B0) ----
+spi_b0: SPI.MSP430_SPI @ sysbus <0x5E0, +0x07>
+    -> cpu@17
+
+// ---- I2C (eUSCI_B1) ----
+i2c_b0: I2C.MSP430_I2C @ sysbus <0x620, +0x0C>
+    -> cpu@18
+
+// ---- Hardware Multiplier (32-bit) ----
+mpy: Miscellaneous.MSP430F2XXX_MPY @ sysbus <0x4C0, +0x10>

@@ -2,7 +2,7 @@
 *** Keywords ***
 Create Machine
     Execute Command          mach create
-    Execute Command          machine LoadPlatformDescription @platforms/cpus/miv.repl
+    Execute Command          machine LoadPlatformDescription @platforms/cpus/microchip/miv.repl
 
 
 *** Test Cases ***

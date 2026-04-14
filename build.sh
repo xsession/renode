@@ -457,7 +457,7 @@ fi
 
 # This list contains all cores that will be built.
 # If you are adding a new core or endianness add it here to have the correct tlib built
-CORES=(arm.le arm.be arm64.le arm-m.le arm-m.be ppc.le ppc.be ppc64.le ppc64.be i386.le x86_64.le riscv.le riscv64.le sparc.le sparc.be xtensa.le)
+CORES=(arm.le arm.be arm64.le arm-m.le arm-m.be ppc.le ppc.be ppc64.le ppc64.be i386.le x86_64.le riscv.le riscv64.le sparc.le sparc.be xtensa.le avr.le stm8.le mcs51.le pic16.le pic18.le c2000.le dspic33.le)
 
 # if '--external-lib-arch' was used - pick the first matching one
 if [[ ! -z $EXTERNAL_LIB_ARCH ]]; then
@@ -477,17 +477,18 @@ if [[ ! -z $EXTERNAL_LIB_ARCH ]]; then
 fi
 
 # build KVM - currently it's supported only on Linux
-if $ON_LINUX && [[ "$HOST_ARCH" == "i386" ]] && [[ -z $EXTERNAL_LIB_ARCH || "${CORES[@]}" == "i386kvm.le" ]]; then
-    KVM_CORE_DIR="$CORES_BUILD_PATH/virt"
-    mkdir -p $KVM_CORE_DIR
-    pushd "$KVM_CORE_DIR" > /dev/null
-    cmake "$CORES_PATH/virt"
-    cmake --build . -j$(nproc)
-    CORE_BIN_DIR=$CORES_BIN_PATH/lib
-    mkdir -p $CORE_BIN_DIR
-    cp -u -v *.so $CORE_BIN_DIR/
-    popd > /dev/null
-fi
+# DISABLED: KVM/virt module has pre-existing build issues, skip for now
+#if $ON_LINUX && [[ "$HOST_ARCH" == "i386" ]] && [[ -z $EXTERNAL_LIB_ARCH || "${CORES[@]}" == "i386kvm.le" ]]; then
+#    KVM_CORE_DIR="$CORES_BUILD_PATH/virt"
+#    mkdir -p $KVM_CORE_DIR
+#    pushd "$KVM_CORE_DIR" > /dev/null
+#    cmake "$CORES_PATH/virt"
+#    cmake --build . -j$(nproc)
+#    CORE_BIN_DIR=$CORES_BIN_PATH/lib
+#    mkdir -p $CORE_BIN_DIR
+#    cp -u -v *.so $CORE_BIN_DIR/
+#    popd > /dev/null
+#fi
 
 build_core () {
     set -e

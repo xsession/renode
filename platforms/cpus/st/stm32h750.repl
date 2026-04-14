@@ -1,0 +1,10 @@
+// STM32H750 — Cortex-M7, 480 MHz, 128 KB Flash, 1 MB SRAM
+// Reference: RM0433, STM32H750 Reference Manual
+// Value-line H7 with small internal flash, external flash via QSPI
+using "./stm32h743.repl"
+
+nvic:
+    systickFrequency: 480000000
+
+flashBank1:
+    size: 0x20000

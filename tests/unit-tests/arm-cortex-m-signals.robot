@@ -1,7 +1,7 @@
 *** Variables ***
 ${START_ADDRESS}                    0x100
 ${COUNTER_ADDRESS}                  0x4
-${PLATFORM}                         @platforms/cpus/renesas-r7fa8m1a.repl
+${PLATFORM}                         @platforms/cpus/renesas/renesas-r7fa8m1a.repl
 
 *** Keywords ***
 Create Machine

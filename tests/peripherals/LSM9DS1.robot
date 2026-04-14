@@ -5,7 +5,7 @@ ${URI}                        @https://dl.antmicro.com/projects/renode
 *** Keywords ***
 Create Machine
     Execute Command          mach create
-    Execute Command          machine LoadPlatformDescription @platforms/boards/arduino_nano_33_ble.repl
+    Execute Command          machine LoadPlatformDescription @platforms/boards/arduino/arduino_nano_33_ble.repl
 
     Execute Command          sysbus LoadELF ${URI}/arduino_nano_33_ble--tf_magic_wand.elf-s_7482772-5722cd8b1dd7b040366cbc259f5175b62aa4496c
 

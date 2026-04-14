@@ -1,0 +1,17 @@
+// Adafruit Metro M4 Express — ATSAMD51J19A, Cortex-M4F @ 120 MHz
+// 512 KB Flash, 192 KB SRAM, 2 MB external QSPI flash
+// NeoPixel on PA16, Red LED on PA23 (D13)
+// Arduino UNO R3 header compatible, USB-C, LiPo charger
+
+using "platforms/cpus/microchip/atsame51j20a.repl"
+
+// Metro M4 uses SAMD51J19A (512 KB flash, 192 KB SRAM)
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x80000           // 512 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x30000           // 192 KB
+
+// External QSPI flash
+qspiFlash: Memory.MappedMemory @ sysbus 0x04000000
+    size: 0x200000          // 2 MB

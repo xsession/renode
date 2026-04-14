@@ -1,0 +1,23 @@
+// ST Nucleo-WB55RG — STM32WB55RGV6, Dual CM4F + CM0+, BLE 5.0
+// 1 MB Flash, 256 KB SRAM
+// User LEDs: LD1 (PB5 blue), LD2 (PB0 green), LD3 (PB1 red)
+// User buttons: SW1 (PC4), SW2 (PD0), SW3 (PD1)
+
+using "platforms/cpus/st/stm32wb55.repl"
+
+gpioPortB:
+    5 -> led1@0
+    0 -> led2@0
+    1 -> led3@0
+
+led1: Miscellaneous.LED @ gpioPortB 5
+
+led2: Miscellaneous.LED @ gpioPortB 0
+
+led3: Miscellaneous.LED @ gpioPortB 1
+
+sw1: Miscellaneous.Button @ gpioPortC
+    -> gpioPortC@4
+
+sw2: Miscellaneous.Button @ gpioPortD
+    -> gpioPortD@0

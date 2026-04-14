@@ -7,7 +7,7 @@ $name?="ARM Cortex-R52"
 using sysbus
 mach create $name
 
-machine LoadPlatformDescription @platforms/cpus/cortex-r52.repl
+machine LoadPlatformDescription @platforms/cpus/arm/cortex-r52.repl
 
 showAnalyzer uart0
 

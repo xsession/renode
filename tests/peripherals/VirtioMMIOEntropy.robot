@@ -8,7 +8,7 @@ ${BIN}                      https://dl.antmicro.com/projects/renode/zephyr-corte
 *** Keywords ***
 Create Machine
     Execute Command         mach create
-    Execute Command         machine LoadPlatformDescription @platforms/boards/cortex_a53_virtio.repl
+    Execute Command         machine LoadPlatformDescription @platforms/boards/arm/cortex_a53_virtio.repl
     Execute Command         sysbus LoadELF @${BIN}
     Execute Command         emulation SetSeed ${SEED}
 

@@ -5,7 +5,7 @@ $name?="LiteX"
 
 using sysbus
 mach create $name
-machine LoadPlatformDescription @platforms/cpus/litex_nexys_video_vexriscv_linux.repl
+machine LoadPlatformDescription @platforms/cpus/litex/litex_nexys_video_vexriscv_linux.repl
 
 $bios?=@https://dl.antmicro.com/projects/renode/litex_vexriscv--bios.elf-s_470352-c4396f1891658b4892aeb80fb15b32f627f84eef
 $sdcard?=@https://dl.antmicro.com/projects/renode/litex_vexriscv--linux-sdcard.img-s_12582912-84441f39e3481b461f3ec70b1477d0838a4ae0f0

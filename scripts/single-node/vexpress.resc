@@ -9,7 +9,7 @@
 using sysbus
 $name?="VersatileExpress"
 mach create $name
-machine LoadPlatformDescription @platforms/boards/vexpress.repl
+machine LoadPlatformDescription @platforms/boards/arm/vexpress.repl
 
 sysbus Redirect 0xC0000000 0x80000000 0x20000000
 

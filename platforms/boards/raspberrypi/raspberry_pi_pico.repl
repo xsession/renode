@@ -1,0 +1,9 @@
+// Raspberry Pi Pico — RP2040, Dual Cortex-M0+ @ 133 MHz
+// 2 MB external QSPI flash, on-board LED on GPIO25
+
+using "platforms/cpus/raspberrypi/rp2040.repl"
+
+gpio0:
+    25 -> led@0
+
+led: Miscellaneous.LED @ gpio0 25

@@ -4,12 +4,12 @@ ${URI}                        @https://dl.antmicro.com/projects/renode
 
 ${STANDARD}=  SEPARATOR=
 ...  """                                     ${\n}
-...  using "platforms/cpus/nrf52840.repl"    ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"    ${\n}
 ...  """
 
 ${NO_DMA}=  SEPARATOR=
 ...  """                                     ${\n}
-...  using "platforms/cpus/nrf52840.repl"    ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"    ${\n}
 ...  uart0:                                  ${\n}
 ...  ${SPACE*4}easyDMA: false                ${\n}
 ...  uart1:                                  ${\n}
@@ -18,7 +18,7 @@ ${NO_DMA}=  SEPARATOR=
 
 ${DMA}=     SEPARATOR=
 ...  """                                     ${\n}
-...  using "platforms/cpus/nrf52840.repl"    ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"    ${\n}
 ...  uart0:                                  ${\n}
 ...  ${SPACE*4}easyDMA: true                 ${\n}
 ...  uart1:                                  ${\n}
@@ -27,7 +27,7 @@ ${DMA}=     SEPARATOR=
 
 ${ADXL_SPI}=     SEPARATOR=
 ...  """                                     ${\n}
-...  using "platforms/cpus/nrf52840.repl"    ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"    ${\n}
 ...                                          ${\n}
 ...  adxl372: Sensors.ADXL372 @ spi2         ${\n}
 ...                                          ${\n}
@@ -37,14 +37,14 @@ ${ADXL_SPI}=     SEPARATOR=
 
 ${ADXL_I2C}=     SEPARATOR=
 ...  """                                     ${\n}
-...  using "platforms/cpus/nrf52840.repl"    ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"    ${\n}
 ...                                          ${\n}
 ...  adxl372: Sensors.ADXL372 @ twi1 0x11    ${\n}
 ...  """
 
 ${BUTTON_LED}=     SEPARATOR=
 ...  """                                     ${\n}
-...  using "platforms/cpus/nrf52840.repl"    ${\n}
+...  using "platforms/cpus/nordic/nrf52840.repl"    ${\n}
 ...                                          ${\n}
 ...  gpio0:                                  ${\n}
 ...  ${SPACE*4}13 -> led@0                   ${\n}
@@ -277,7 +277,7 @@ Should Run Bluetooth sample
     Execute Command           emulation CreateIEEE802_15_4Medium "wireless"
 
     Execute Command           mach add "central"
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/nrf52840.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/nordic/nrf52840.repl
     Execute Command           sysbus LoadELF ${URI}/nrf52840--zephyr-bluetooth_central_hr.elf-s_3380332-316e27f81dcda3c2b0e7f2c3516001e7b27ad051
     Execute Command           connector Connect sysbus.radio wireless
 
@@ -286,7 +286,7 @@ Should Run Bluetooth sample
 
     Execute Command           mach add "peripheral"
     Execute Command           mach set "peripheral"
-    Execute Command           machine LoadPlatformDescription @platforms/cpus/nrf52840.repl
+    Execute Command           machine LoadPlatformDescription @platforms/cpus/nordic/nrf52840.repl
     Execute Command           sysbus LoadELF ${URI}/nrf52840--zephyr-bluetooth_peripheral_hr.elf-s_3217940-7b59adc9629f8be90067b131e663a13d2d4bb711
     Execute Command           connector Connect sysbus.radio wireless
 

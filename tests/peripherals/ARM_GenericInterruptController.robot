@@ -6,7 +6,7 @@ ${TEST_TEXT}                        Lorem ipsum dolor sit amet, consectetur adip
 
 ${MULTICORE_ZYNQ_7000}=     SEPARATOR=
 ...  """                                                        ${\n}
-...  using "platforms/cpus/zynq-7000.repl"                      ${\n}
+...  using "platforms/cpus/xilinx/zynq-7000.repl"                      ${\n}
 ...                                                             ${\n}
 ...  cpu1: CPU.ARMv7A @ sysbus                                  ${\n}
 ...  ${SPACE*4}cpuType: "cortex-a9"                             ${\n}

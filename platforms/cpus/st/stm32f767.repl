@@ -1,0 +1,24 @@
+// STM32F767 — Cortex-M7, 216 MHz, 2 MB Flash, 512 KB SRAM
+// Reference: RM0410, STM32F76x Reference Manual
+using "./stm32f746.repl"
+
+cpu:
+    cpuType: "cortex-m7"
+    numberOfMPURegions: 16
+
+nvic:
+    systickFrequency: 216000000
+
+flash:
+    size: 0x200000
+
+sram:
+    size: 0x80000
+
+uart7: UART.STM32F7_USART @ sysbus 0x40007800
+    frequency: 200000000
+    IRQ -> nvic@82
+
+uart8: UART.STM32F7_USART @ sysbus 0x40007C00
+    frequency: 200000000
+    IRQ -> nvic@83

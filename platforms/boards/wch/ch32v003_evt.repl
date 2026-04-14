@@ -1,0 +1,6 @@
+// WCH CH32V003-EVT — CH32V003F4P6, RISC-V RV32EC @ 48 MHz
+// 16 KB Flash, 2 KB SRAM
+// On-board LED on PD0, BOOT button
+// Ultra-low-cost RISC-V eval board
+
+using "platforms/cpus/wch/ch32v003.repl"

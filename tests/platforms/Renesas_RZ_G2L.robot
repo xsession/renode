@@ -30,7 +30,7 @@ Prepare Machine
     [Arguments]                     ${elf}
     Execute Command                 mach create "Renesas RZ/G2L"
     Execute Command                 using sysbus.cluster
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/renesas_rz_g2l.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/renesas/renesas_rz_g2l.repl
     Execute Command                 macro reset "cpu0 IsHalted true; cpu1 IsHalted true; sysbus LoadELF @${elf} cpu=cpu_m33"
     Execute Command                 runMacro $reset
 
@@ -177,7 +177,7 @@ Should Copy Memory With DMA
     ...                             str r6, [r0, #0x28]  # CHCTRL register offset
 
     Execute Command                 mach create "Renesas RZ/G2L"
-    Execute Command                 machine LoadPlatformDescription @platforms/cpus/renesas_rz_g2l.repl
+    Execute Command                 machine LoadPlatformDescription @platforms/cpus/renesas/renesas_rz_g2l.repl
     Execute Command                 cluster ForEach IsHalted true
 
     Execute Command                 sysbus WriteDoubleWord ${source} ${expected_value} cpu_m33

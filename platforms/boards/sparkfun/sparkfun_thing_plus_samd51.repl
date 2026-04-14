@@ -1,0 +1,15 @@
+// SparkFun Thing Plus — SAMD51, Cortex-M4F @ 120 MHz
+// 512 KB Flash, 192 KB SRAM, 16 MB external QSPI flash
+// Blue LED (D13/PA23), Qwiic I2C connector, LiPo charger
+// USB-C, Feather-compatible pinout
+
+using "platforms/cpus/microchip/atsame51j20a.repl"
+
+flash: Memory.MappedMemory @ sysbus 0x00000000
+    size: 0x80000           // 512 KB
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x30000           // 192 KB
+
+qspiFlash: Memory.MappedMemory @ sysbus 0x04000000
+    size: 0x1000000         // 16 MB

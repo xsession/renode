@@ -1,0 +1,6 @@
+// TI MSP-EXP432P401R LaunchPad — MSP432P401R
+// Cortex-M4F @ 48 MHz, 256 KB Flash, 64 KB SRAM, low-power
+// 2 LEDs: LED1 (P1.0 red), LED2 RGB (P2.0 red, P2.1 green, P2.2 blue)
+// 2 buttons: S1 (P1.1), S2 (P1.4)
+
+using "platforms/cpus/ti/msp432p401r.repl"

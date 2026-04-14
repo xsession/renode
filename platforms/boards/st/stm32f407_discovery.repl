@@ -1,0 +1,23 @@
+// STM32F407G-DISC1 (Discovery) — STM32F407VGT6, Cortex-M4F @ 168 MHz
+// 1 MB Flash, 192 KB SRAM
+// 4 user LEDs: LD3 (PD13 orange), LD4 (PD12 green), LD5 (PD14 red), LD6 (PD15 blue)
+// User button (B1) on PA0, accelerometer LIS3DSH, audio DAC CS43L22
+
+using "platforms/cpus/st/stm32f407.repl"
+
+gpioPortD:
+    12 -> led4@0
+    13 -> led3@0
+    14 -> led5@0
+    15 -> led6@0
+
+led3: Miscellaneous.LED @ gpioPortD 13
+
+led4: Miscellaneous.LED @ gpioPortD 12
+
+led5: Miscellaneous.LED @ gpioPortD 14
+
+led6: Miscellaneous.LED @ gpioPortD 15
+
+userButton: Miscellaneous.Button @ gpioPortA
+    -> gpioPortA@0

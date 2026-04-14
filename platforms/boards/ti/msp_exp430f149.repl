@@ -1,0 +1,5 @@
+// MSP430F149 Experimenter Board
+// Texas Instruments MSP430F149 on MSP-TS430PM64A target socket board
+// 48 I/O pins, 2 UARTs, Timer A/B, 12-bit ADC, hardware multiplier
+
+using "platforms/cpus/ti/msp430f149.repl"

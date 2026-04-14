@@ -6,7 +6,7 @@ using sysbus
 mach create $name
 
 $bin?=@https://dl.antmicro.com/projects/renode/up_squared--zephyr-hello_world.elf-s_5247080-e38ef496b86f337bd8592dccdc85cb059a961339
-machine LoadPlatformDescription @platforms/cpus/up_squared_x86_64.repl
+machine LoadPlatformDescription @platforms/cpus/intel/up_squared_x86_64.repl
 
 showAnalyzer sysbus.uart
 
