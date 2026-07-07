@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "STM32L476 OpenOCD Debug",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "openocd",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/zephyr/zephyr.elf",
+      "device": "STM32L476RG",
+      "interface": "swd",
+      "configFiles": [
+        "interface/stlink.cfg",
+        "target/stm32l4x.cfg"
+      ],
+      "preLaunchTask": "Build Zephyr app",
+      "runToEntryPoint": "main",
+      "showDevDebugOutput": "raw",
+      "svdFile": "${workspaceFolder}/STM32L476.svd",
+      "postLaunchCommands": [
+        "monitor reset halt"
+      ]
+    },
+    {
+      "name": "Renode GDB Debug STM32L476",
+      "type": "cortex-debug",
+      "request": "attach",
+      "servertype": "external",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/zephyr/zephyr.elf",
+      "gdbTarget": "localhost:3333",
+      "device": "STM32L476RG",
+      "runToEntryPoint": "main",
+      "svdFile": "${workspaceFolder}/STM32L476.svd"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Zephyr app",
+      "type": "shell",
+      "command": "west build -b nucleo_l476rg -d build",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Pristine Build Zephyr app",
+      "type": "shell",
+      "command": "west build -p always -b nucleo_l476rg -d build",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Flash Zephyr app",
+      "type": "shell",
+      "command": "west flash -d build",
+      "options": { "cwd": "${workspaceFolder}" },
+      "dependsOn": "Build Zephyr app",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Renode",
+      "type": "shell",
+      "command": "renode renode/stm32l476_debug.resc",
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Parse Renode timeline",
+      "type": "shell",
+      "command": "python3 tools/trace_to_timeline.py < renode/run.log > renode/timeline.jsonl",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
+  ]
+}

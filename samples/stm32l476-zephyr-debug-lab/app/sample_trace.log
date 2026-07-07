@@ -1,0 +1,8 @@
+[0000000000 ms] BOOT     main entered
+[0000000250 ms] PWM      duty=20%
+[0000000500 ms] GPIO     heartbeat led=1 button_irq_count=0
+[0000000500 ms] PWM      duty=30%
+[0000000750 ms] PWM      duty=40%
+[0000001000 ms] GPIO     heartbeat led=0 button_irq_count=0
+[0000001000 ms] PWM      duty=50%
+[0000001000 ms] CAN      TX simulated id=0x123 duty=50 button=0 led=0

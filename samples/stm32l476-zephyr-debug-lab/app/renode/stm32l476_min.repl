@@ -1,0 +1,47 @@
+# Minimal teaching platform for trace/debug experiments.
+# This is not a complete STM32L476 SoC model.
+# Extend with RCC, EXTI, CAN and exact timers when you need register-accurate simulation.
+
+using "platforms/cpus/cortex-m4.repl"
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xF0
+    systickFrequency: 80000000
+    IRQ -> cpu@0
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x18000
+
+flash: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x100000
+
+# Common STM32L4 peripheral address regions used for access logging/stubbing.
+rcc: Memory.MappedMemory @ sysbus 0x40021000
+    size: 0x400
+
+pwr: Memory.MappedMemory @ sysbus 0x40007000
+    size: 0x400
+
+syscfg: Memory.MappedMemory @ sysbus 0x40010000
+    size: 0x400
+
+exti: Memory.MappedMemory @ sysbus 0x40010400
+    size: 0x400
+
+gpioA: GPIOPort.STM32_GPIOPort @ sysbus 0x48000000
+    [0-15] -> nvic@[6]
+
+gpioB: GPIOPort.STM32_GPIOPort @ sysbus 0x48000400
+    [0-15] -> nvic@[6]
+
+gpioC: GPIOPort.STM32_GPIOPort @ sysbus 0x48000800
+    [0-15] -> nvic@[6]
+
+timer2: Timers.STM32_Timer @ sysbus 0x40000000
+    frequency: 80000000
+    IRQ -> nvic@28
+
+# CAN1 placeholder/stub region for initial traces.
+# Replace with a real bxCAN model or external mock transport for deeper tests.
+can1_stub: Memory.MappedMemory @ sysbus 0x40006400
+    size: 0x400

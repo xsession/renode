@@ -1,0 +1,34 @@
+/*
+ * Teaching overlay.
+ *
+ * This overlay gives the application stable aliases/chosen nodes where possible.
+ * Verify pin mappings against your board schematic and Zephyr's current
+ * nucleo_l476rg devicetree before using external wiring.
+ */
+
+/ {
+    aliases {
+        /* Most Zephyr boards already define led0 and sw0. */
+        /* pwm-led0 may require enabling a real timer PWM channel below. */
+        pwm-led0 = &pwm_led0;
+    };
+};
+
+/* Example PWM LED node. Adjust pwms target/channel/polarity for your board. */
+pwmleds {
+    compatible = "pwm-leds";
+    pwm_led0: pwm_led0 {
+        /* This is intentionally a placeholder-like teaching mapping. */
+        pwms = <&pwm2 1 1000000 PWM_POLARITY_NORMAL>;
+    };
+};
+
+/* Enable PWM on TIM2 if available in current Zephyr STM32L476 DTS. */
+&pwm2 {
+    status = "okay";
+};
+
+/* CAN device availability depends on current Zephyr board DTS and pinctrl. */
+&can1 {
+    status = "okay";
+};

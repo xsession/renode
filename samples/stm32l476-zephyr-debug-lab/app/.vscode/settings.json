@@ -1,0 +1,10 @@
+{
+  "cortex-debug.armToolchainPath": "",
+  "cortex-debug.openocdPath": "openocd",
+  "files.associations": {
+    "*.overlay": "dts",
+    "*.conf": "ini",
+    "*.repl": "plaintext",
+    "*.resc": "plaintext"
+  }
+}

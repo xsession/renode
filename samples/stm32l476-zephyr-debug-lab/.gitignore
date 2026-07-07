@@ -1,0 +1,8 @@
+app/build/
+app/renode/run.log
+app/renode/timeline.jsonl
+*.elf
+*.bin
+*.hex
+*.map
+__pycache__/
