@@ -3,7 +3,7 @@
 # Create AssemblyInfo.cs but only when the file does not exists or has different version information
 FILE_NAME="AssemblyInfo"
 
-CURRENT_VERSION=`cat ../../../tools/version`
+CURRENT_VERSION=`cat ../../../tools/version | tr -d '\r'`
 CURRENT_INFORMATIONAL_VERSION="`git rev-parse --short=8 HEAD`"
 
 PARAMS=()

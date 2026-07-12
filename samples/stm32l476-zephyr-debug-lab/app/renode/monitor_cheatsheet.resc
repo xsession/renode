@@ -1,0 +1,25 @@
+# Useful Renode monitor commands for the lab
+
+# Start/stop/pause
+# start
+# pause
+# reset
+
+# Inspect machine and peripherals
+# peripherals
+# sysbus WhatPeripheralIsAt 0x48000000
+
+# GPIO stimulation examples; exact syntax depends on peripheral model/version
+# gpioC Set 13 true
+# gpioC Set 13 false
+
+# CPU tracing toggles
+# cpu LogFunctionNames true
+# cpu LogFunctionNames false
+
+# Peripheral access logging
+# sysbus LogPeripheralAccess gpioA
+# sysbus LogPeripheralAccess timer2
+
+# GDB
+# machine StartGdbServer 3333

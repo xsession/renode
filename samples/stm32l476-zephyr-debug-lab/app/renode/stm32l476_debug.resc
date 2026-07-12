@@ -1,0 +1,33 @@
+:name: STM32L476 Zephyr Debug Lab
+:description: Minimal Renode script for GDB attach, function logging, and peripheral access tracing.
+
+using sysbus
+
+mach create "stm32l476"
+machine LoadPlatformDescription @renode/stm32l476_min.repl
+
+sysbus LoadELF @build/zephyr/zephyr.elf
+
+cpu PerformanceInMips 80
+
+logLevel 3
+logFile @renode/run.log
+
+# GDB server for VS Code Cortex-Debug attach profile.
+machine StartGdbServer 3333
+
+# Symbol-level execution tracing. Requires zephyr.elf with symbols.
+cpu LogFunctionNames true
+
+# Peripheral access logs for teaching and troubleshooting.
+sysbus LogPeripheralAccess rcc
+sysbus LogPeripheralAccess gpioA
+sysbus LogPeripheralAccess gpioB
+sysbus LogPeripheralAccess gpioC
+sysbus LogPeripheralAccess timer2
+sysbus LogPeripheralAccess can1_stub
+
+# Optional: pause at reset vector and attach GDB before running.
+# cpu PC 0x08000000
+
+start
