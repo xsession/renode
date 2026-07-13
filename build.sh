@@ -71,6 +71,8 @@ function print_help() {
   echo "--external-lib-arch               build only single arch (implies --external-lib-only)"
   echo "--tlib-export-compile-commands    build tlibs with 'compile_commands.json' (requires --external-lib-arch)"
   echo "--host-arch                       build with a specific tcg host architecture (default: i386)"
+  echo "RENODE_CUSTOM_CORES               whitespace/comma separated extra tlib cores, e.g. 'mycore.le mycore.be'"
+  echo "RENODE_CUSTOM_CORES_FILE          file with one extra tlib core per line; comments starting with '#' are ignored"
   echo "--skip-dotnet-target-generation   don't generate 'Directory.Build.targets' file, useful when experimenting with different build settings"
   echo "--tcg-opcode-backtrace            collect a backtrace for each emitted TCG opcode, to track internal TCG errors (implies Debug configuration)"
   echo "--shared                          build the librenode native library"
@@ -416,6 +418,34 @@ fi
 # This list contains all cores that will be built.
 # If you are adding a new core or endianness add it here to have the correct tlib built
 CORES=(arm.le arm.be arm64.le arm-m.le arm-m.be ppc.le ppc.be ppc64.le ppc64.be i386.le x86_64.le riscv.le riscv64.le sparc.le sparc.be xtensa.le avr.le stm8.le mcs51.le pic16.le pic18.le c2000.le dspic33.le)
+
+append_custom_core() {
+  local core_config="$1"
+  core_config="${core_config%%#*}"
+  core_config="${core_config//$'\r'/}"
+  core_config="$(echo "$core_config" | xargs)"
+  if [[ -z "$core_config" ]]; then
+    return
+  fi
+  if [[ ! "$core_config" =~ ^[A-Za-z0-9_-]+\.(le|be)$ ]]; then
+    echo "Invalid custom core '$core_config'. Expected '<arch>.le' or '<arch>.be'."
+    exit 1
+  fi
+  CORES+=("$core_config")
+}
+
+if [[ -n "${RENODE_CUSTOM_CORES:-}" ]]; then
+  CUSTOM_CORE_LIST="${RENODE_CUSTOM_CORES//,/ }"
+  for custom_core in $CUSTOM_CORE_LIST; do
+    append_custom_core "$custom_core"
+  done
+fi
+
+if [[ -n "${RENODE_CUSTOM_CORES_FILE:-}" ]]; then
+  while IFS= read -r custom_core || [[ -n "$custom_core" ]]; do
+    append_custom_core "$custom_core"
+  done < "$RENODE_CUSTOM_CORES_FILE"
+fi
 
 # if '--external-lib-arch' was used - pick the first matching one
 if [[ ! -z $EXTERNAL_LIB_ARCH ]]; then

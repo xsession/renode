@@ -1,11 +1,10 @@
-"""Scan all .repl files for MappedMemory/peripheral address overlaps and alignment issues."""
+"""Scan .repl files for MappedMemory/peripheral address overlaps and alignment issues."""
+import argparse
 import re
-import os
 import sys
 from pathlib import Path
-from collections import defaultdict
 
-PLATFORMS_DIR = Path(r"c:\GIT\renode\platforms")
+DEFAULT_PLATFORMS_DIR = Path(__file__).resolve().parent / "platforms"
 
 # Architecture -> page size (bytes) based on TARGET_PAGE_BITS
 ARCH_PAGE = {
@@ -81,11 +80,13 @@ def parse_repl_regions(content):
         name = m.group(1)
         type_name = m.group(2)
         addr = int(m.group(3), 16)
-        # Look for size: in subsequent lines
-        after = content[m.end():m.end()+200]
-        sm = re.search(r'size:\s*0x([0-9A-Fa-f]+)', after)
+        # Look for size only inside this declaration block. The old script used
+        # a fixed character window and could borrow size: from the next region.
+        next_decl = re.search(r'\n\w+:\s+\S+\s+@\s+sysbus', content[m.end():])
+        block_end = m.end() + next_decl.start() if next_decl else len(content)
+        block = content[m.end():block_end]
+        sm = re.search(r'^\s*size:\s*0x([0-9A-Fa-f]+)', block, re.MULTILINE)
         size = int(sm.group(1), 16) if sm else 0
-        is_memory = 'Memory.MappedMemory' in type_name or 'Memory.ArrayMemory' in type_name
         regions.append((name, addr, size, m.start()))
     
     return regions
@@ -123,11 +124,26 @@ def check_alignment(regions, page_size, content):
                 issues.append((name, addr, page_size, f'not aligned to 0x{page_size:X}'))
     return issues
 
-def main():
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "platforms_dir",
+        nargs="?",
+        type=Path,
+        default=DEFAULT_PLATFORMS_DIR,
+        help="Renode platforms directory. Defaults to ./platforms next to this script.",
+    )
+    parser.add_argument("--json", action="store_true", help="Emit machine-readable JSON.")
+    args = parser.parse_args(argv)
+    platforms_dir = args.platforms_dir.resolve()
+    if not platforms_dir.exists():
+        parser.error(f"platforms directory does not exist: {platforms_dir}")
+
     total_files = 0
     total_issues = 0
+    report = []
     
-    for repl_file in sorted(PLATFORMS_DIR.rglob('*.repl')):
+    for repl_file in sorted(platforms_dir.rglob('*.repl')):
         total_files += 1
         content = repl_file.read_text(encoding='utf-8', errors='replace')
         arch, page_size = detect_arch(content)
@@ -137,22 +153,44 @@ def main():
         align_issues = check_alignment(regions, page_size, content)
         
         if overlap_issues or align_issues:
-            rel_path = repl_file.relative_to(PLATFORMS_DIR)
-            print(f"\n{'='*60}")
-            print(f"FILE: {rel_path}  (arch={arch}, page=0x{page_size:X})")
-            print(f"{'='*60}")
+            rel_path = repl_file.relative_to(platforms_dir)
+            file_report = {"file": str(rel_path), "arch": arch, "page_size": page_size, "issues": []}
+            if not args.json:
+                print(f"\n{'='*60}")
+                print(f"FILE: {rel_path}  (arch={arch}, page=0x{page_size:X})")
+                print(f"{'='*60}")
             
             for r1, r2, desc in overlap_issues:
                 n1, a1, s1, _ = r1
                 n2, a2, s2, _ = r2
-                print(f"  OVERLAP: {n1} (0x{a1:08X}, size=0x{s1:X}) vs {n2} (0x{a2:08X}, size=0x{s2:X}) [{desc}]")
+                file_report["issues"].append({
+                    "type": "overlap",
+                    "description": desc,
+                    "first": {"name": n1, "address": a1, "size": s1},
+                    "second": {"name": n2, "address": a2, "size": s2},
+                })
+                if not args.json:
+                    print(f"  OVERLAP: {n1} (0x{a1:08X}, size=0x{s1:X}) vs {n2} (0x{a2:08X}, size=0x{s2:X}) [{desc}]")
                 total_issues += 1
             
             for name, addr, ps, desc in align_issues:
-                print(f"  ALIGN: {name} at 0x{addr:08X} - {desc}")
+                file_report["issues"].append({
+                    "type": "alignment",
+                    "description": desc,
+                    "region": {"name": name, "address": addr, "page_size": ps},
+                })
+                if not args.json:
+                    print(f"  ALIGN: {name} at 0x{addr:08X} - {desc}")
                 total_issues += 1
+            report.append(file_report)
     
-    print(f"\n\nSummary: Scanned {total_files} files, found {total_issues} issues")
+    if args.json:
+        import json
+
+        print(json.dumps({"files_scanned": total_files, "issues_found": total_issues, "files": report}, indent=2))
+    else:
+        print(f"\n\nSummary: Scanned {total_files} files, found {total_issues} issues")
+    return 1 if total_issues else 0
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

@@ -15,14 +15,38 @@ Verified against actual file contents. Fixes:
 12. PIC16/PIC18 port size and SRAM overlap fixes
 """
 import re
+import argparse
+import shutil
 from pathlib import Path
 
-PLATFORMS = Path(r"c:\GIT\renode\platforms")
+REPO_ROOT = Path(__file__).resolve().parent
+DEFAULT_PLATFORMS = REPO_ROOT / "platforms"
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("platforms", nargs="?", type=Path, default=DEFAULT_PLATFORMS)
+parser.add_argument("--apply", action="store_true", help="Write changes. Without this, only preview.")
+parser.add_argument("--backup-dir", type=Path, default=None, help="Directory for timestamped backups when --apply is used.")
+args = parser.parse_args()
+PLATFORMS = args.platforms.resolve()
+APPLY = args.apply
+BACKUP_DIR = args.backup_dir
+if not PLATFORMS.exists():
+    parser.error(f"platforms directory does not exist: {PLATFORMS}")
+if APPLY and BACKUP_DIR:
+    BACKUP_DIR.mkdir(parents=True, exist_ok=True)
 
 def read_file(p):
     return p.read_text(encoding='utf-8')
 
 def write_file(p, content):
+    if not APPLY:
+        print(f"PREVIEW: would update {p}")
+        return
+    if BACKUP_DIR:
+        relative = p.resolve().relative_to(PLATFORMS)
+        backup = BACKUP_DIR / relative
+        backup.parent.mkdir(parents=True, exist_ok=True)
+        if not backup.exists():
+            shutil.copy2(p, backup)
     p.write_text(content, encoding='utf-8')
 
 fixes_applied = []

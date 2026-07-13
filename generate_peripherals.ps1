@@ -1,6 +1,33 @@
-$videoDir   = "c:\GIT\renode\src\Infrastructure\src\Emulator\Peripherals\Peripherals\Video"
-$miscDir    = "c:\GIT\renode\src\Infrastructure\src\Emulator\Peripherals\Peripherals\Miscellaneous"
-$sensorsDir = "c:\GIT\renode\src\Infrastructure\src\Emulator\Peripherals\Peripherals\Sensors"
+param(
+    [string]$RepositoryRoot = $PSScriptRoot,
+    [string]$OutputRoot,
+    [switch]$Apply
+)
+
+$ErrorActionPreference = "Stop"
+if (-not $OutputRoot) {
+    $OutputRoot = Join-Path $RepositoryRoot "src\Infrastructure\src\Emulator\Peripherals\Peripherals"
+}
+$videoDir   = Join-Path $OutputRoot "Video"
+$miscDir    = Join-Path $OutputRoot "Miscellaneous"
+$sensorsDir = Join-Path $OutputRoot "Sensors"
+
+function Set-Content {
+    param(
+        [Parameter(Position=0)][string]$Path,
+        [Parameter(Position=1)]$Value,
+        [string]$Encoding = "UTF8"
+    )
+    if (-not $Apply) {
+        Write-Host "PREVIEW: would write $Path" -ForegroundColor Yellow
+        return
+    }
+    $parent = Split-Path -Parent $Path
+    if ($parent -and -not (Test-Path -LiteralPath $parent)) {
+        New-Item -ItemType Directory -Path $parent -Force | Out-Null
+    }
+    Microsoft.PowerShell.Management\Set-Content -LiteralPath $Path -Value $Value -Encoding $Encoding
+}
 
 $license = @"
 //
@@ -12,6 +39,7 @@ $license = @"
 "@
 
 Write-Host "Generating servo/motor drivers, displays, and other peripherals..."
+if (-not $Apply) { Write-Host "Preview mode. Pass -Apply to write files." -ForegroundColor Yellow }
 
 # ══════════════════════════════════════════════════════════════
 # SERVO / MOTOR DRIVERS (Miscellaneous/)

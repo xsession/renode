@@ -1,0 +1,35 @@
+name: Custom cores
+
+on:
+  pull_request:
+    paths:
+      - "build.sh"
+      - "platforms/**"
+      - "src/Infrastructure/**"
+      - "tools/custom_cores_audit/**"
+      - "tests/custom_cores_audit/**"
+  push:
+    branches:
+      - custom-cores
+      - custom-cores-fixes
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [avr, stm8, mcs51, pic16, pic18, c2000, dspic33]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Python tests
+        run: python -m pytest -q tests/custom_cores_audit
+      - name: Repository audit
+        run: python tools/custom_cores_audit/audit_repo.py . --fail-on error
+      - name: Export tlib compile commands
+        run: RENODE_CUSTOM_CORES="${{ matrix.arch }}.le" ./build.sh --external-lib-only --external-lib-arch "${{ matrix.arch }}" --tlib-export-compile-commands --skip-fetch
