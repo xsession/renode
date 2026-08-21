@@ -81,3 +81,50 @@ jobs:
         with:
           name: renode-custom-cores-offline-image-windows
           path: renode-custom-cores-offline-windows.tar
+
+  package-deb:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: docker/setup-buildx-action@v3
+      - name: Build Linux package image
+        env:
+          DOCKER_PLATFORMS: linux/amd64
+        run: bash scripts/custom_cores/docker-build.sh renode-custom-cores:package-linux
+      - name: Build Debian package
+        env:
+          IMAGE_TAG: renode-custom-cores:package-linux
+          DOCKER_NETWORK: bridge
+          RENODE_PACKAGE_SKIP_FETCH: "false"
+        run: bash scripts/custom_cores/docker-package-deb.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: renode-deb
+          path: output/deploy/*.deb
+
+  package-exe:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build Windows package image
+        shell: pwsh
+        env:
+          DOCKER_PLATFORM: windows/amd64
+        run: .\scripts\custom_cores\docker-build.ps1 renode-custom-cores:package-windows
+      - name: Build Windows installer
+        shell: pwsh
+        env:
+          IMAGE_TAG: renode-custom-cores:package-windows
+          DOCKER_NETWORK: nat
+          RENODE_PACKAGE_SKIP_FETCH: "false"
+        run: .\scripts\custom_cores\docker-package-exe.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: renode-exe
+          path: output\deploy\*.setup.exe

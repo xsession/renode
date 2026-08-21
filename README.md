@@ -300,9 +300,35 @@ docker compose -f docker/custom-cores/compose.windows.yml build
 docker compose -f docker/custom-cores/compose.windows.yml run --rm custom-cores-windows
 ```
 
+To create deployable packages from an offline-ready checkout, use the package
+entrypoints. The Linux package flow writes Debian packages to `output/deploy`:
+
+```
+IMAGE_TAG=renode-custom-cores:offline-linux bash scripts/custom_cores/docker-package-deb.sh
+```
+
+The Windows package flow writes the Inno Setup installer to `output\deploy`:
+
+```
+$env:IMAGE_TAG = "renode-custom-cores:offline-windows"
+.\scripts\custom_cores\docker-package-exe.ps1
+```
+
+The package entrypoints default to `--skip-fetch` and Docker networking disabled.
+For an online CI/package builder, set `RENODE_PACKAGE_SKIP_FETCH=false` and
+`DOCKER_NETWORK` to the Docker network used by the host.
+
+The package flows can also be launched with Compose:
+
+```
+docker compose -f docker/custom-cores/compose.yml run --rm package-deb
+docker compose -f docker/custom-cores/compose.windows.yml run --rm package-exe
+```
+
 The `Custom cores` GitHub workflow uses the same container runner. It also has a
 manual dispatch option that uploads separate offline image archives for Linux
-and Windows.
+and Windows. Manual workflow runs also upload `renode-deb` and `renode-exe`
+artifacts containing the generated `.deb` and `.setup.exe` files.
 
 ## Documentation
 

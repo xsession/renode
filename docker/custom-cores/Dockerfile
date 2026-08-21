@@ -17,11 +17,16 @@ RUN apt-get update \
         g++ \
         gcc \
         git \
+        libarchive-tools \
         make \
         pkg-config \
         python3 \
         python3-pytest \
+        rpm \
+        ruby \
+        ruby-dev \
         xz-utils \
+    && gem install --no-document fpm \
     && rm -rf /var/lib/apt/lists/*
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 \
@@ -32,6 +37,7 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 \
 WORKDIR /workspace
 
 COPY run-custom-cores.sh /usr/local/bin/run-custom-cores
-RUN chmod +x /usr/local/bin/run-custom-cores
+COPY package-renode.sh /usr/local/bin/package-renode
+RUN chmod +x /usr/local/bin/run-custom-cores /usr/local/bin/package-renode
 
 ENTRYPOINT ["/usr/local/bin/run-custom-cores"]

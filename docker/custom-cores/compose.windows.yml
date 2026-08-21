@@ -12,3 +12,23 @@ services:
       RENODE_CUSTOM_CORE_ARCHES: ${RENODE_CUSTOM_CORE_ARCHES:-}
     volumes:
       - ../..:C:\workspace
+  package-exe:
+    image: ${IMAGE_TAG:-renode-custom-cores:offline-windows}
+    build:
+      context: .
+      dockerfile: Dockerfile.windows
+    platform: ${DOCKER_PLATFORM:-windows/amd64}
+    network_mode: none
+    entrypoint:
+      - powershell
+      - -NoLogo
+      - -NoProfile
+      - -ExecutionPolicy
+      - Bypass
+      - -File
+      - C:\package-renode.ps1
+    working_dir: C:\workspace
+    environment:
+      RENODE_BUILD_HOST_ARCH: ${RENODE_BUILD_HOST_ARCH:-}
+    volumes:
+      - ../..:C:\workspace

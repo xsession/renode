@@ -12,3 +12,16 @@ services:
       RENODE_CUSTOM_CORE_ARCHES: ${RENODE_CUSTOM_CORE_ARCHES:-}
     volumes:
       - ../..:/workspace
+  package-deb:
+    image: ${IMAGE_TAG:-renode-custom-cores:offline-linux}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    network_mode: none
+    entrypoint: /usr/local/bin/package-renode
+    working_dir: /workspace
+    environment:
+      RENODE_BUILD_HOST_ARCH: ${RENODE_BUILD_HOST_ARCH:-}
+    volumes:
+      - ../..:/workspace
