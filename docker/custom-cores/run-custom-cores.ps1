@@ -7,8 +7,17 @@ $BuildHostArch = if ($env:RENODE_BUILD_HOST_ARCH) { $env:RENODE_BUILD_HOST_ARCH 
 
 Set-Location $Workspace
 
-python -m pytest -q tests/custom_cores_audit
-python tools/custom_cores_audit/audit_repo.py . --fail-on $FailOn
+$Python = Get-Command python -ErrorAction SilentlyContinue
+if (-not $Python) {
+    $Python = Get-ChildItem -Path C:\Python*\python.exe | Select-Object -First 1
+}
+if (-not $Python) {
+    throw "Python executable was not found."
+}
+$PythonPath = if ($Python.Source) { $Python.Source } else { $Python.FullName }
+
+& $PythonPath -m pytest -q tests/custom_cores_audit
+& $PythonPath tools/custom_cores_audit/audit_repo.py . --fail-on $FailOn
 
 $bashWorkspace = $Workspace -replace "\\", "/"
 if ($bashWorkspace -match "^([A-Za-z]):/(.*)$") {

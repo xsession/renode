@@ -13,3 +13,6 @@ docker run --rm `
     -v "${RootDir}:C:\workspace" `
     -w C:\workspace `
     $ImageTag
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}

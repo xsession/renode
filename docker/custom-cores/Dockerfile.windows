@@ -11,13 +11,15 @@ RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tl
     choco install -y git python msys2 innosetup; `
     & C:\tools\msys64\usr\bin\bash.exe -lc 'pacman --noconfirm -Syuu || true'; `
     & C:\tools\msys64\usr\bin\bash.exe -lc 'pacman --noconfirm -S --needed base-devel mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc make'; `
-    & C:\ProgramData\chocolatey\bin\python.exe -m pip install --no-cache-dir pytest
+    $python = Get-ChildItem -Path C:\Python*\python.exe | Select-Object -First 1; `
+    if (-not $python) { throw 'Python executable was not found after Chocolatey installation.' }; `
+    & $python.FullName -m pip install --no-cache-dir pytest
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 `
     DOTNET_NOLOGO=1 `
     RENODE_DOCKER_TARGETOS=windows `
     RENODE_DOCKER_TARGETARCH=amd64 `
-    PATH="C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Inno Setup 6;C:\Python312;C:\Python312\Scripts;C:\tools\msys64\mingw64\bin;C:\tools\msys64\usr\bin;${PATH}"
+    PATH="C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Inno Setup 6;C:\Python313;C:\Python313\Scripts;C:\Python312;C:\Python312\Scripts;C:\Python311;C:\Python311\Scripts;C:\tools\msys64\mingw64\bin;C:\tools\msys64\usr\bin;${PATH}"
 
 WORKDIR C:\workspace
 

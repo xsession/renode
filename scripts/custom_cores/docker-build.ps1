@@ -10,5 +10,8 @@ docker build `
     -f (Join-Path $RootDir "docker/custom-cores/Dockerfile.windows") `
     -t $ImageTag `
     (Join-Path $RootDir "docker/custom-cores")
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
 
 Write-Host "Built $ImageTag for $DockerPlatform"

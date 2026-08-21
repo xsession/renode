@@ -16,3 +16,6 @@ docker run --rm `
     -w C:\workspace `
     $ImageTag `
     -NoLogo -NoProfile -ExecutionPolicy Bypass -File C:\package-renode.ps1
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
