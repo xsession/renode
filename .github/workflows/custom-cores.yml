@@ -1,10 +1,20 @@
 name: Custom cores
 
 on:
+  workflow_dispatch:
+    inputs:
+      upload-offline-image:
+        description: "Build and upload an offline Docker image archive"
+        required: false
+        default: false
+        type: boolean
   pull_request:
     paths:
+      - ".github/workflows/custom-cores.yml"
       - "build.sh"
+      - "docker/custom-cores/**"
       - "platforms/**"
+      - "scripts/custom_cores/**"
       - "src/Infrastructure/**"
       - "tools/custom_cores_audit/**"
       - "tests/custom_cores_audit/**"
@@ -24,12 +34,50 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-      - uses: actions/setup-python@v5
+      - uses: docker/setup-buildx-action@v3
+      - name: Build custom cores Docker image
+        env:
+          DOCKER_PLATFORMS: linux/amd64
+        run: bash scripts/custom_cores/docker-build.sh renode-custom-cores:ci
+      - name: Offline audit and tlib compile commands
+        env:
+          IMAGE_TAG: renode-custom-cores:ci
+          RENODE_CUSTOM_CORE_ARCHES: ${{ matrix.arch }}
+        run: bash scripts/custom_cores/docker-run-offline.sh
+
+  offline-linux-image:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.upload-offline-image }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Build custom cores Docker image
+        env:
+          DOCKER_PLATFORMS: linux/amd64
+        run: bash scripts/custom_cores/docker-build.sh renode-custom-cores:offline-linux
+      - name: Save offline Docker image
+        env:
+          DOCKER_PLATFORM: linux/amd64
+        run: bash scripts/custom_cores/docker-save-offline.sh renode-custom-cores:offline-linux renode-custom-cores-offline-linux.tar
+      - uses: actions/upload-artifact@v4
         with:
-          python-version: "3.11"
-      - name: Python tests
-        run: python -m pytest -q tests/custom_cores_audit
-      - name: Repository audit
-        run: python tools/custom_cores_audit/audit_repo.py . --fail-on error
-      - name: Export tlib compile commands
-        run: RENODE_CUSTOM_CORES="${{ matrix.arch }}.le" ./build.sh --external-lib-only --external-lib-arch "${{ matrix.arch }}" --tlib-export-compile-commands --skip-fetch
+          name: renode-custom-cores-offline-image-linux
+          path: renode-custom-cores-offline-linux.tar
+
+  offline-windows-image:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.upload-offline-image }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build custom cores Windows Docker image
+        shell: pwsh
+        env:
+          DOCKER_PLATFORM: windows/amd64
+        run: .\scripts\custom_cores\docker-build.ps1 renode-custom-cores:offline-windows
+      - name: Save offline Windows Docker image
+        shell: pwsh
+        run: .\scripts\custom_cores\docker-save-offline.ps1 renode-custom-cores:offline-windows renode-custom-cores-offline-windows.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: renode-custom-cores-offline-image-windows
+          path: renode-custom-cores-offline-windows.tar

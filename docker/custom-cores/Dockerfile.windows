@@ -1,0 +1,26 @@
+# escape=`
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
+
+LABEL org.opencontainers.image.title="Renode custom cores offline Windows builder" `
+      org.opencontainers.image.description="Offline-capable Windows container for Renode custom tlib core audit and build"
+
+SHELL ["powershell", "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command"]
+
+RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
+    Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')); `
+    choco install -y git python msys2; `
+    & C:\tools\msys64\usr\bin\bash.exe -lc 'pacman --noconfirm -Syuu || true'; `
+    & C:\tools\msys64\usr\bin\bash.exe -lc 'pacman --noconfirm -S --needed base-devel mingw-w64-x86_64-cmake mingw-w64-x86_64-gcc make'; `
+    & C:\ProgramData\chocolatey\bin\python.exe -m pip install --no-cache-dir pytest
+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 `
+    DOTNET_NOLOGO=1 `
+    RENODE_DOCKER_TARGETOS=windows `
+    RENODE_DOCKER_TARGETARCH=amd64 `
+    PATH="C:\tools\msys64\mingw64\bin;C:\tools\msys64\usr\bin;${PATH}"
+
+WORKDIR C:\workspace
+
+COPY run-custom-cores.ps1 C:\run-custom-cores.ps1
+
+ENTRYPOINT ["powershell", "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\run-custom-cores.ps1"]

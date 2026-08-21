@@ -223,6 +223,87 @@ You can add more `-v` switches to the command to mount your own directories.
 
 For more information and the underlying Dockerfile, visit the [repository on GitHub](https://github.com/renode/renode-docker).
 
+#### Offline custom core build containers
+
+The custom tlib core audit can also be run from a local Docker image without
+network access. Build the target image once on a machine that can download base
+images and packages, then save it and move the archive to the offline machine.
+
+For a Linux container:
+
+```
+bash scripts/custom_cores/docker-build.sh renode-custom-cores:offline-linux
+bash scripts/custom_cores/docker-save-offline.sh renode-custom-cores:offline-linux renode-custom-cores-offline-linux.tar
+```
+
+For a Windows container, run from PowerShell on a Windows Docker engine:
+
+```
+.\scripts\custom_cores\docker-build.ps1 renode-custom-cores:offline-windows
+.\scripts\custom_cores\docker-save-offline.ps1 renode-custom-cores:offline-windows renode-custom-cores-offline-windows.tar
+```
+
+Linux images can also be built for a specific CPU architecture by setting
+`DOCKER_PLATFORMS`:
+
+```
+DOCKER_PLATFORMS=linux/arm64 bash scripts/custom_cores/docker-build.sh renode-custom-cores:offline-linux-arm64
+```
+
+Move the saved archive to the offline machine and load it:
+
+```
+docker load -i renode-custom-cores-offline-linux.tar
+```
+
+From a checkout with submodules already initialized, run the audit and tlib
+compile command export with Docker networking disabled.
+
+For Linux:
+
+```
+IMAGE_TAG=renode-custom-cores:offline-linux bash scripts/custom_cores/docker-run-offline.sh
+```
+
+For Windows:
+
+```
+$env:IMAGE_TAG = "renode-custom-cores:offline-windows"
+.\scripts\custom_cores\docker-run-offline.ps1
+```
+
+Set `RENODE_CUSTOM_CORE_ARCHES` to limit the run to selected architectures, for
+example on Linux:
+
+```
+RENODE_CUSTOM_CORE_ARCHES="avr stm8" bash scripts/custom_cores/docker-run-offline.sh
+```
+
+Or on Windows:
+
+```
+$env:RENODE_CUSTOM_CORE_ARCHES = "avr stm8"
+.\scripts\custom_cores\docker-run-offline.ps1
+```
+
+The same offline run can be launched with Docker Compose:
+
+```
+docker compose -f docker/custom-cores/compose.yml build
+docker compose -f docker/custom-cores/compose.yml run --rm custom-cores
+```
+
+On Windows, use the Windows compose file with a Windows Docker engine:
+
+```
+docker compose -f docker/custom-cores/compose.windows.yml build
+docker compose -f docker/custom-cores/compose.windows.yml run --rm custom-cores-windows
+```
+
+The `Custom cores` GitHub workflow uses the same container runner. It also has a
+manual dispatch option that uploads separate offline image archives for Linux
+and Windows.
+
 ## Documentation
 
 Documentation is available on [Read the Docs](https://renode.readthedocs.io).
