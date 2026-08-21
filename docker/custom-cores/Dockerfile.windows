@@ -19,11 +19,11 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 `
     DOTNET_NOLOGO=1 `
     RENODE_DOCKER_TARGETOS=windows `
     RENODE_DOCKER_TARGETARCH=amd64 `
-    PATH="C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Inno Setup 6;C:\Python313;C:\Python313\Scripts;C:\Python312;C:\Python312\Scripts;C:\Python311;C:\Python311\Scripts;C:\tools\msys64\mingw64\bin;C:\tools\msys64\usr\bin;${PATH}"
+    PATH="C:\Windows\System32;C:\Windows;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\dotnet;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Inno Setup 6;C:\Python314;C:\Python314\Scripts;C:\Python313;C:\Python313\Scripts;C:\Python312;C:\Python312\Scripts;C:\Python311;C:\Python311\Scripts;C:\tools\msys64\mingw64\bin;C:\tools\msys64\usr\bin"
 
 WORKDIR C:\workspace
 
 COPY run-custom-cores.ps1 C:\run-custom-cores.ps1
 COPY package-renode.ps1 C:\package-renode.ps1
 
-ENTRYPOINT ["powershell", "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\run-custom-cores.ps1"]
+ENTRYPOINT ["C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\run-custom-cores.ps1"]

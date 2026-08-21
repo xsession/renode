@@ -20,7 +20,7 @@ services:
     platform: ${DOCKER_PLATFORM:-windows/amd64}
     network_mode: none
     entrypoint:
-      - powershell
+      - C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
       - -NoLogo
       - -NoProfile
       - -ExecutionPolicy

@@ -9,7 +9,7 @@ $RootDir = Resolve-Path (Join-Path $ScriptDir "../..")
 docker run --rm `
     --platform $DockerPlatform `
     --network $DockerNetwork `
-    --entrypoint powershell `
+    --entrypoint "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" `
     -e "RENODE_BUILD_HOST_ARCH=$env:RENODE_BUILD_HOST_ARCH" `
     -e "RENODE_PACKAGE_SKIP_FETCH=$env:RENODE_PACKAGE_SKIP_FETCH" `
     -v "${RootDir}:C:\workspace" `
