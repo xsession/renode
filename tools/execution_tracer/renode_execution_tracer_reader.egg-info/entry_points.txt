@@ -1,0 +1,2 @@
+[console_scripts]
+renode-retracer = execution_tracer.execution_tracer_reader:main

@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: renode-execution-tracer-reader
+Version: 1.0.2
+Summary: Inspect binary Renode execution traces and generate code coverage reports
+Author: Antmicro
+Requires-Python: >=3.9
+Requires-Dist: pyelftools==0.30

@@ -1,0 +1,13 @@
+pyproject.toml
+execution_tracer/common_utils.py
+execution_tracer/coverage.py
+execution_tracer/coverview_integration.py
+execution_tracer/dwarf.py
+execution_tracer/execution_tracer_reader.py
+execution_tracer/pc2line.py
+renode_execution_tracer_reader.egg-info/PKG-INFO
+renode_execution_tracer_reader.egg-info/SOURCES.txt
+renode_execution_tracer_reader.egg-info/dependency_links.txt
+renode_execution_tracer_reader.egg-info/entry_points.txt
+renode_execution_tracer_reader.egg-info/requires.txt
+renode_execution_tracer_reader.egg-info/top_level.txt
