@@ -1,0 +1,33 @@
+//
+// PIC12F629 platform description.
+// Microchip PIC12F629 — classic mid-range 8-bit MCU (14-bit instruction set)
+// 1024 x 14-bit Flash, 128 bytes data memory, 6 I/O pins (GP0-GP5)
+// Reference: DS41190, PIC12F629/675 Data Sheet
+//
+// Memory map (flat Renode address space):
+//   0x000000-0x0007FF  Program Flash (1024 words x 2 bytes)
+//   0x200000-0x20009F  Data space (SFR + GPR, PIC12_DataSpace device)
+//
+// The core registers PCL/STATUS/FSR/INDF live inside the CPU core
+// (tlib CPUState); writes to their data-space slots are rejected by
+// the data-space device.
+//
+// WDT: the CPU core owns a virtual watchdog (LimitTimer, 1 tick = 1 ms).
+// Default period 1024 ms matches the POR OPTION_REG (PSA=1, PS2:PS0=111:
+// 4.096 ms x 256, DS41190). On timeout a machine-level reset is issued;
+// CLRWDT restarts it.
+//
+cpu: CPU.PIC12 @ sysbus
+    cpuType: "pic12f629"
+
+// ---- Program Flash ----
+flash: Memory.MappedMemory @ sysbus 0x000000
+    size: 0x800     // 1K words x 2 bytes = 2 KB
+
+// ---- Data space (SFR + GPR) ----
+// TMR0=0x01, GPIO=0x05, PCLATH=0x0A, INTCON=0x0B, PIR1=0x0C,
+// TMR1L/H=0x0E/0x0F, T1CON=0x10, CMCON=0x19,
+// OPTION_REG=0x81, TRISIO=0x85, PIE1=0x8C, PCON=0x8E,
+// OSCCAL=0x90, WPU=0x95, GPR 0x06-0x1F / 0x20-0x5F / 0x88-0x9F
+dataspace: PIC12.PIC12_DataSpace @ sysbus 0x200000
+    size: 0xA0
