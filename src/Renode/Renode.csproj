@@ -67,7 +67,9 @@
     <ProjectReference Include="..\Infrastructure\src\Plugins\TracePlugin\TracePlugin.csproj"/>
     <ProjectReference Include="..\Plugins\WiresharkPlugin\WiresharkPlugin.csproj"/>
     <ProjectReference Include="..\Plugins\CoSimulationPlugin\CoSimulationPlugin.csproj"/>
-    <ProjectReference Include="..\Plugins\SystemCPlugin\SystemCPlugin.csproj"/>
+    <!-- SystemCPlugin excluded: it targets a different upstream core API and does
+         not compile against this fork (unrelated to PIC12). Re-add after reconciling. -->
+    <!-- <ProjectReference Include="..\Plugins\SystemCPlugin\SystemCPlugin.csproj"/> -->
     <ProjectReference Include="..\..\lib\InpliTftpServer\libtftp\libtftp_alt.csproj"/>
     <ProjectReference Include="..\..\lib\Packet.Net\PacketDotNet\PacketDotNet.csproj"/>
     <ProjectReference Include="..\Infrastructure\src\Infrastructure.csproj"/>

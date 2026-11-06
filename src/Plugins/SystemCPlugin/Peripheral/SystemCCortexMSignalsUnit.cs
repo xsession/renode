@@ -17,7 +17,7 @@ using Antmicro.Renode.Peripherals.Miscellaneous;
 
 namespace Antmicro.Renode.Peripherals.SystemC
 {
-    public class SystemCCortexMSignalsUnit : SystemCPeripheral, IExecutableIO
+    public class SystemCCortexMSignalsUnit : SystemCPeripheral, IMemory
     {
         public SystemCCortexMSignalsUnit(
                 IMachine machine,
@@ -92,7 +92,7 @@ namespace Antmicro.Renode.Peripherals.SystemC
 
         /// <remarks>
         /// CPU is allowed to execute code from this peripheral,
-        /// so it implements <see cref="IMemory"/> via <see cref="IExecutableIO"/>.
+        /// so it implements <see cref="IMemory"/>.
         /// Nevertheless this peripheral isn't required to represent a uniform memory space at SystemC side
         /// and it usually covers multiple peripherals on the remote side,
         /// but the particular memory layout is transparent to this peripheral. 
