@@ -43,7 +43,17 @@
     <DefineConstants>$(DefineConstants);GUI_DISABLED</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <!-- UartPtyTerminal: Unix-only; the fork's file references PtyUnixStream,
+         which is not present in this tree. Excluded on all platforms. -->
+    <Compile Remove="Backends\Terminals\UartPtyTerminal.cs" />
+    <!-- CANKeywords: references CANTester, which is not present in this fork's core. -->
+    <Compile Remove="RobotFrameworkEngine\CANKeywords.cs" />
     <PackageReference Include="NetMQ" Version="4.0.1.12" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <!-- Required by IronPython on .NET (System.CodeDom is not in-box on net6+). -->
+    <PackageReference Include="System.CodeDom" Version="8.0.0" />
+    <!-- Required so IronPython 2.7 can use legacy code pages (e.g. encoding 852). -->
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
     <PackageReference Include="System.ServiceModel.Http" Version="6.0.0" />
 
     <Reference Include="Sprache">

@@ -48,6 +48,11 @@ namespace Antmicro.Renode
 
         public static void MainWithOptions(Options options)
         {
+            // On modern .NET, legacy code pages (e.g. IBM852/850) are not available
+            // by default. IronPython 2.7 queries them while setting up its standard
+            // IO, so register the CodePages provider before anything touches it.
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
             if(options.Version)
             {
                 Console.Out.WriteLine(LongVersionString);

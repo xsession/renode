@@ -223,7 +223,7 @@ namespace Antmicro.Renode.Network
 
             case State.NotConnected:
             default:
-                throw new UnreachableException();
+                throw new Antmicro.Renode.Exceptions.UnreachableException();
             }
         }
 

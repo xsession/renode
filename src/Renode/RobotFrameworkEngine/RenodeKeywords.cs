@@ -360,7 +360,7 @@ namespace Antmicro.Renode.RobotFramework
                 // We could do it accurately, but it doesn't seem worth here, because the goal is just to provide some extra context to the exception message.
                 // We arbitrarily chose the number of messages to include here. In theory it could still throw during string.Join operation given very long messages,
                 // but it's unlikely to happen given the value of Int32.MaxValue = 2,147,483,647.
-                var logContextMessages = bufferedMessages.TakeLast(MaxLogContextPrintedOnException);
+                var logContextMessages = Misc.TakeLast(bufferedMessages, MaxLogContextPrintedOnException);
                 var logMessages = string.Join("\n ", logContextMessages);
                 var droppedMessageWarning = logTester.HasDroppedMessages ? $"Warning: Buffered log messages exceeded configured max {logTester.MaxLogEntries}, some messages were dropped \n" : "";
                 throw new KeywordException($"Expected pattern \"{pattern}\" did not appear in the log\n {droppedMessageWarning}Last {logContextMessages.Count()} buffered log messages are: \n {logMessages}");
