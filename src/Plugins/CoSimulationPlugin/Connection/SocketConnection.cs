@@ -265,7 +265,9 @@ namespace Antmicro.Renode.Plugins.CoSimulationPlugin.Connection
             {
                 if(!RuntimeInfo.IsWindows())
                 {
+#if NET8_0_OR_GREATER
                     File.SetUnixFileMode(filePath, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+#endif
                 }
 
                 bool redirectStdoutToFile = !String.IsNullOrWhiteSpace(stdoutFile);

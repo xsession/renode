@@ -71,7 +71,7 @@ namespace Antmicro.Renode.Network.ExternalControl
                 PerformWrite(sysbus, context, address, accessWidth, writeData.ToArray());
                 return Response.Success(Identifier);
             default:
-                throw new UnreachableException();
+                throw new Antmicro.Renode.Exceptions.UnreachableException();
             }
         }
 
@@ -144,7 +144,7 @@ namespace Antmicro.Renode.Network.ExternalControl
                         data.SetBytesFromValue(bus.ReadQuadWord(address + (ulong)i, context), i);
                         break;
                     default:
-                        throw new UnreachableException();
+                        throw new Antmicro.Renode.Exceptions.UnreachableException();
                     }
                 }
             }
@@ -176,7 +176,7 @@ namespace Antmicro.Renode.Network.ExternalControl
                         bus.WriteQuadWord(address + (ulong)i, BitConverter.ToUInt64(data, i), context);
                         break;
                     default:
-                        throw new UnreachableException();
+                        throw new Antmicro.Renode.Exceptions.UnreachableException();
                     }
                 }
             }

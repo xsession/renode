@@ -23,6 +23,23 @@ namespace Antmicro.Renode
         [STAThread]
         public static void Main(string[] args)
         {
+            // Must run before anything touches the console or the Python engine:
+            // register the legacy code-page provider (so 852/850 resolve), and force
+            // the console streams to UTF-8 so IronPython's stdio setup
+            // (StringOps.GetEncodingName -> Encoding.IsBrowserDisplay) uses a
+            // fully-populated in-box encoding instead of the console code page.
+            try
+            {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                System.Console.InputEncoding = System.Text.Encoding.UTF8;
+                System.Console.OutputEncoding = System.Text.Encoding.UTF8;
+            }
+            catch
+            {
+                // Non-interactive / redirected console - the provider registration is
+                // still applied; the encoding change is best-effort.
+            }
+
             AppDomain.CurrentDomain.ProcessExit += (_, __) => Emulator.Exit();
 
             void SignalHandler(PosixSignalContext ctx)
@@ -49,8 +66,9 @@ namespace Antmicro.Renode
         public static void MainWithOptions(Options options)
         {
             // On modern .NET, legacy code pages (e.g. IBM852/850) are not available
-            // by default. IronPython 2.7 queries them while setting up its standard
-            // IO, so register the CodePages provider before anything touches it.
+            // by default. IronPython 2.7 queries the console code page while setting
+            // up its standard IO (StringOps.GetEncodingName -> Encoding.IsBrowserDisplay),
+            // so register the CodePages provider before the Python engine is created.
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
             if(options.Version)
@@ -80,6 +98,15 @@ namespace Antmicro.Renode
                 Emulator.BeforeExit += WebSockets.WebSocketsManager.Instance.Dispose;
             }
 
+            {
+                var _t = (string tag, System.Text.Encoding e) => { try { return tag + "=cp" + e.CodePage + "/browser" + e.IsBrowserDisplay; } catch (Exception ex) { return tag + "=cp" + ((System.Text.Encoding)e).CodePage + "/ERR"; } };
+                System.Text.Encoding _fresh;
+                try { _fresh = System.Text.Encoding.GetEncoding(852); } catch (Exception ex) { _fresh = null; }
+                System.Console.Error.WriteLine("[diag-pre] " +
+                    (_fresh != null ? _t("fresh852", _fresh) : "fresh852=FAIL") +
+                    " " + _t("consoleOut", System.Console.OutputEncoding) +
+                    " providerType=" + System.Text.CodePagesEncodingProvider.Instance.GetType().Assembly.GetName().Name + "v" + System.Text.CodePagesEncodingProvider.Instance.GetType().Assembly.GetName().Version);
+            }
             var thread = new Thread(() =>
             {
                 try

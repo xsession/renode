@@ -51,9 +51,11 @@
     <PackageReference Include="NetMQ" Version="4.0.1.12" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <!-- Required by IronPython on .NET (System.CodeDom is not in-box on net6+). -->
-    <PackageReference Include="System.CodeDom" Version="8.0.0" />
-    <!-- Required so IronPython 2.7 can use legacy code pages (e.g. encoding 852). -->
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+    <PackageReference Include="System.CodeDom" Version="6.0.0" />
+    <!-- Aligned to 6.0.0: the net6.0 in-box CodePages provider is fully populated
+         (IsBrowserDisplay works). 8.0.0's build has a broken IsBrowserDisplay that
+         IronPython 2.7's StringOps.GetEncodingName hits. -->
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="System.ServiceModel.Http" Version="6.0.0" />
 
     <Reference Include="Sprache">
